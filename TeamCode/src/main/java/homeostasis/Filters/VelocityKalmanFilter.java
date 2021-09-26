@@ -1,0 +1,50 @@
+package homeostasis.Filters;
+
+
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.subsystems.dashboard;
+
+/**
+ *
+ * using a kalman filter, more accurately obtain velocity measurements of systems
+ *
+ */
+
+public class VelocityKalmanFilter extends SISOKalmanFilter {
+
+	protected DcMotorEx motor;
+	protected double previousPosition = 0;
+	protected ElapsedTime timer = new ElapsedTime();
+
+	/**
+	 * initialize filter and give access to our motor
+	 * @param motor the motor we want to estimate the velocity of
+	 */
+	public VelocityKalmanFilter(DcMotorEx motor) {
+		super();
+		this.motor = motor;
+	}
+
+	public double estimateVelocity() {
+
+		double position = motor.getCurrentPosition();
+		double derivedVelocity = (position - previousPosition) / timer.seconds();
+		previousPosition = position;
+		double quantized = motor.getVelocity();
+		double velocityEstimate = updateKalmanMeasurements(derivedVelocity,quantized);
+
+		timer.reset();
+
+		dashboard.packet.put("d",derivedVelocity);
+		dashboard.packet.put("q",quantized);
+		dashboard.packet.put("e",velocityEstimate);
+		System.out.println("quantized: " + quantized + " derived: " + derivedVelocity + " estimated " + velocityEstimate);
+
+		return velocityEstimate;
+
+	}
+
+
+}
