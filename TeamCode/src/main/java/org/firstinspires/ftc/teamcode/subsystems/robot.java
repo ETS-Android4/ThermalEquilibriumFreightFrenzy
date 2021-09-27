@@ -18,6 +18,7 @@ public class robot {
 
     public dashboard dashBoard = new dashboard();
 
+    public differentialDriveOdom odometry = new differentialDriveOdom();
 
 
     /**
@@ -27,6 +28,7 @@ public class robot {
 
         subsystems.add(driveTrain);
         subsystems.add(dashBoard);
+        subsystems.add(odometry);
 
     }
 
@@ -38,6 +40,7 @@ public class robot {
     public robot(boolean minimal) {
         subsystems.add(driveTrain);
         subsystems.add(dashBoard);
+        subsystems.add(odometry);
     }
 
 
@@ -50,6 +53,7 @@ public class robot {
         driveTrain.init(hwmap);
         dashBoard.init(hwmap);
         batterVoltageSensor = hwmap.voltageSensor.iterator().next();
+        odometry.init(hwmap);
     }
 
     /**
@@ -61,7 +65,7 @@ public class robot {
 
         driveTrain.init(hwmap);
         dashBoard.init(hwmap);
-
+        odometry.init(hwmap);
         batterVoltageSensor = hwmap.voltageSensor.iterator().next();
 
     }

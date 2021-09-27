@@ -4,6 +4,8 @@ package org.firstinspires.ftc.teamcode.geometry;
 
 import org.ejml.data.DMatrixRMaj;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 import static org.firstinspires.ftc.teamcode.utils.utils.AngleWrap;
 import static org.firstinspires.ftc.teamcode.utils.utils.approxFirstOrderIntegral;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngle;
@@ -490,5 +492,35 @@ public class Vector3D {
         rotated = rotated.rotateBy(theta);
         return new Vector3D(rotated.getX(),rotated.getY(),angle.radians);
     }
+
+    /**
+     * second order integration of a pose
+     * @param delta pose
+     * @return integrated pose
+     */
+    public Vector3D poseExponential(Vector3D delta) {
+        double deltaTheta = delta.getAngleRadians();
+        double theta = angle.radians;
+        double cosTerm;
+        double sinTerm;
+
+        if (Math.abs(deltaTheta) <= 1e-3) {
+            sinTerm = 1.0 - deltaTheta * deltaTheta / 6.0;
+            cosTerm = deltaTheta / 2.0;
+        } else {
+            sinTerm = sin(deltaTheta) / deltaTheta;
+            cosTerm = (1 - cos(deltaTheta)) / deltaTheta;
+        }
+        double xTransform = sinTerm * delta.getX() - cosTerm * delta.getY();
+        double yTransform = cosTerm * delta.getX() + sinTerm * delta.getX();
+
+        Vector3D integrated = new Vector3D(xTransform,yTransform,deltaTheta);
+
+        integrated = integrated.rotateBy(angle.degrees - 45);
+
+        return this.plus(integrated);
+    }
+
+
 
 }
