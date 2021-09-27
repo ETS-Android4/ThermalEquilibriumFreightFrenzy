@@ -36,7 +36,7 @@ public class dripTeleop extends LinearOpMode {
 			switchDrivingState();
 			driveRobot();
 			if (gamepad1.dpad_up) {
-				targetPosition = robot.driveTrain.getRobotPosition();
+				targetPosition = robot.getRobotPose();
 			}
 			scheduler.updateRobot();
 

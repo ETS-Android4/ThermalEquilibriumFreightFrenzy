@@ -39,7 +39,7 @@ public class drivetrainIdentification extends LinearOpMode {
             robot.driveTrain.update();
             robot.dashBoard.update();
 
-            System.out.println("step response: " + power + ", " + robot.driveTrain.robotPosition.getAngleRadians() + ", " + robot.driveTrain.robotVelocity.getAngleRadians());
+            System.out.println("step response: " + power + ", " + robot.getRobotPose().getAngleRadians() + ", " + robot.driveTrain.robotVelocity.getAngleRadians());
 
         }
 

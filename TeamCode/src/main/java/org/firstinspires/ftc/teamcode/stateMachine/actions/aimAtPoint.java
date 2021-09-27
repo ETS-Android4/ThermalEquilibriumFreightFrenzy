@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.stateMachine.actions;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.classicalControl.NonlinearPID;
+import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoeffecients;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
@@ -13,7 +15,7 @@ import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngleRR;
 public class aimAtPoint implements action {
 
     // 1 degree angle tolerance
-    double tolerance = Math.toRadians(0.25);
+    double tolerance = Math.toRadians(4);
     double allowedTimeSeconds = 2;
     Vector3D targetPosition;
     double error;
@@ -24,6 +26,9 @@ public class aimAtPoint implements action {
     private robot robot;
     private boolean isWithinTolerance = false;
     private boolean reverseAngle;
+    PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.75,0.01,0.155);
+
+    private NonlinearPID controller = new NonlinearPID(thetaCoefficients);
 
 
     /**
@@ -39,6 +44,20 @@ public class aimAtPoint implements action {
         this.targetPosition = targetPoint;
         this.reversed = reversed;
         this.angleOffset = angleOffset;
+        this.reverseAngle = reverseAngle;
+    }
+    public aimAtPoint(robot robot, Vector3D targetPoint) {
+        this.robot = robot;
+        this.targetPosition = targetPoint;
+        this.reversed = false;
+        this.angleOffset = 0;
+        this.reverseAngle = false;
+    }
+    public aimAtPoint(robot robot, Vector3D targetPoint, boolean reverseAngle) {
+        this.robot = robot;
+        this.targetPosition = targetPoint;
+        this.reversed = false;
+        this.angleOffset = 0;
         this.reverseAngle = reverseAngle;
     }
 
@@ -67,11 +86,11 @@ public class aimAtPoint implements action {
         error = AngleWrap(normalizeAngleRR(theta - robot.getRobotPose().getAngleRadians()));
 
         System.out.println("angle controller turret " + error);
-        double power = Range.clip(error * 3.5, -max_power, max_power);
+        double power = Range.clip(controller.calculateOutput(-error), -max_power, max_power);
 
         robot.driveTrain.setMotorPowers(-power, power, -power, power);
 
-        if (Math.abs(error) < tolerance || timeout.seconds() > allowedTimeSeconds) {
+        if ((Math.abs(error) < tolerance && Math.abs(robot.getVelocity().getAngleRadians()) < 0.002) || timeout.seconds() > allowedTimeSeconds) {
             isWithinTolerance = true;
         }
 

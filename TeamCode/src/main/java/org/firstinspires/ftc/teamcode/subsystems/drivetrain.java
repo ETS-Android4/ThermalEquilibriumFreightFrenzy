@@ -433,14 +433,6 @@ public class drivetrain implements subsystem {
     }
 
 
-    public void debugPosition(Telemetry telemetry) {
-        telemetry.addData("x pos: ", robotPosition.getX());
-        telemetry.addData("y pos: ", robotPosition.getY());
-        telemetry.addData("theta pos", robotPosition.getAngleRadians());
-        telemetry.addData("x velo", robotVelocity.getX());
-        telemetry.addData("y velo: ", robotVelocity.getY());
-        telemetry.addData("theta velo: ", robotVelocity.getAngleRadians());
-    }
 
     /**
      * check if the velocity encountered a null pointer exception inorder to disable feedback

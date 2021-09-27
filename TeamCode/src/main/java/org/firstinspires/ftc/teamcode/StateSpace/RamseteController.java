@@ -54,8 +54,8 @@ public class RamseteController {
 		output = controllerOutput(position, velocity).multiply(new Vector3D(0.005, 0.005, 0.005));
 		robot.driveTrain.robotRelative(output.getX(),output.getAngleRadians());
 		drawRobotGreen(position, dashboard.packet);
-		return robot.driveTrain.getRobotPosition().distanceToPose(position) < threshold + 1
-				&& Math.abs(robot.driveTrain.getRobotPosition().getError(position).getAngleRadians())
+		return robot.getRobotPose().distanceToPose(position) < threshold + 1
+				&& Math.abs(robot.getRobotPose().getError(position).getAngleRadians())
 				< Math.toRadians(3);
 	}
 

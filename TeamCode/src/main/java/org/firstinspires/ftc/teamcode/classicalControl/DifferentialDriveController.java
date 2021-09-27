@@ -11,7 +11,7 @@ import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 
 public class DifferentialDriveController {
 
-	PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.75,0.01,0.015);
+	PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.8,0.01,0.155);
 	PIDFCoeffecients omegaCoefficients = new PIDFCoeffecients(1,0,0.115);
 	PIDFCoeffecients driveCoefficients = new PIDFCoeffecients(0.55,0,0.115);
 	public static final double MAX_VELO = 75;
@@ -83,9 +83,9 @@ public class DifferentialDriveController {
 		output = controllerOutput(position);
 		robot.driveTrain.robotRelative(output.getX(),output.getAngleRadians());
 		drawRobotGreen(position, dashboard.packet);
-		return (robot.driveTrain.getRobotPosition().distanceToPose(position) < threshold + 1.5
-				&& Math.abs(robot.driveTrain.getRobotPosition().getError(position).getAngleRadians())
-				< Math.toRadians(4) && Math.abs(robot.driveTrain.getRobotVelocity().getAngleRadians()) < 0.002);
+		return (robot.getRobotPose().distanceToPose(position) < threshold + 1.5
+				&& Math.abs(robot.getRobotPose().getError(position).getAngleRadians())
+				< Math.toRadians(4) && Math.abs(robot.getVelocity().getAngleRadians()) < 0.002);
 	}
 
 	public void driveToAngle(Vector3D position) {

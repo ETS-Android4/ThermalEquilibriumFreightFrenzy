@@ -87,7 +87,7 @@ public class robot {
      * @return drivetrain position
      */
     public Vector3D getRobotPose() {
-        return driveTrain.robotPosition;
+        return odometry.subsystemState();
     }
 
     /**
@@ -98,4 +98,7 @@ public class robot {
     }
 
 
+    public Vector3D getVelocity() {
+        return odometry.getVelocity();
+    }
 }

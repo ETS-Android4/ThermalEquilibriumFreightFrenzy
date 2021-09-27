@@ -32,7 +32,6 @@ public class LocalizationTest extends LinearOpMode {
 
             scheduler.updateRobot();
 
-            System.out.println(robot.driveTrain.robotPosition);
         }
 
     }

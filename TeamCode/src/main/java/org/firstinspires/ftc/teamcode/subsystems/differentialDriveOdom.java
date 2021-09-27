@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.utils.Quadratic;
+import org.firstinspires.ftc.teamcode.utils.Regression;
 import org.firstinspires.ftc.teamcode.utils.SizedStack;
 
 import static org.firstinspires.ftc.teamcode.roadrunnerquickstart.DriveConstants.encoderTicksToInches;
@@ -26,8 +28,8 @@ public class differentialDriveOdom implements subsystem {
 	double trackWidth = 18;
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
-	protected Vector3D accels = new Vector3D();
 	protected double IMU_angle = 0;
+	double angularVelocity = 0;
 	SizedStack<Vector3D> accels = new SizedStack<>(3);
 	SizedStack<Double> dts = new SizedStack<>(3);
 
@@ -42,7 +44,12 @@ public class differentialDriveOdom implements subsystem {
 	 * initialize a differential drive robot with odometry
 	 */
 	public differentialDriveOdom() {
-
+		accels.add(new Vector3D());
+		accels.add(new Vector3D());
+		accels.add(new Vector3D());
+		dts.add(0.0);
+		dts.add(0.0);
+		dts.add(0.0);
 	}
 
 	@Override
@@ -82,15 +89,15 @@ public class differentialDriveOdom implements subsystem {
 		updateIMU();
 
 		double xDelta = (leftDelta + rightDelta) / 2;
-		double yDelta = imuYDx;
+		double yDelta = 0;
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
 
 		positionEstimateDeltaRobotRelative = new Vector3D(xDelta,yDelta,thetaDelta);
 
 		// we need some second order dynamics imo (in my option)
-		//positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
+		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 
-		positionEstimate = positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
+		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
 		positionEstimate.setAngleRad(IMU_angle);
 		drawRobot(positionEstimate,dashboard.packet);
 		System.out.println("the estimated pose from the custom odom is " + positionEstimate);
@@ -140,16 +147,25 @@ public class differentialDriveOdom implements subsystem {
 		IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
 		Acceleration accel = imu.getLinearAcceleration();
 		accelDt = timer.seconds();
+		angularVelocity = imu.getAngularVelocity().zRotationRate;
+
 		timer.reset();
+		double y_acc = accel.xAccel * 387.009049289;
+		dts.push(accelDt);
+		accels.push(new Vector3D(0,y_acc,0));
 
-		accels = new Vector3D(0,accel.yAccel * 386.08858267717,0);
-
-
-		imuYDx = accels.getY() * Math.pow(accelDt,2);
+		double[] y = {accels.get(0).getY(),accels.get(1).getY(),accels.get(2).getY()};
+		double[] dtArray = {dts.get(0), dts.get(0) + dts.get(1), dts.get(0) + dts.get(1) + dts.get(2)};
+		Quadratic yRegression = Regression.quadraticRegression(dtArray,y);
+		imuYDx = yRegression.rangedDoubleIntegral(0,dts.get(0) + dts.get(1)+dts.get(2));
 		System.out.println("accel dt is " + accelDt + " IMUYdt is " + imuYDx);
 
 	}
 
+
+	public Vector3D getVelocity() {
+		return new Vector3D(0,0,angularVelocity);
+	}
 
 
 

@@ -62,7 +62,7 @@ public class IMUOdom implements subsystem {
 		// push accel and delta time to the stack
 		dts.push(timer.seconds());
 		timer.reset();
-		accels.push(accel.rotateBy(drive.robotPosition.getAngleRadians()));
+		accels.push(accel.rotateBy(0));
 		if (callCounter % 3 == 0)
 		{
 			double[] x = {accels.get(0).getX(), accels.get(1).getX(), accels.get(2).getX()};
