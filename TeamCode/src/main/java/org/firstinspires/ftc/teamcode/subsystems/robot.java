@@ -52,8 +52,9 @@ public class robot {
     public void initMinimal(HardwareMap hwmap) {
         driveTrain.init(hwmap);
         dashBoard.init(hwmap);
-        batterVoltageSensor = hwmap.voltageSensor.iterator().next();
         odometry.init(hwmap);
+
+        batterVoltageSensor = hwmap.voltageSensor.iterator().next();
     }
 
     /**
@@ -62,11 +63,7 @@ public class robot {
      * @param hwmap HardwareMap instance
      */
     public void init(HardwareMap hwmap) {
-
-        driveTrain.init(hwmap);
-        dashBoard.init(hwmap);
-        odometry.init(hwmap);
-        batterVoltageSensor = hwmap.voltageSensor.iterator().next();
+        initMinimal(hwmap);
 
     }
 
@@ -78,6 +75,7 @@ public class robot {
     public void initWithoutReset(HardwareMap hwmap) {
         driveTrain.initNoReset(hwmap);
         dashBoard.initNoReset(hwmap);
+        odometry.initNoReset(hwmap);
         batterVoltageSensor = hwmap.voltageSensor.iterator().next();
     }
 
@@ -88,6 +86,9 @@ public class robot {
      */
     public Vector3D getRobotPose() {
         return odometry.subsystemState();
+    }
+    public void setRobotPose(Vector3D pose) {
+        odometry.setPositionEstimate(pose);
     }
 
     /**

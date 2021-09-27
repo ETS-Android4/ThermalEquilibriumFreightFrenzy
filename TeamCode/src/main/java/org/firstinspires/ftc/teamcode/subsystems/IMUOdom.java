@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.utils.Quadratic;
 import org.firstinspires.ftc.teamcode.utils.Regression;
 import org.firstinspires.ftc.teamcode.utils.SizedStack;
 
+
 public class IMUOdom implements subsystem {
 
 	protected boolean hasRun = false;
@@ -43,7 +44,7 @@ public class IMUOdom implements subsystem {
 
 	@Override
 	public void initNoReset(HardwareMap hwmap) {
-		imuPos = drive.getRobotPosition();
+		imuPos = new Vector3D();
 	}
 
 

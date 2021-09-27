@@ -14,7 +14,7 @@ public class blueDuckAuto extends baseAuto {
 
 	@Override
 	public void setStartingPosition() {
-		robot.driveTrain.setPoseEstimate(new Vector3D(-36,60,Math.toRadians(-90)));
+		robot.setRobotPose(new Vector3D(-36,60,Math.toRadians(-90)));
 	}
 	@Override
 	public void addActions() {

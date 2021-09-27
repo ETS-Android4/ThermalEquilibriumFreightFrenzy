@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.utils.SizedStack;
 
 import static org.firstinspires.ftc.teamcode.roadrunnerquickstart.DriveConstants.encoderTicksToInches;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobot;
-import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngle;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngleRR;
 
 public class differentialDriveOdom implements subsystem {
@@ -127,20 +126,11 @@ public class differentialDriveOdom implements subsystem {
 
 	/**
 	 *
-	 * @return
+	 * @return the field relative pose delta
 	 */
 	public Vector3D getPositionEstimateDelta() {
 		return positionEstimateDeltaFieldRelative;
 	}
-
-	/**
-	 * position estimate robot relative
-	 * @return the robot relative position estimate
-	 */
-	public Vector3D robotRelativeDelta() {
-		return positionEstimateDeltaRobotRelative;
-	}
-
 
 	public void updateIMU() {
 
