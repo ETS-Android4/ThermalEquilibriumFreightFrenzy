@@ -13,7 +13,7 @@ public class ButtonPress {
      *
      * @param buttonState the current button state
      */
-    public void getButtonState(boolean buttonState) {
+    public void button(boolean buttonState) {
 
         lastButton = this.buttonState;
         this.buttonState = buttonState;

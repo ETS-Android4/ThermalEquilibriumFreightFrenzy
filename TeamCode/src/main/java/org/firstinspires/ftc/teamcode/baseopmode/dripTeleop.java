@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 @TeleOp
 public class dripTeleop extends LinearOpMode {
+
 	org.firstinspires.ftc.teamcode.subsystems.robot robot;
 	DifferentialDriveController controller;
 	drivingState dtState = drivingState.MANUAL;
@@ -31,7 +32,7 @@ public class dripTeleop extends LinearOpMode {
 
 
 		while (opModeIsActive()) {
-			a.getButtonState(gamepad1.a);
+			a.button(gamepad1.a);
 
 			switchDrivingState();
 			driveRobot();
@@ -78,9 +79,6 @@ public class dripTeleop extends LinearOpMode {
 			}
 		}
 	}
-
-
-
 
 	enum drivingState {
 		MANUAL,

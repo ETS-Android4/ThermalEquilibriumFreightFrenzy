@@ -29,26 +29,12 @@ public class differentialDriveOdom implements subsystem {
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
 	double angularVelocity = 0;
-	SizedStack<Vector3D> accels = new SizedStack<>(3);
-	SizedStack<Double> dts = new SizedStack<>(3);
-
-	private boolean hasRun = false;
-
-	double accelDt = 0;
-	double imuYDx = 0; // change in y position as estimated by the IMU
-	ElapsedTime timer = new ElapsedTime();
-
 
 	/**
 	 * initialize a differential drive robot with odometry
 	 */
 	public differentialDriveOdom() {
-		accels.add(new Vector3D());
-		accels.add(new Vector3D());
-		accels.add(new Vector3D());
-		dts.add(0.0);
-		dts.add(0.0);
-		dts.add(0.0);
+
 	}
 
 	@Override
@@ -74,11 +60,6 @@ public class differentialDriveOdom implements subsystem {
 	public void update() {
 
 
-		if (!hasRun)
-		{
-			timer.reset();
-			hasRun = true;
-		}
 		double left = encoderTicksToInches(FrontLeft.getCurrentPosition());
 		double right = encoderTicksToInches(FrontRight.getCurrentPosition());
 		double leftDelta = left - leftPrev;
@@ -103,8 +84,6 @@ public class differentialDriveOdom implements subsystem {
 
 
 	}
-
-
 
 	/**
 	 * position estimate of the robot
@@ -135,23 +114,7 @@ public class differentialDriveOdom implements subsystem {
 	public void updateIMU() {
 
 		IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
-		Acceleration accel = imu.getLinearAcceleration();
-		accelDt = timer.seconds();
-		angularVelocity = imu.getAngularVelocity().zRotationRate;
-
-		timer.reset();
-		double y_acc = accel.xAccel * 387.009049289;
-		dts.push(accelDt);
-		accels.push(new Vector3D(0,y_acc,0));
-
-		double[] y = {accels.get(0).getY(),accels.get(1).getY(),accels.get(2).getY()};
-		double[] dtArray = {dts.get(0), dts.get(0) + dts.get(1), dts.get(0) + dts.get(1) + dts.get(2)};
-		Quadratic yRegression = Regression.quadraticRegression(dtArray,y);
-		imuYDx = yRegression.rangedDoubleIntegral(0,dts.get(0) + dts.get(1)+dts.get(2));
-		System.out.println("accel dt is " + accelDt + " IMUYdt is " + imuYDx);
-
 	}
-
 
 	public Vector3D getVelocity() {
 		return new Vector3D(0,0,angularVelocity);

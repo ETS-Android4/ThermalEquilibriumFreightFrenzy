@@ -26,7 +26,7 @@ public class aimAtPoint implements action {
     private robot robot;
     private boolean isWithinTolerance = false;
     private boolean reverseAngle;
-    PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.75,0.01,0.155);
+    PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.95,0.01,0.155);
 
     private NonlinearPID controller = new NonlinearPID(thetaCoefficients);
 

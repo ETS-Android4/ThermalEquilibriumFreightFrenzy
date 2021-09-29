@@ -30,8 +30,6 @@ public class dashboard implements subsystem {
 
         dashboard.sendTelemetryPacket(packet);
         packet = new TelemetryPacket();
-
-
         dashboardTimer.reset();
 
     }

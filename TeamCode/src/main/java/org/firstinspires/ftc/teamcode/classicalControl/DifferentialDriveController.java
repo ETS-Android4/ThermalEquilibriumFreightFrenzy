@@ -13,7 +13,7 @@ public class DifferentialDriveController {
 
 	PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.8,0.01,0.155);
 	PIDFCoeffecients omegaCoefficients = new PIDFCoeffecients(1,0,0.115);
-	PIDFCoeffecients driveCoefficients = new PIDFCoeffecients(0.55,0,0.115);
+	PIDFCoeffecients driveCoefficients = new PIDFCoeffecients(0.55,0,0.2);
 	public static final double MAX_VELO = 75;
 	ProfiledPIDController distanceController = new ProfiledPIDController(driveCoefficients, MAX_VELO, 55);
 	NonlinearPID thetaController = new NonlinearPID(thetaCoefficients);
