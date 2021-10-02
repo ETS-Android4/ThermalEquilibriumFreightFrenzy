@@ -20,8 +20,6 @@ public class SISOKalmanFilter {
 	protected double u = 0;
 	protected double z = 0;
 
-	protected double lastSensor1 = 0;
-	protected double lastSensor2 = 0;
 
 	public SISOKalmanFilter() {
 
@@ -73,7 +71,7 @@ public class SISOKalmanFilter {
 		// use another sensor for z
 		x = x + K * (z - x);
 
-		p = (1-K) * p;
+		p = 1 - K * p;
 
 		x_previous = x;
 		p_previous = p;
@@ -98,11 +96,10 @@ public class SISOKalmanFilter {
 
 		K = p/(p + R);
 
-		z = sensor2; // you are probably already using a sensor for u,
-		// use another sensor for z
+		z = sensor2;
 		x = x + K * (z - x);
 
-		p = (1-K) * p;
+		p = 1-K * p;
 
 		x_previous = x;
 		p_previous = p;
