@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.HenoGoat.EasyOnlineMotionProfile;
 import org.firstinspires.ftc.teamcode.WPILIB.TrapezoidProfile;
+import org.firstinspires.ftc.teamcode.subsystems.dashboard;
 
 public class ProfiledPIDController extends NonlinearPID {
 
@@ -16,6 +17,9 @@ public class ProfiledPIDController extends NonlinearPID {
     protected TrapezoidProfile.Constraints systemConstraints;
 
     boolean hasRun = false;
+
+    double scaler = 0;
+    double rateOfChange = 0.025;
 
     double lastReference = 999999;
 
@@ -32,7 +36,12 @@ public class ProfiledPIDController extends NonlinearPID {
         this.MAX_VELOCITY = MAX_VELOCITY;
         this.systemConstraints = new TrapezoidProfile.Constraints(MAX_VELOCITY, MAX_ACCELERATION);
     }
-
+    public ProfiledPIDController(PIDFCoeffecients pidf) {
+        super(pidf);
+        this.MAX_ACCELERATION = 0;
+        this.MAX_VELOCITY = 0;
+        this.systemConstraints = new TrapezoidProfile.Constraints(MAX_VELOCITY, MAX_ACCELERATION);
+    }
 
     /**
      * given a reference and a state, compute the motion profile and then follow it
@@ -56,14 +65,21 @@ public class ProfiledPIDController extends NonlinearPID {
 //            motionProfile = new TrapezoidProfile(systemConstraints, new TrapezoidProfile.State(reference, 0),
 //                    new TrapezoidProfile.State(state, 0));
             profile = new EasyOnlineMotionProfile(MAX_VELOCITY, MAX_ACCELERATION);
+            scaler = 0;
             hasRun = true;
         }
 
+        if (scaler > 1) {
+            scaler =  1;
+        }
+        scaler += rateOfChange;
 
-        profile.updateProfile(reference);
+
+        profile.updateProfile(reference - state);
+        dashboard.packet.put("motion profiled reference is ",profile.getPosition());
         lastReference = reference;
 
-        return calculateOutput(profile.getPosition(),state);
+        return calculateOutput(profile.getPosition(),state) * scaler;
 
     }
 

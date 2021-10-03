@@ -11,19 +11,22 @@ import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 
 public class DifferentialDriveController {
 
-	PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.8,0.01,0.155);
-	PIDFCoeffecients omegaCoefficients = new PIDFCoeffecients(1,0,0.115);
-	PIDFCoeffecients driveCoefficients = new PIDFCoeffecients(0.55,0,0.2);
+	PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.8,0,0);
+	PIDFCoeffecients omegaCoefficients = new PIDFCoeffecients(0.8,0,0);
+	PIDFCoeffecients driveCoefficients = new PIDFCoeffecients(0.55,0,0);
 	public static final double MAX_VELO = 75;
-	ProfiledPIDController distanceController = new ProfiledPIDController(driveCoefficients, MAX_VELO, 55);
+	ProfiledPIDController distanceController = new ProfiledPIDController(driveCoefficients, 20, 20);
 	NonlinearPID thetaController = new NonlinearPID(thetaCoefficients);
 	NonlinearPID omegaController = new NonlinearPID(omegaCoefficients);
 
 	protected double Kp3 = 0.23;
 	protected double Kp5 = Kp3 * 1.5;
 	protected double Kp6 = 9;
-	protected double threshold = 2.5;
+	protected double threshold = 2;
 	protected robot robot;
+	protected double scaler = 0;
+	protected double scalerChangeSize = 0.025;
+	protected double thetaScaler = 0;
 
 	protected Vector3D output;
 
@@ -35,6 +38,7 @@ public class DifferentialDriveController {
 		thetaController.setIntegralZeroCrossoverDetection(true);
 		thetaController.setEnableLowPassDerivative(false);
 		omegaController.setEnableLowPassDerivative(false);
+		omegaController.setIntegralZeroCrossoverDetection(true);
 	}
 
 	/**
@@ -43,6 +47,7 @@ public class DifferentialDriveController {
 	 * @return the motor command to move the robot in robot relative space
 	 */
 	public Vector3D controllerOutput(Vector3D positionSetpoint) {
+		scaler = Range.clip(scaler + scalerChangeSize,0,1);
 
 		Vector3D positionError = positionSetpoint.getError(robot.getRobotPose());
 
@@ -69,8 +74,10 @@ public class DifferentialDriveController {
 			omegaComponent = 0;
 		} else {
 			thetaComponent = 0;
+			thetaScaler = Range.clip(thetaScaler + 0.01,0,1);
 		}
-		return new Vector3D(Range.clip(driveComponent,-1,1), 0,Range.clip(omegaComponent + thetaComponent,-1,1));
+		double clippedTurn = Range.clip(Range.clip(thetaComponent,-thetaScaler,thetaScaler) + Range.clip(omegaComponent,-1,1),-1,1);
+		return new Vector3D(Range.clip(driveComponent,-1,1)* scaler, 0,clippedTurn * scaler);
 
 
 	}
@@ -85,7 +92,7 @@ public class DifferentialDriveController {
 		drawRobotGreen(position, dashboard.packet);
 		return (robot.getRobotPose().distanceToPose(position) < threshold + 1.5
 				&& Math.abs(robot.getRobotPose().getError(position).getAngleRadians())
-				< Math.toRadians(4) && Math.abs(robot.getVelocity().getAngleRadians()) < 0.002);
+				< Math.toRadians(4) && !robot.imu.isRotating()); // Math.abs(robot.getVelocity().getAngleRadians()) < 0.002
 	}
 
 	public void driveToAngle(Vector3D position) {

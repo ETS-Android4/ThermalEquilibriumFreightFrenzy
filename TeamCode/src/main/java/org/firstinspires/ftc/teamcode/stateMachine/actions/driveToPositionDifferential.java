@@ -12,6 +12,8 @@ public class driveToPositionDifferential implements action {
 	protected robot robot;
 	protected Vector3D targetPose;
 	protected boolean isComplete = false;
+	protected boolean withinPoseDistance = false;
+	protected boolean timeOutExceeded = false;
 	DifferentialDriveController controller;
 	ElapsedTime timer = new ElapsedTime();
 	double timeOutTime;
@@ -34,7 +36,9 @@ public class driveToPositionDifferential implements action {
 
 	@Override
 	public void runAction() {
-		isComplete = controller.driveToPosition(targetPose) || timer.seconds() > timeOutTime;
+		withinPoseDistance = controller.driveToPosition(targetPose);
+		timeOutExceeded = timer.seconds() > timeOutTime;
+		isComplete = withinPoseDistance || timeOutExceeded;
 	}
 
 	@Override

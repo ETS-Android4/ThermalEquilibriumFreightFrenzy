@@ -58,6 +58,8 @@ import kauailabs.navx.IMURegisters;
  */
 public class AHRS {
 
+    public static final double G_TO_INCHES_MULTIPLIER = 386.08858267717;
+
     /**
      * Identifies one of the three sensing axes on the navX sensor board.  Note that these axes are
      * board-relative ("Board Frame"), and are not necessarily the same as the logical axes of the
@@ -494,9 +496,9 @@ public class AHRS {
      *<p>
      * @return Current world linear acceleration in the X-axis (in G).
      */
-    public float getWorldLinearAccelX()
+    public double getWorldLinearAccelX()
     {
-        return curr_data.linear_accel_x;
+        return curr_data.linear_accel_x * 386.08858267717;
     }
 
     /**
@@ -510,9 +512,9 @@ public class AHRS {
      *<p>
      * @return Current world linear acceleration in the Y-axis (in G).
      */
-    public float getWorldLinearAccelY()
+    public double getWorldLinearAccelY()
     {
-        return curr_data.linear_accel_y;
+        return curr_data.linear_accel_y * 386.08858267717;
     }
 
     /**
@@ -526,9 +528,9 @@ public class AHRS {
      *<p>
      * @return Current world linear acceleration in the Z-axis (in G).
      */
-    public float getWorldLinearAccelZ()
+    public double getWorldLinearAccelZ()
     {
-        return curr_data.linear_accel_z;
+        return curr_data.linear_accel_z * 386.08858267717;
     }
 
     /**

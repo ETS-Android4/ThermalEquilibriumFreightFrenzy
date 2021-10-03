@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.classicalControl.NonlinearPID;
 import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoeffecients;
+import org.firstinspires.ftc.teamcode.classicalControl.ProfiledPIDController;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
@@ -26,9 +27,9 @@ public class aimAtPoint implements action {
     private robot robot;
     private boolean isWithinTolerance = false;
     private boolean reverseAngle;
-    PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.95,0.01,0.155);
+    PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.95,0.01,0);
 
-    private NonlinearPID controller = new NonlinearPID(thetaCoefficients);
+    private ProfiledPIDController controller = new ProfiledPIDController(thetaCoefficients);
 
 
     /**
@@ -86,12 +87,13 @@ public class aimAtPoint implements action {
         error = AngleWrap(normalizeAngleRR(theta - robot.getRobotPose().getAngleRadians()));
 
         System.out.println("angle controller turret " + error);
-        double power = Range.clip(controller.calculateOutput(-error), -max_power, max_power);
+        double power = Range.clip(controller.calculateProfiledOutput(0,-error), -max_power, max_power);
 
         robot.driveTrain.setMotorPowers(-power, power, -power, power);
 
         if ((Math.abs(error) < tolerance && Math.abs(robot.getVelocity().getAngleRadians()) < 0.002) || timeout.seconds() > allowedTimeSeconds) {
             isWithinTolerance = true;
+            System.out.println("aiming towards point: " + targetPosition + " ended with error less than tolerance = " + (Math.abs(error) < tolerance && Math.abs(robot.getVelocity().getAngleRadians()) < 0.002) + " and timeout is = " + (timeout.seconds() > allowedTimeSeconds));
         }
 
     }

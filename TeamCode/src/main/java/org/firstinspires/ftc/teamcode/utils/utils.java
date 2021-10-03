@@ -171,4 +171,17 @@ public class utils {
                 .strokeLine(x1, y1, x2, y2);
 
     }
+
+    /**
+     * plot a vector3d object on the dashboard
+     * @param vector vector we want to plot
+     * @param label what the vector is representing
+     * @param packet the packet we want to push to
+     */
+    public static void plotVector(Vector3D vector, String label, TelemetryPacket packet) {
+        packet.put(label + " x" , vector.getX());
+        packet.put(label + " y" , vector.getY());
+        packet.put(label + " z" , vector.getZ());
+        packet.put(label + " theta" , vector.getAngleRadians());
+    }
 }

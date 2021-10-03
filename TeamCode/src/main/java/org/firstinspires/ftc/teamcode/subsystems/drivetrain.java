@@ -75,10 +75,10 @@ public class drivetrain implements subsystem {
         BackLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         BackRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-        FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         FrontLeft.setDirection(DcMotorEx.Direction.FORWARD);
         FrontRight.setDirection(DcMotorEx.Direction.REVERSE);

@@ -23,6 +23,7 @@ public class baseAuto extends LinearOpMode {
 
 	}
 
+
 	public void addActions() {
 
 	}

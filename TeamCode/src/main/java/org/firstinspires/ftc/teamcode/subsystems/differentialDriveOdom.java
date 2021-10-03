@@ -1,19 +1,16 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
-import org.firstinspires.ftc.teamcode.utils.Quadratic;
-import org.firstinspires.ftc.teamcode.utils.Regression;
-import org.firstinspires.ftc.teamcode.utils.SizedStack;
+
+import homeostasis.Filters.angleKalmanFilter;
 
 import static org.firstinspires.ftc.teamcode.roadrunnerquickstart.DriveConstants.encoderTicksToInches;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobot;
+import static org.firstinspires.ftc.teamcode.utils.utils.drawRobotBlue;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngleRR;
 
 public class differentialDriveOdom implements subsystem {
@@ -29,13 +26,19 @@ public class differentialDriveOdom implements subsystem {
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
+	protected double revIMUAngle = 0;
+	protected double kalmanFilterAngleEstimate = 0;
+	protected angleKalmanFilter angleKf;
+
+	protected navxIMU navx;
+
 	double angularVelocity = 0;
 
 	/**
 	 * initialize a differential drive robot with odometry
 	 */
-	public differentialDriveOdom() {
-
+	public differentialDriveOdom(navxIMU navx) {
+		this.navx = navx;
 	}
 
 	@Override
@@ -48,7 +51,7 @@ public class differentialDriveOdom implements subsystem {
 		imu.initialize(parameters);
 		FrontLeft = hwmap.get(DcMotorEx.class, "FrontLeft");
 		FrontRight = hwmap.get(DcMotorEx.class, "FrontRight");
-
+		angleKf = new angleKalmanFilter(0);
 
 	}
 
@@ -77,11 +80,12 @@ public class differentialDriveOdom implements subsystem {
 
 		// we need some second order dynamics imo (in my option)
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
-
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
-		positionEstimate.setAngleRad(IMU_angle);
+
+		kalmanFilterAngleEstimate = angleKf.updateKalmanEstimate(thetaDelta,IMU_angle);
+		positionEstimate.setAngleRad(kalmanFilterAngleEstimate);
 		drawRobot(positionEstimate,dashboard.packet);
-		System.out.println("the estimated pose from the custom odom is " + positionEstimate);
+
 
 
 	}
@@ -113,8 +117,9 @@ public class differentialDriveOdom implements subsystem {
 	}
 
 	public void updateIMU() {
-
-		IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
+		IMU_angle = navx.subsystemState().getAngleRadians();
+		revIMUAngle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
+		//IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
 	}
 
 	public Vector3D getVelocity() {

@@ -29,7 +29,7 @@ public class SquareTest extends LinearOpMode {
         actions.add(new driveToPositionDifferential(robot,new Vector3D(20,20,Math.toRadians(0))));
         actions.add(new aimAtPoint(robot,new Vector3D(50,20,Math.toRadians(90))));
 
-        actions.add(new driveToPositionDifferential(robot,new Vector3D(50,20,Math.toRadians(90))));
+        actions.add(new driveToPositionDifferential(robot,new Vector3D(50,20,Math.toRadians(180))));
         actions.add(new aimAtPoint(robot,new Vector3D(0,0,Math.toRadians(0))));
 
         actions.add(new driveToPositionDifferential(robot,new Vector3D(0,0,Math.toRadians(0))));

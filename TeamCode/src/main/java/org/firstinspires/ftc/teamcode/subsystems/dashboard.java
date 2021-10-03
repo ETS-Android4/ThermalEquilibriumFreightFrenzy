@@ -30,6 +30,7 @@ public class dashboard implements subsystem {
 
         dashboard.sendTelemetryPacket(packet);
         packet = new TelemetryPacket();
+        packet.put("Loop time",dashboardTimer.milliseconds());
         dashboardTimer.reset();
 
     }

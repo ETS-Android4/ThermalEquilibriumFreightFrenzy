@@ -16,9 +16,13 @@ public class robot {
 
     public drivetrain driveTrain = new drivetrain();
 
+    public navxIMU imu = new navxIMU();
+
     public dashboard dashBoard = new dashboard();
 
-    public differentialDriveOdom odometry = new differentialDriveOdom();
+
+    public differentialDriveOdom odometry = new differentialDriveOdom(imu);
+
 
 
     /**
@@ -29,6 +33,7 @@ public class robot {
         subsystems.add(driveTrain);
         subsystems.add(dashBoard);
         subsystems.add(odometry);
+        subsystems.add(imu);
 
     }
 
@@ -41,6 +46,7 @@ public class robot {
         subsystems.add(driveTrain);
         subsystems.add(dashBoard);
         subsystems.add(odometry);
+        subsystems.add(imu);
     }
 
 
@@ -53,7 +59,7 @@ public class robot {
         driveTrain.init(hwmap);
         dashBoard.init(hwmap);
         odometry.init(hwmap);
-
+        imu.init(hwmap);
         batterVoltageSensor = hwmap.voltageSensor.iterator().next();
     }
 
@@ -64,6 +70,7 @@ public class robot {
      */
     public void init(HardwareMap hwmap) {
         initMinimal(hwmap);
+        imu.init(hwmap);
 
     }
 
@@ -77,6 +84,8 @@ public class robot {
         dashBoard.initNoReset(hwmap);
         odometry.initNoReset(hwmap);
         batterVoltageSensor = hwmap.voltageSensor.iterator().next();
+        imu.init(hwmap);
+
     }
 
     /**
