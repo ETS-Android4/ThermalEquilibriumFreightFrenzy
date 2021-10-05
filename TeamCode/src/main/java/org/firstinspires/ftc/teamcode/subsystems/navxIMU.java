@@ -24,7 +24,7 @@ public class navxIMU implements subsystem {
 	public void init(HardwareMap hwmap) {
 		initNoReset(hwmap);
 		navx_device.zeroYaw();
-		initialAngle = Math.toRadians(navx_device.getFusedHeading());
+		initialAngle = normalizeAngleRR(Math.toRadians(navx_device.getFusedHeading()));
 		while (navx_device.isCalibrating() && !navx_device.isMagnetometerCalibrated()) {
 			System.out.println("is navX calibrating? " +  navx_device.isCalibrating() + " is navX mag calibrated? " + navx_device.isMagnetometerCalibrated());
 		}

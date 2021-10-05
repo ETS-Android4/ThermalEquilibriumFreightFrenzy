@@ -14,8 +14,8 @@ public class angleKalmanFilter {
 	protected double p_previous;
 	public static double Q = 6.504936835155863;
 	public static double R = 7.815049368351558;
-	protected double currentSensor1;
-	protected double previousSensor1;
+	protected double currentModel;
+	protected double previousModel;
 	protected double currentSensor2;
 	protected double previousSensor2;
 
@@ -31,8 +31,8 @@ public class angleKalmanFilter {
 		this.x_previous = initialCondition;
 		this.p = 0;
 		this.p_previous = 0;
-		this.currentSensor1 = initialCondition;
-		this.previousSensor1 = initialCondition;
+		this.currentModel = initialCondition;
+		this.previousModel = initialCondition;
 		this.currentSensor2 = initialCondition;
 		this.previousSensor2 = initialCondition;
 
@@ -41,28 +41,28 @@ public class angleKalmanFilter {
 	/**
 	 * update the odometry measurement from our sensor1 and gyro angle
 	 *
-	 * @param sensor1 primary angle sensor
+	 * @param model primary angle sensor
 	 * @param sensor2 most stable angle sensor that we are converging on over time
 	 * @return estimated angle from kalman filter
 	 */
-	public double updateKalmanEstimate(double sensor1, double sensor2) {
+	public double updateKalmanEstimate(double model, double sensor2) {
 
 
-		currentSensor1 = sensor1;
+		currentModel = model;
 		currentSensor2 = sensor2;
 
 
-		double u = currentSensor1;
+		double u = currentModel - previousModel;
 
 		x = x_previous + u;
 		p = p_previous + Q;
 		kalmanGain = p * H * (1 / (H * p * H + R));
 
-		x = normalizeRadians(x + kalmanGain * normalizeRadians((currentSensor2 - previousSensor2) - H * normalizeRadians(x - x_previous)));
+		x = normalizeRadians(x + kalmanGain * normalizeRadians((currentSensor2) - H * normalizeRadians(x - x_previous)));
 
 		x_previous = x;
 
-		previousSensor1 = currentSensor1;
+		previousModel = currentModel;
 		previousSensor2 = currentSensor2;
 
 		p = (I - kalmanGain * H) * p;

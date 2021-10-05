@@ -29,6 +29,7 @@ public class differentialDriveOdom implements subsystem {
 	protected double revIMUAngle = 0;
 	protected double kalmanFilterAngleEstimate = 0;
 	protected angleKalmanFilter angleKf;
+	double encoderAngle = 0;
 
 	protected navxIMU navx;
 
@@ -75,6 +76,8 @@ public class differentialDriveOdom implements subsystem {
 		double xDelta = (leftDelta + rightDelta) / 2;
 		double yDelta = 0;
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
+		encoderAngle += thetaDelta;
+		encoderAngle = normalizeAngleRR(encoderAngle);
 
 		positionEstimateDeltaRobotRelative = new Vector3D(xDelta,yDelta,thetaDelta);
 
@@ -82,9 +85,14 @@ public class differentialDriveOdom implements subsystem {
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
 
-		kalmanFilterAngleEstimate = angleKf.updateKalmanEstimate(thetaDelta,IMU_angle);
+		kalmanFilterAngleEstimate = angleKf.updateKalmanEstimate(IMU_angle,thetaDelta);
+
 		positionEstimate.setAngleRad(kalmanFilterAngleEstimate);
 		drawRobot(positionEstimate,dashboard.packet);
+		dashboard.packet.put("bno055 imu angle ", revIMUAngle);
+		dashboard.packet.put("navx imu angle ", IMU_angle);
+		dashboard.packet.put("encoder angle", encoderAngle);
+		dashboard.packet.put("kalman filter angle", kalmanFilterAngleEstimate);
 
 
 
