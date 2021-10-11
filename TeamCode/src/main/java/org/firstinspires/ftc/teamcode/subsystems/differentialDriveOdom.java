@@ -27,8 +27,10 @@ public class differentialDriveOdom implements subsystem {
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
 	protected double revIMUAngle = 0;
+	protected double previous_IMU_angle = 0;
 	protected double kalmanFilterAngleEstimate = 0;
 	protected angleKalmanFilter angleKf;
+	protected angleKalmanFilter angleKfKf;
 	double encoderAngle = 0;
 
 	protected navxIMU navx;
@@ -53,7 +55,7 @@ public class differentialDriveOdom implements subsystem {
 		FrontLeft = hwmap.get(DcMotorEx.class, "FrontLeft");
 		FrontRight = hwmap.get(DcMotorEx.class, "FrontRight");
 		angleKf = new angleKalmanFilter(0);
-
+		angleKfKf = new angleKalmanFilter(0);
 	}
 
 	@Override
@@ -80,21 +82,22 @@ public class differentialDriveOdom implements subsystem {
 		encoderAngle = normalizeAngleRR(encoderAngle);
 
 		positionEstimateDeltaRobotRelative = new Vector3D(xDelta,yDelta,thetaDelta);
+		positionEstimate.setAngleRad(positionEstimate.getAngleRadians() + thetaDelta);
 
 		// we need some second order dynamics imo (in my option)
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
 
-		kalmanFilterAngleEstimate = angleKf.updateKalmanEstimate(IMU_angle,thetaDelta);
+		kalmanFilterAngleEstimate = angleKf.updateKalmanEstimate(encoderAngle,normalizeAngleRR(thetaDelta-previous_IMU_angle));
 
-		positionEstimate.setAngleRad(kalmanFilterAngleEstimate);
+		positionEstimate.setAngleRad(IMU_angle);
 		drawRobot(positionEstimate,dashboard.packet);
 		dashboard.packet.put("bno055 imu angle ", revIMUAngle);
 		dashboard.packet.put("navx imu angle ", IMU_angle);
 		dashboard.packet.put("encoder angle", encoderAngle);
 		dashboard.packet.put("kalman filter angle", kalmanFilterAngleEstimate);
 
-
+		System.out.println("angle experiment, BNO055: " + revIMUAngle + " naxIMU: " + IMU_angle + " encoder angle: " + encoderAngle + " kalman filter angle (navx + encoder): " + kalmanFilterAngleEstimate);
 
 	}
 
@@ -125,8 +128,9 @@ public class differentialDriveOdom implements subsystem {
 	}
 
 	public void updateIMU() {
-		IMU_angle = navx.subsystemState().getAngleRadians();
-		revIMUAngle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
+
+		IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
+		//revIMUAngle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
 		//IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
 	}
 

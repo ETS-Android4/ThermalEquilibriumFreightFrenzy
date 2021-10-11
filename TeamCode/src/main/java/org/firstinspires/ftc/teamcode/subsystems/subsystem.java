@@ -10,6 +10,7 @@ public interface subsystem {
 
     void update();
 
+
     Object subsystemState();
 
 }

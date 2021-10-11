@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.classicalControl;
 
-public class PIDFCoeffecients {
+public class PIDFCoefficients {
 
     public double Kp;
     public double Ki;
@@ -8,7 +8,7 @@ public class PIDFCoeffecients {
     public double Kd2;
     public double Kf;
 
-    public PIDFCoeffecients(double Kp, double Ki, double Kd, double Kd2, double Kf) {
+    public PIDFCoefficients(double Kp, double Ki, double Kd, double Kd2, double Kf) {
         this.Kp = Kp;
         this.Ki = Ki;
         this.Kd = Kd;
@@ -16,7 +16,7 @@ public class PIDFCoeffecients {
         this.Kd2 = Kd2;
     }
 
-    public PIDFCoeffecients(double Kp, double Ki, double Kd, double Kf) {
+    public PIDFCoefficients(double Kp, double Ki, double Kd, double Kf) {
         this.Kp = Kp;
         this.Ki = Ki;
         this.Kd = Kd;
@@ -24,7 +24,7 @@ public class PIDFCoeffecients {
         this.Kf = Kf;
     }
 
-    public PIDFCoeffecients(double Kp, double Ki, double Kd) {
+    public PIDFCoefficients(double Kp, double Ki, double Kd) {
         this.Kp = Kp;
         this.Ki = Ki;
         this.Kd = Kd;

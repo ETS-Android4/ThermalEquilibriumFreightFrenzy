@@ -19,7 +19,7 @@ public class ProfiledPIDController extends NonlinearPID {
     boolean hasRun = false;
 
     double scaler = 0;
-    double rateOfChange = 0.025;
+    double rateOfChange = 0.015;
 
     double lastReference = 999999;
 
@@ -30,13 +30,13 @@ public class ProfiledPIDController extends NonlinearPID {
      * @param MAX_VELOCITY     maximum constrained velocity
      * @param MAX_ACCELERATION maximum constrained acceleration
      */
-    public ProfiledPIDController(PIDFCoeffecients pidf, double MAX_VELOCITY, double MAX_ACCELERATION) {
+    public ProfiledPIDController(PIDFCoefficients pidf, double MAX_VELOCITY, double MAX_ACCELERATION) {
         super(pidf);
         this.MAX_ACCELERATION = MAX_ACCELERATION;
         this.MAX_VELOCITY = MAX_VELOCITY;
         this.systemConstraints = new TrapezoidProfile.Constraints(MAX_VELOCITY, MAX_ACCELERATION);
     }
-    public ProfiledPIDController(PIDFCoeffecients pidf) {
+    public ProfiledPIDController(PIDFCoefficients pidf) {
         super(pidf);
         this.MAX_ACCELERATION = 0;
         this.MAX_VELOCITY = 0;

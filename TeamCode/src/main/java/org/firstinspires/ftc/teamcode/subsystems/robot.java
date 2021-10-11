@@ -14,7 +14,7 @@ public class robot {
 
     public VoltageSensor batterVoltageSensor;
 
-    public drivetrain driveTrain = new drivetrain();
+    public drivetrain driveTrain = new drivetrain(batterVoltageSensor);
 
     public navxIMU imu = new navxIMU();
 
@@ -56,11 +56,11 @@ public class robot {
      * @param hwmap HardwareMap instance
      */
     public void initMinimal(HardwareMap hwmap) {
+        batterVoltageSensor = hwmap.voltageSensor.iterator().next();
         driveTrain.init(hwmap);
         dashBoard.init(hwmap);
         odometry.init(hwmap);
         imu.init(hwmap);
-        batterVoltageSensor = hwmap.voltageSensor.iterator().next();
     }
 
     /**
@@ -70,7 +70,7 @@ public class robot {
      */
     public void init(HardwareMap hwmap) {
         initMinimal(hwmap);
-        imu.init(hwmap);
+
 
     }
 
@@ -83,7 +83,6 @@ public class robot {
         driveTrain.initNoReset(hwmap);
         dashBoard.initNoReset(hwmap);
         odometry.initNoReset(hwmap);
-        batterVoltageSensor = hwmap.voltageSensor.iterator().next();
         imu.init(hwmap);
 
     }

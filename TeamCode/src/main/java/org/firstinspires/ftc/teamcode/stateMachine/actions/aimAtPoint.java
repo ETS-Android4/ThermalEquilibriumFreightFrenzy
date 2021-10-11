@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode.stateMachine.actions;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.classicalControl.NonlinearPID;
-import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoeffecients;
+import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.classicalControl.ProfiledPIDController;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
@@ -17,7 +16,7 @@ public class aimAtPoint implements action {
 
     // 1 degree angle tolerance
     double tolerance = Math.toRadians(4);
-    double allowedTimeSeconds = 2;
+    double allowedTimeSeconds = 3;
     Vector3D targetPosition;
     double error;
     boolean reversed;
@@ -27,7 +26,7 @@ public class aimAtPoint implements action {
     private robot robot;
     private boolean isWithinTolerance = false;
     private boolean reverseAngle;
-    PIDFCoeffecients thetaCoefficients = new PIDFCoeffecients(0.95,0.01,0);
+    PIDFCoefficients thetaCoefficients = new PIDFCoefficients(0.95,0.01,0);
 
     private ProfiledPIDController controller = new ProfiledPIDController(thetaCoefficients);
 
@@ -89,7 +88,7 @@ public class aimAtPoint implements action {
         System.out.println("angle controller turret " + error);
         double power = Range.clip(controller.calculateProfiledOutput(0,-error), -max_power, max_power);
 
-        robot.driveTrain.setMotorPowers(-power, power, -power, power);
+        robot.driveTrain.setMotorPowers(-power, power);
 
         if ((Math.abs(error) < tolerance && Math.abs(robot.getVelocity().getAngleRadians()) < 0.002) || timeout.seconds() > allowedTimeSeconds) {
             isWithinTolerance = true;
@@ -106,5 +105,10 @@ public class aimAtPoint implements action {
     @Override
     public boolean isActionComplete() {
         return isWithinTolerance;
+    }
+
+    @Override
+    public boolean isActionPersistant() {
+        return true;
     }
 }

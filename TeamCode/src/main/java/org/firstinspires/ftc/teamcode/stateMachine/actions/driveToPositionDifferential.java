@@ -28,7 +28,7 @@ public class driveToPositionDifferential implements action {
 	@Override
 	public void startAction() {
 
-		timeOutTime = (targetPose.distanceToPose(robot.getRobotPose()) / DifferentialDriveController.MAX_VELO) * 5;
+		timeOutTime = (targetPose.distanceToPose(robot.getRobotPose()) / DifferentialDriveController.MAX_VELO) * 7;
 
 		timer.reset();
 
@@ -49,5 +49,10 @@ public class driveToPositionDifferential implements action {
 	@Override
 	public boolean isActionComplete() {
 		return isComplete;
+	}
+
+	@Override
+	public boolean isActionPersistant() {
+		return true;
 	}
 }

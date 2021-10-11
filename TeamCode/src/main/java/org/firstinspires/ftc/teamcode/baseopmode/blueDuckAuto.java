@@ -16,14 +16,13 @@ public class blueDuckAuto extends baseAuto {
 	public void setStartingPosition() {
 		robot.setRobotPose(new Vector3D(-36,60,Math.toRadians(-90)));
 	}
+
 	@Override
 	public void addActions() {
-		actions.add(new driveToPositionDifferential(robot,capstonePickUpSpot)); // drive to capstone pickup
-
+		actions.add(new driveToPositionDifferential(robot,capstonePickUpSpot));
 		actions.add(new driveToPositionDifferential(robot,placeBox));
 		actions.add(new driveToPositionDifferential(robot,spinDuck));
 		actions.add(new driveToPositionDifferential(robot,park));
-
 	}
 
 }

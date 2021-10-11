@@ -3,7 +3,10 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.teamcode.classicalControl.velocityControl;
 
 import java.util.ArrayList;
 
@@ -13,6 +16,7 @@ import homeostasis.systems.DcMotorPlant;
 public class drivetrain implements subsystem {
 
 
+    public static final double MAX_DRIVE_MOTOR_TPS =  2 * (435 * (15.0/12) * 60.0) / 28;
 
     /**
      * the maximum translational acceleration of our robot
@@ -27,7 +31,6 @@ public class drivetrain implements subsystem {
      */
     public final static double MAX_ROBOT_VELOCITY = 30;//55;
 
-
     /**
      * the maximum angular speed of our robot
      */
@@ -37,29 +40,31 @@ public class drivetrain implements subsystem {
      */
     public final static double MAX_ANGULAR_ACCELERATION = Math.toRadians(240);
 
-
-
     public DcMotorEx FrontLeft;
     public DcMotorEx FrontRight;
     public DcMotorEx BackLeft;
     public DcMotorEx BackRight;
 
-    public double fl = 0;
-    public double fr = 0;
-    public double bl = 0;
-    public double br = 0;
-
-
     public double last_FrontLeft_Power = 0;
-    public double last_FrontRight_Power = 0;
     public double last_BackRight_Power = 0;
-    public double last_BackLeft_Power = 0;
 
     public DcMotorPlant leftMotorSys;
     public DcMotorPlant rightMotorSys;
 
+    protected velocityControl leftMotorController;
+    protected velocityControl rightMotorController;
+
+    protected VoltageSensor batterySensor;
+
+    protected HardwareMap hwmap;
+
+    public drivetrain(VoltageSensor batterySensor) {
+        this.batterySensor = batterySensor;
+    }
+
     @Override
     public void init(HardwareMap hwmap) {
+        this.hwmap = hwmap;
         FrontLeft = hwmap.get(DcMotorEx.class, "FrontLeft");
         FrontRight = hwmap.get(DcMotorEx.class, "FrontRight");
         BackLeft = hwmap.get(DcMotorEx.class, "BackLeft");
@@ -96,6 +101,9 @@ public class drivetrain implements subsystem {
         leftMotorSys = new DcMotorPlant(leftMotors);
         rightMotorSys = new DcMotorPlant(rightMotors);
 
+        leftMotorController = new velocityControl(leftMotorSys);
+        rightMotorController = new velocityControl(rightMotorSys);
+
     }
 
     @Override
@@ -105,7 +113,7 @@ public class drivetrain implements subsystem {
 
     @Override
     public void update() {
-        //updatePoseEstimate();
+
     }
 
     /**
@@ -115,37 +123,17 @@ public class drivetrain implements subsystem {
      * This is because we are sending unnecessary lynx writes to the rev hub, increasing loop times
      *
      *
-     * @param fl front left power
-     * @param fr front right power
-     * @param bl back left power
-     * @param br back right power
+     * @param left front left power (-1 < x < 1)
+     * @param right front right power (-1 < x < 1)
      */
-    public void setMotorPowers(double fl, double fr, double bl, double br) {
+    public void setMotorPowers(double left, double right) {
 
-        this.fl = Range.clip(fl,-1,1);
-        this.fr = Range.clip(fr, -1, 1);
-        this.bl = Range.clip(bl, -1,1);
-        this.br = Range.clip(br, -1, 1);
-
-
-        if (last_FrontLeft_Power != fl) {
-            FrontLeft.setPower(fl);
-        }
-        if (last_FrontRight_Power != fr) {
-            FrontRight.setPower(fr);
-        }
-        if (last_BackLeft_Power != bl) {
-            BackLeft.setPower(bl);
-        }
-
-        if (last_BackRight_Power != br) {
-            BackRight.setPower(br);
-        }
-
-        last_BackLeft_Power = bl;
-        last_BackRight_Power = br;
-        last_FrontLeft_Power = fl;
-        last_FrontRight_Power = fr;
+        left = Range.clip(left,-1,1) * MAX_DRIVE_MOTOR_TPS;
+        right = Range.clip(right,-1,1) * MAX_DRIVE_MOTOR_TPS;
+        batterySensor = hwmap.voltageSensor.iterator().next();
+        double voltage = batterySensor.getVoltage();
+        leftMotorController.voltageCorrectedControl(left,voltage);
+        rightMotorController.voltageCorrectedControl(right,voltage);
 
     }
 
@@ -156,16 +144,14 @@ public class drivetrain implements subsystem {
      * @param turnSpeed turning speed
      */
     public void robotRelative(double xSpeed, double turnSpeed) {
-        double frontLeftPower = xSpeed + turnSpeed;
-        double backLeftPower = xSpeed + turnSpeed;
-        double frontRightPower = xSpeed - turnSpeed;
-        double backRightPower = xSpeed - turnSpeed;
-        setMotorPowers(frontLeftPower, frontRightPower, backLeftPower, backRightPower);
+        double leftPower = xSpeed + turnSpeed;
+        double rightPower = xSpeed - turnSpeed;
+        setMotorPowers(leftPower, rightPower);
     }
 
 
     public void STOP() {
-        setMotorPowers(0,0,0,0);
+        setMotorPowers(0,0);
     }
 
     @Override

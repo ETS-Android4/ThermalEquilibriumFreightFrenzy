@@ -4,6 +4,7 @@ package homeostasis.Filters;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.filter.LowPassFilter;
 import org.firstinspires.ftc.teamcode.subsystems.dashboard;
 
 /**
@@ -17,6 +18,7 @@ public class VelocityKalmanFilter extends SISOKalmanFilter {
 	protected DcMotorEx motor;
 	protected double previousPosition = 0;
 	protected ElapsedTime timer = new ElapsedTime();
+	protected LowPassFilter filter = new LowPassFilter(0.9);
 
 	/**
 	 * initialize filter and give access to our motor
@@ -42,7 +44,14 @@ public class VelocityKalmanFilter extends SISOKalmanFilter {
 		dashboard.packet.put("e",velocityEstimate);
 		System.out.println("quantized: " + quantized + " derived: " + derivedVelocity + " estimated " + velocityEstimate);
 
-		return velocityEstimate;
+		return quantized; // TODO change this back to the velocity estimate once the kalman filter works
+
+	}
+
+	public double lowPassVelocity() {
+		double raw = motor.getVelocity();
+
+		return filter.updateEstimate(raw);
 
 	}
 

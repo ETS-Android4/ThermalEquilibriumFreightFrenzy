@@ -25,6 +25,8 @@ public class scheduler {
     // array of subsystems that need their update method called every loop
     ArrayList<subsystem> subsystemList;
 
+    protected action currentPersistentAction = null;
+
     public scheduler(ArrayList<action> actions) {
         this.actionList = actions;
     }
@@ -77,11 +79,21 @@ public class scheduler {
         if (actionList.get(currentState).isActionComplete() && currentState < actionList.size() - 1) {
             actionList.get(currentState).stopAction();
             currentState += 1;
+            if (actionList.get(currentState).isActionPersistant()) {
+                currentPersistentAction = actionList.get(currentState);
+            }
             hasStartedAction = false;
+
+
         } else if (actionList.get(currentState).isActionComplete() && currentState == actionList.size() - 1) {
             actionList.get(currentState).stopAction();
         } else {
             actionList.get(currentState).runAction();
+        }
+
+        // run the persistent action if applicable
+        if (currentPersistentAction != null && (!actionList.get(currentState).isActionPersistant() || currentState == actionList.size() - 1)) {
+            currentPersistentAction.runAction();
         }
 
         timer.reset();

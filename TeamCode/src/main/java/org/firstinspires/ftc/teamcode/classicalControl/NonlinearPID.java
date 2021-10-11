@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.classicalControl;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
@@ -7,16 +8,15 @@ import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 public class NonlinearPID {
 
     // Proportional gain
-    protected double Kp;
+    public double Kp = 0;
     // Integral gain
-    protected double Ki;
+    public double Ki = 0;
     // derivative gain
-    protected double Kd;
+    public double Kd = 0;
     // second order derivative gain
-    protected double Kd2;
+    public double Kd2 = 0;
     // feedforward gain
-    protected double Kf;
-
+    public double Kf = 0;
 
     protected double integralSum = 0;
 
@@ -27,6 +27,8 @@ public class NonlinearPID {
     protected double derivativeSecondOrder = 0;
 
     protected double integralSumLimit = 1;
+
+    protected double previousOutput = 0;
 
     // true when we want to low pass filter our derivative
     private boolean enableLowPassDerivative = false;
@@ -51,10 +53,10 @@ public class NonlinearPID {
 
     private double lastError = 0;
 
-    private ElapsedTime integralTimer = new ElapsedTime();
+    private final ElapsedTime integralTimer = new ElapsedTime();
 
 
-    public NonlinearPID(PIDFCoeffecients pidf) {
+    public NonlinearPID(PIDFCoefficients pidf) {
         this.Kp = pidf.Kp;
         this.Ki = pidf.Ki;
         this.Kd = pidf.Kd;
@@ -94,7 +96,11 @@ public class NonlinearPID {
 
 
         // forward euler integration to approximate the integral
-        integralSum += integralTimer.seconds() * error;
+        // only integrate if our output is less than the saturation limit
+        double SATURATION_LIMIT = 1;
+        if (Math.abs(previousOutput) <= SATURATION_LIMIT) {
+            integralSum += integralTimer.seconds() * error;
+        }
 
         // reset integral sum upon setpoint changes
         if (integralResetOnSetpointChange) {
@@ -102,6 +108,7 @@ public class NonlinearPID {
                 integralSum = 0;
             }
         }
+        lastReference = reference;
 
         // set a hard limit on the integral sum if applicable
         if (limitIntegralSum) {
@@ -137,6 +144,7 @@ public class NonlinearPID {
         lastDerivative = derivative;
 
         integralTimer.reset();
+        previousOutput = output;
 
         return output;
     }

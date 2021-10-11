@@ -76,7 +76,7 @@ public class DcMotorPlant extends plant {
      */
     @Override
     public state getState() {
-        this.motorState = new state(motors.get(0).getCurrentPosition(), velocityObserver.estimateVelocity());
+        this.motorState = new state(motors.get(0).getCurrentPosition(), velocityObserver.lowPassVelocity());
         return motorState;
     }
 
