@@ -52,7 +52,7 @@ public class driveToPositionDifferential implements action {
 	}
 
 	@Override
-	public boolean isActionPersistant() {
+	public boolean isActionPersistent() {
 		return true;
 	}
 }

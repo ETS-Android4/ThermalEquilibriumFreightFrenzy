@@ -6,7 +6,7 @@ public interface action {
     public void runAction();
     public void stopAction();
     public boolean isActionComplete();
-    public boolean isActionPersistant();
+    public boolean isActionPersistent();
 
 
 }

@@ -32,6 +32,7 @@ public class differentialDriveOdom implements subsystem {
 	protected angleKalmanFilter angleKf;
 	protected angleKalmanFilter angleKfKf;
 	double encoderAngle = 0;
+	double xDot = 0;
 
 	protected navxIMU navx;
 
@@ -130,12 +131,13 @@ public class differentialDriveOdom implements subsystem {
 	public void updateIMU() {
 
 		IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
+		angularVelocity = imu.getAngularVelocity().zRotationRate;
 		//revIMUAngle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
 		//IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
 	}
 
 	public Vector3D getVelocity() {
-		return new Vector3D(0,0,angularVelocity);
+		return new Vector3D(xDot,0,angularVelocity);
 	}
 
 

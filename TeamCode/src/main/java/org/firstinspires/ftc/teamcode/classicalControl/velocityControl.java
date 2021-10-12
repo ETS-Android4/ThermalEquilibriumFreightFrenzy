@@ -44,7 +44,7 @@ public class velocityControl {
 
 		double state = motor.getState().getVelocity();
 		double target = rateLimiter.updateEstimate(targetVelocity);
-		double output = pidController.calculateOutput(target,state);
+		double output = pidController.calculateOutput(targetVelocity,state);
 		dashboard.packet.put("measured velo", state);
 		dashboard.packet.put("rate limited velo", target);
 		dashboard.packet.put("target velo", targetVelocity);

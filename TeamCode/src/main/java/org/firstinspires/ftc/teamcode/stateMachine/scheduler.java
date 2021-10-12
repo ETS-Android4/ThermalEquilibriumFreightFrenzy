@@ -79,7 +79,7 @@ public class scheduler {
         if (actionList.get(currentState).isActionComplete() && currentState < actionList.size() - 1) {
             actionList.get(currentState).stopAction();
             currentState += 1;
-            if (actionList.get(currentState).isActionPersistant()) {
+            if (actionList.get(currentState).isActionPersistent()) {
                 currentPersistentAction = actionList.get(currentState);
             }
             hasStartedAction = false;
@@ -92,7 +92,7 @@ public class scheduler {
         }
 
         // run the persistent action if applicable
-        if (currentPersistentAction != null && (!actionList.get(currentState).isActionPersistant() || currentState == actionList.size() - 1)) {
+        if (currentPersistentAction != null && (!actionList.get(currentState).isActionPersistent() || currentState == actionList.size() - 1) && hasStartedAction) {
             currentPersistentAction.runAction();
         }
 

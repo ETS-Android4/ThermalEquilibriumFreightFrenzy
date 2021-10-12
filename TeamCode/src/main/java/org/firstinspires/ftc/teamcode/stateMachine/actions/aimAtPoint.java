@@ -108,7 +108,7 @@ public class aimAtPoint implements action {
     }
 
     @Override
-    public boolean isActionPersistant() {
+    public boolean isActionPersistent() {
         return true;
     }
 }
