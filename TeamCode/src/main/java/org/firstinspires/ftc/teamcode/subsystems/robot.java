@@ -54,8 +54,6 @@ public class robot {
      */
     public void init(HardwareMap hwmap) {
         initMinimal(hwmap);
-
-
     }
 
     /**

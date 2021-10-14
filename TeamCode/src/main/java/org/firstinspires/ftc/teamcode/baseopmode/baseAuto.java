@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.stateMachine.scheduler;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class baseAuto extends LinearOpMode {
 
@@ -32,7 +31,7 @@ public class baseAuto extends LinearOpMode {
 
 	@Override
 	public void runOpMode() {
-		robot = new robot(true);
+		robot = new robot();
 		robot.init(hardwareMap);
 
 		addActions();
