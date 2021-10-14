@@ -6,11 +6,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 
-import homeostasis.Filters.angleKalmanFilter;
-
 import static org.firstinspires.ftc.teamcode.roadrunnerquickstart.DriveConstants.encoderTicksToInches;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobot;
-import static org.firstinspires.ftc.teamcode.utils.utils.drawRobotBlue;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngleRR;
 
 public class differentialDriveOdom implements subsystem {
@@ -26,28 +23,22 @@ public class differentialDriveOdom implements subsystem {
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
-	protected double revIMUAngle = 0;
-	protected double previous_IMU_angle = 0;
-	protected double kalmanFilterAngleEstimate = 0;
-	protected angleKalmanFilter angleKf;
-	protected angleKalmanFilter angleKfKf;
+
 	double encoderAngle = 0;
 	double xDot = 0;
 
-	protected navxIMU navx;
 
 	double angularVelocity = 0;
 
 	/**
 	 * initialize a differential drive robot with odometry
 	 */
-	public differentialDriveOdom(navxIMU navx) {
-		this.navx = navx;
+	public differentialDriveOdom() {
+
 	}
 
 	@Override
 	public void init(HardwareMap hwmap) {
-
 		imu = hwmap.get(BNO055IMU.class, "imu");
 		BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 		parameters.mode = BNO055IMU.SensorMode.IMU;
@@ -55,8 +46,6 @@ public class differentialDriveOdom implements subsystem {
 		imu.initialize(parameters);
 		FrontLeft = hwmap.get(DcMotorEx.class, "FrontLeft");
 		FrontRight = hwmap.get(DcMotorEx.class, "FrontRight");
-		angleKf = new angleKalmanFilter(0);
-		angleKfKf = new angleKalmanFilter(0);
 	}
 
 	@Override
@@ -82,23 +71,17 @@ public class differentialDriveOdom implements subsystem {
 		encoderAngle += thetaDelta;
 		encoderAngle = normalizeAngleRR(encoderAngle);
 
-		positionEstimateDeltaRobotRelative = new Vector3D(xDelta,yDelta,thetaDelta);
+		positionEstimateDeltaRobotRelative = new Vector3D(xDelta, yDelta, thetaDelta);
 		positionEstimate.setAngleRad(positionEstimate.getAngleRadians() + thetaDelta);
 
 		// we need some second order dynamics imo (in my option)
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
 
-		kalmanFilterAngleEstimate = angleKf.updateKalmanEstimate(encoderAngle,normalizeAngleRR(thetaDelta-previous_IMU_angle));
-
 		positionEstimate.setAngleRad(IMU_angle);
-		drawRobot(positionEstimate,dashboard.packet);
-		dashboard.packet.put("bno055 imu angle ", revIMUAngle);
-		dashboard.packet.put("navx imu angle ", IMU_angle);
-		dashboard.packet.put("encoder angle", encoderAngle);
-		dashboard.packet.put("kalman filter angle", kalmanFilterAngleEstimate);
+		drawRobot(positionEstimate, dashboard.packet);
+		dashboard.packet.put("imu angle ", IMU_angle);
 
-		System.out.println("angle experiment, BNO055: " + revIMUAngle + " naxIMU: " + IMU_angle + " encoder angle: " + encoderAngle + " kalman filter angle (navx + encoder): " + kalmanFilterAngleEstimate);
 
 	}
 

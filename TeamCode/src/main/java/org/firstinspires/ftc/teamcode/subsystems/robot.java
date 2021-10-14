@@ -9,20 +9,18 @@ import java.util.ArrayList;
 
 public class robot {
 
-    private ArrayList<subsystem> subsystems = new ArrayList<>();
+    private final ArrayList<subsystem> subsystems = new ArrayList<>();
 
 
     public VoltageSensor batterVoltageSensor;
 
     public drivetrain driveTrain = new drivetrain(batterVoltageSensor);
 
-    public navxIMU imu = new navxIMU();
 
     public dashboard dashBoard = new dashboard();
 
 
-    public differentialDriveOdom odometry = new differentialDriveOdom(imu);
-
+    public differentialDriveOdom odometry = new differentialDriveOdom();
 
 
     /**
@@ -33,20 +31,7 @@ public class robot {
         subsystems.add(driveTrain);
         subsystems.add(dashBoard);
         subsystems.add(odometry);
-        subsystems.add(imu);
 
-    }
-
-    /**
-     * alternate constructor that allows us to only use the drive train and dashboard for test robot
-     *
-     * @param minimal
-     */
-    public robot(boolean minimal) {
-        subsystems.add(driveTrain);
-        subsystems.add(dashBoard);
-        subsystems.add(odometry);
-        subsystems.add(imu);
     }
 
 
@@ -60,7 +45,6 @@ public class robot {
         driveTrain.init(hwmap);
         dashBoard.init(hwmap);
         odometry.init(hwmap);
-        imu.init(hwmap);
     }
 
     /**
@@ -83,7 +67,6 @@ public class robot {
         driveTrain.initNoReset(hwmap);
         dashBoard.initNoReset(hwmap);
         odometry.initNoReset(hwmap);
-        imu.init(hwmap);
 
     }
 

@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.classicalControl;
 
-import com.qualcomm.robotcore.hardware.VoltageSensor;
-
 import org.firstinspires.ftc.teamcode.filter.LowPassFilter;
 import org.firstinspires.ftc.teamcode.subsystems.dashboard;
 
@@ -43,11 +41,8 @@ public class velocityControl {
 	public void controlMotor(double targetVelocity) {
 
 		double state = motor.getState().getVelocity();
-		double target = rateLimiter.updateEstimate(targetVelocity);
 		double output = pidController.calculateOutput(targetVelocity,state);
-		dashboard.packet.put("measured velo", state);
-		dashboard.packet.put("rate limited velo", target);
-		dashboard.packet.put("target velo", targetVelocity);
+
 		motor.input(output);
 	}
 

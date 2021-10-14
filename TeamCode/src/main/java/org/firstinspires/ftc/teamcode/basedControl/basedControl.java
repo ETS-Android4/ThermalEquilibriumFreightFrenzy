@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.basedControl;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.utils.RingBuffer;
 
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 
-public class basedPID {
+public class basedControl {
 
 	// coefficients of the controller
 	protected PIDFCoefficients coefficients;
@@ -15,7 +16,7 @@ public class basedPID {
 	// elapsed timer used for integral and derivative calculations
 	protected ElapsedTime timer;
 
-	private RingBuffer<PIDState> derivativeBuffer; // good morning bfr <3
+	private final RingBuffer<PIDState> derivativeBuffer; // good morning bfr <3
 
 	// process error
 	protected double error = 0;
@@ -36,35 +37,21 @@ public class basedPID {
 	// where our plants state should be
 	protected double reference;
 	// how long the RingBuffers length should store data for
-	protected int bufferLength = 1;
+	protected int bufferLength;
 	// exit tolerance
-	protected double exitTolerance = 1;
+	protected double exitTolerance;
 	// if the derivative is above this, we are not considering the system stable
-	protected double stability_threshold = 0.001;
-
-	/**
-	 * construct PID with just reference
-	 * @param coefficients pid coefficients
-	 * @param reference the target state our system should be in
-	 */
-	public basedPID(PIDFCoefficients coefficients, double reference) {
-		this.reference = reference;
-		this.coefficients = coefficients;
-		timer = new ElapsedTime();
-		lastTime = timer.time();
-		PIDState PIDFData = new PIDState(lastError, lastTime);
-		derivativeBuffer = new RingBuffer<>(bufferLength, PIDFData);
-
-	}
+	protected double stability_threshold;
 
 	/**
 	 * construct PID with buffer length and stability threshold
-	 * @param coefficients pid coefficients
-	 * @param reference the target state our system should be in
-	 * @param bufferLength how long our buffer should be
+	 *
+	 * @param coefficients        pid coefficients
+	 * @param reference           the target state our system should be in
+	 * @param bufferLength        how long our buffer should be
 	 * @param stability_threshold how stable our derivative needs to be inorder to stop
 	 */
-	public basedPID(PIDFCoefficients coefficients, double reference, int bufferLength, double stability_threshold, double exitTolerance) {
+	public basedControl(PIDFCoefficients coefficients, double reference, int bufferLength, double stability_threshold, double exitTolerance) {
 		this.reference = reference;
 		this.bufferLength = bufferLength;
 		this.stability_threshold = stability_threshold;
@@ -113,7 +100,6 @@ public class basedPID {
 	public double calculateAngle(double state) {
 		calculateErrorAngle(state);
 		baseCalculate();
-		System.out.println("angle error is " + error);
 		output = opAngleController() + (derivative * coefficients.Kd) + (integral_sum * coefficients.Ki);
 		return output;
 	}
@@ -146,6 +132,7 @@ public class basedPID {
 		if (shouldIntegrate()) {
 			integral_sum += avg * dt;
 		}
+		antiWindup();
 
 	}
 
@@ -203,13 +190,17 @@ public class basedPID {
 		if (error > 0) {
 			return Math.pow(coefficients.Kp, error) - hysteresisAmount;
 		}
-		return -Math.pow(coefficients.Kp,-error) + hysteresisAmount;
+		return -Math.pow(coefficients.Kp, -error) + hysteresisAmount;
 	}
-
 
 	public boolean isComplete() {
 		return Math.abs(error) < exitTolerance && isStable();
 	}
-	
-	
+
+	public void antiWindup() {
+		integral_sum = Range.clip(integral_sum, -0.5, 0.5);
+		if ((lastError > 0 && error < 0) || ((lastError < 0 && error > 0))) {
+			integral_sum = 0;
+		}
+	}
 }

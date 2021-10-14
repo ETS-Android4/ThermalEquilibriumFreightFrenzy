@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Stanley;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
 
-public class stanleyController {
+public class purePursuit {
 
 	robot robot;
 
@@ -11,7 +11,7 @@ public class stanleyController {
 	protected double B = 0;
 	protected double C = 0;
 
-	public stanleyController(robot robot) {
+	public purePursuit(robot robot) {
 		this.robot = robot;
 	}
 
