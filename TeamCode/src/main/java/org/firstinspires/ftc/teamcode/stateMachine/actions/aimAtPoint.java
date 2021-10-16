@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.stateMachine.actions;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
-import org.firstinspires.ftc.teamcode.classicalControl.ProfiledPIDController;
+import org.firstinspires.ftc.teamcode.basedControl.basedControl;
+import org.firstinspires.ftc.teamcode.basedControl.robotCoefficients;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
@@ -22,13 +22,12 @@ public class aimAtPoint implements action {
     boolean reversed;
     double angleOffset;
     ElapsedTime timeout = new ElapsedTime();
-    double max_power = 0.7;
-    private robot robot;
-    private boolean isWithinTolerance = false;
-    private boolean reverseAngle;
-    PIDFCoefficients thetaCoefficients = new PIDFCoefficients(0.95,0.01,0);
+	double max_power = 0.7;
+	private final robot robot;
+	private boolean isWithinTolerance = false;
+	private final boolean reverseAngle;
 
-    private ProfiledPIDController controller = new ProfiledPIDController(thetaCoefficients);
+	private final basedControl controller;
 
 
     /**
@@ -40,26 +39,33 @@ public class aimAtPoint implements action {
      * @param angleOffset is the amount we add to the target angle to account for curved shooters and such
      */
     public aimAtPoint(robot robot, Vector3D targetPoint, boolean reversed, double angleOffset, boolean reverseAngle) {
-        this.robot = robot;
-        this.targetPosition = targetPoint;
-        this.reversed = reversed;
-        this.angleOffset = angleOffset;
-        this.reverseAngle = reverseAngle;
-    }
+		this.robot = robot;
+		this.targetPosition = targetPoint;
+		this.reversed = reversed;
+		this.angleOffset = angleOffset;
+		this.reverseAngle = reverseAngle;
+		controller = new basedControl(robotCoefficients.turnCoefficients, 0, 3, 0.004, Math.toRadians(1));
+
+	}
     public aimAtPoint(robot robot, Vector3D targetPoint) {
-        this.robot = robot;
-        this.targetPosition = targetPoint;
-        this.reversed = false;
-        this.angleOffset = 0;
-        this.reverseAngle = false;
-    }
+		this.robot = robot;
+		this.targetPosition = targetPoint;
+		this.reversed = false;
+		this.angleOffset = 0;
+		this.reverseAngle = false;
+		controller = new basedControl(robotCoefficients.turnCoefficients, 0, 3, 0.004, Math.toRadians(1));
+
+	}
     public aimAtPoint(robot robot, Vector3D targetPoint, boolean reverseAngle) {
-        this.robot = robot;
-        this.targetPosition = targetPoint;
-        this.reversed = false;
-        this.angleOffset = 0;
-        this.reverseAngle = reverseAngle;
-    }
+
+		this.robot = robot;
+		this.targetPosition = targetPoint;
+		this.reversed = false;
+		this.angleOffset = 0;
+		this.reverseAngle = reverseAngle;
+		controller = new basedControl(robotCoefficients.turnCoefficients, 0, 3, 0.004, Math.toRadians(1));
+
+	}
 
     @Override
     public void startAction() {
@@ -86,7 +92,7 @@ public class aimAtPoint implements action {
         error = AngleWrap(normalizeAngleRR(theta - robot.getRobotPose().getAngleRadians()));
 
         System.out.println("angle controller turret " + error);
-        double power = Range.clip(controller.calculateProfiledOutput(0,-error), -max_power, max_power);
+		double power = Range.clip(controller.calculateAngle(error), -max_power, max_power);
 
         robot.driveTrain.setMotorPowers(-power, power);
 

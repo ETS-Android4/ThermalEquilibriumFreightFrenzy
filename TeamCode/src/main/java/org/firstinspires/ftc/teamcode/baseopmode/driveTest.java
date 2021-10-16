@@ -2,27 +2,34 @@ package org.firstinspires.ftc.teamcode.baseopmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.stateMachine.actions.basedDrive;
-import org.firstinspires.ftc.teamcode.stateMachine.actions.basedTurn;
+import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 
 
 @Autonomous
 public class driveTest extends baseAuto {
+    double distance = 45;
+    double distance2 = 12;
+
+
+    @Override
+    public void setStartingPosition() {
+        robot.setRobotPose(new Vector3D());
+    }
 
     @Override
     public void addActions() {
+        collectFromBarrier();
+        collectFromBarrier();
+    }
 
-        double distance = 30;
-        //actions.add(new basedTurn(robot,Math.toRadians(90)));
-        actions.add(new basedDrive(robot, distance));
-        actions.add(new basedTurn(robot, Math.toRadians(90)));
-        actions.add(new basedDrive(robot, distance));
-        actions.add(new basedTurn(robot, Math.toRadians(180)));
-        actions.add(new basedDrive(robot, distance));
-        actions.add(new basedTurn(robot, Math.toRadians(270)));
-        actions.add(new basedDrive(robot, distance));
-        actions.add(new basedTurn(robot, Math.toRadians(0)));
+    public void collectFromBarrier() {
+        driveDistance(distance);
+        turn(Math.toRadians(17));
+        driveDistance(distance2);
+        driveDistance(-distance2);
 
+        turn(Math.toRadians(0));
+        driveDistance(-distance);
 
     }
 

@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
 import org.firstinspires.ftc.teamcode.stateMachine.actions.aimAtPoint;
+import org.firstinspires.ftc.teamcode.stateMachine.actions.basedDrive;
+import org.firstinspires.ftc.teamcode.stateMachine.actions.basedTurn;
 import org.firstinspires.ftc.teamcode.stateMachine.actions.driveToPositionDifferential;
 import org.firstinspires.ftc.teamcode.stateMachine.actions.turnToAngle;
 import org.firstinspires.ftc.teamcode.stateMachine.scheduler;
@@ -50,13 +52,21 @@ public class baseAuto extends LinearOpMode {
 	}
 
 	public void safeDrive(Vector3D target) {
-		actions.add(new aimAtPoint(robot,target));
-		actions.add(new driveToPositionDifferential(robot,target));
+		actions.add(new aimAtPoint(robot, target));
+		actions.add(new driveToPositionDifferential(robot, target));
 		actions.add(new turnToAngle(robot, target.getAngleRadians()));
 	}
 
 	public void turn(double angle) {
-		actions.add(new turnToAngle(robot, angle));
+		actions.add(new basedTurn(robot, angle));
+	}
+
+	public void driveDistance(double distance) {
+		actions.add(new basedDrive(robot, distance));
+	}
+
+	public void turnTo(Vector3D targetPoint) {
+		actions.add(new aimAtPoint(robot, targetPoint));
 	}
 
 }

@@ -186,7 +186,7 @@ public class basedControl {
 	}
 	
 	protected double opAngleController() {
-		double hysteresisAmount = 0.96;
+		double hysteresisAmount = 0.99;
 		if (error > 0) {
 			return Math.pow(coefficients.Kp, error) - hysteresisAmount;
 		}

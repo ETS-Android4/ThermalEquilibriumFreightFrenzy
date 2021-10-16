@@ -1,11 +1,15 @@
 package org.firstinspires.ftc.teamcode.stateMachine.actions;
 
+import com.qualcomm.robotcore.util.Range;
+
 import org.firstinspires.ftc.teamcode.basedControl.basedControl;
-import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
 import org.firstinspires.ftc.teamcode.subsystems.dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
+
+import static org.firstinspires.ftc.teamcode.basedControl.robotCoefficients.driveCoefficients;
+import static org.firstinspires.ftc.teamcode.basedControl.robotCoefficients.turnCoefficients;
 
 public class basedDrive implements action {
 
@@ -18,8 +22,6 @@ public class basedDrive implements action {
 
 	protected basedControl turnPid;
 	protected basedControl drivePid;
-	protected PIDFCoefficients turnCoefficients = new PIDFCoefficients(0.9, 0, 0.1);
-	protected PIDFCoefficients driveCoefficients = new PIDFCoefficients(0.1, 0, 0.01);
 
 
 	public basedDrive(robot robot, double targetDistance) {
@@ -40,10 +42,11 @@ public class basedDrive implements action {
 		distance = initialPosition.distanceToPose(robot.odometry.subsystemState());
 		dashboard.packet.put("distance traveled", distance);
 
-		double drive = drivePid.calculate(distance);
+		double drive = Range.clip(Math.signum(targetDistance) * drivePid.calculate(distance), -1, 1);
 		double turn = turnPid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
+		turn = Range.clip(turn, -1, 1);
 
-		robot.driveTrain.robotRelative(drive,turn);
+		robot.driveTrain.robotRelative(drive, turn);
 
 		isComplete = drivePid.isComplete();
 
