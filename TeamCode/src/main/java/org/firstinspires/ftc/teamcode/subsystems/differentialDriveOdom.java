@@ -19,11 +19,10 @@ public class differentialDriveOdom implements subsystem {
 	protected Vector3D positionEstimateDeltaRobotRelative = new Vector3D();
 	private double leftPrev = 0;
 	private double rightPrev = 0;
-	double trackWidth = 18;
+	double trackWidth = 15.543307;
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
-
 	double encoderAngle = 0;
 	double xDot = 0;
 
