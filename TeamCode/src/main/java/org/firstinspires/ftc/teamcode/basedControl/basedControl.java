@@ -100,7 +100,7 @@ public class basedControl {
 	public double calculateAngle(double state) {
 		calculateErrorAngle(state);
 		baseCalculate();
-		output = opAngleController() + (derivative * coefficients.Kd) + (integral_sum * coefficients.Ki);
+		output = nonlinearAngleControl() + (derivative * coefficients.Kd) + (integral_sum * coefficients.Ki);
 		return output;
 	}
 	/**
@@ -179,13 +179,14 @@ public class basedControl {
 
 	/**
 	 * return the current plant error
+	 *
 	 * @return error
 	 */
 	public double getError() {
 		return error;
 	}
-	
-	protected double opAngleController() {
+
+	protected double nonlinearAngleControl() {
 		double hysteresisAmount = 0.96;
 		if (error > 0) {
 			return Math.pow(coefficients.Kp, error) - hysteresisAmount;
@@ -204,4 +205,13 @@ public class basedControl {
 		}
 	}
 
+
+	/**
+	 * change the reference (imo)
+	 *
+	 * @param reference reference position
+	 */
+	public void setReference(double reference) {
+		this.reference = reference;
+	}
 }

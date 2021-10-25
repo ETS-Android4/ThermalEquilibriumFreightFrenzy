@@ -6,11 +6,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 
-import static org.firstinspires.ftc.teamcode.roadrunnerquickstart.DriveConstants.encoderTicksToInches;
+import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobot;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngleRR;
 
 public class differentialDriveOdom implements subsystem {
+
 
 	public DcMotorEx FrontLeft;
 	public DcMotorEx FrontRight;
@@ -19,7 +20,11 @@ public class differentialDriveOdom implements subsystem {
 	protected Vector3D positionEstimateDeltaRobotRelative = new Vector3D();
 	private double leftPrev = 0;
 	private double rightPrev = 0;
+	private final double gearRatio;
+	private final double ticksPerRevolution = 28.0 * 13.7;
 	double trackWidth = 15.543307;
+	double testBotTrackWidth = 15.543307;
+	double compBotTrackWidth = 16;
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
@@ -33,6 +38,15 @@ public class differentialDriveOdom implements subsystem {
 	 * initialize a differential drive robot with odometry
 	 */
 	public differentialDriveOdom() {
+		if (isCompBot) {
+			trackWidth = compBotTrackWidth;
+			double compBotRatio = 14.0 / 22;
+			gearRatio = compBotRatio;
+		} else {
+			trackWidth = testBotTrackWidth;
+			double protoBotRatio = 1;
+			gearRatio = protoBotRatio;
+		}
 
 	}
 
@@ -58,6 +72,8 @@ public class differentialDriveOdom implements subsystem {
 
 		double left = encoderTicksToInches(FrontLeft.getCurrentPosition());
 		double right = encoderTicksToInches(FrontRight.getCurrentPosition());
+
+		System.out.println("odometry is alive with the left encoder being: " + left + " and right is " + right);
 		double leftDelta = left - leftPrev;
 		double rightDelta = right - rightPrev;
 		leftPrev = left;
@@ -119,10 +135,13 @@ public class differentialDriveOdom implements subsystem {
 	}
 
 	public Vector3D getVelocity() {
-		return new Vector3D(xDot,0,angularVelocity);
+		return new Vector3D(xDot, 0, angularVelocity);
 	}
 
-
+	public double encoderTicksToInches(double ticks) {
+		double WHEEL_RADIUS = 3.77953 / 2;
+		return WHEEL_RADIUS * 2 * Math.PI * gearRatio * ticks / ticksPerRevolution;
+	}
 
 
 }

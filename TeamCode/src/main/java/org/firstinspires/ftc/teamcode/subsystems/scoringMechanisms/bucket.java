@@ -1,0 +1,73 @@
+package org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms;
+
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.subsystems.subsystem;
+
+public class bucket implements subsystem {
+
+	protected Servo bucketServo;
+
+	protected deposit.depositStates state = deposit.depositStates.IN;
+
+	double lastPosition = 1000;
+
+	double IN = 0;
+	double OUT = 0;
+
+	@Override
+	public void init(HardwareMap hwmap) {
+		bucketServo = hwmap.get(Servo.class, "bucket");
+	}
+
+	@Override
+	public void initNoReset(HardwareMap hwmap) {
+		init(hwmap);
+	}
+
+
+	/**
+	 * called periodically, acts as a state management system for our subsystems logic.
+	 */
+	@Override
+	public void update() {
+
+		if (state.equals(deposit.depositStates.DEPOSITING)) {
+			setPosition(OUT);
+		} else {
+			setPosition(IN);
+		}
+
+
+	}
+
+	@Override
+	public Object subsystemState() {
+		return null;
+	}
+
+	/**
+	 * set the servo position using lynx optimized servo calls
+	 *
+	 * @param position servo position
+	 */
+	protected void setPosition(double position) {
+
+		if (position != lastPosition) {
+			bucketServo.setPosition(position);
+		}
+
+		lastPosition = position;
+	}
+
+
+	/**
+	 * because it is intended for an external subroutine to set the position, this state management method is required
+	 *
+	 * @param state the state we would like to go to
+	 */
+	public void setState(deposit.depositStates state) {
+		this.state = state;
+	}
+}

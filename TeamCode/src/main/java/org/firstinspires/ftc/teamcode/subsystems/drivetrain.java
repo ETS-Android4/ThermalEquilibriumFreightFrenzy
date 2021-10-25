@@ -12,11 +12,13 @@ import java.util.ArrayList;
 
 import homeostasis.systems.DcMotorPlant;
 
+import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
+
 
 public class drivetrain implements subsystem {
 
 
-    public static final double MAX_DRIVE_MOTOR_TPS =  2 * (435 * (15.0/12) * 60.0) / 28;
+    public static final double MAX_DRIVE_MOTOR_TPS = 2 * (435 * (15.0 / 12) * 60.0) / 28;
 
     /**
      * the maximum translational acceleration of our robot
@@ -65,6 +67,8 @@ public class drivetrain implements subsystem {
     @Override
     public void init(HardwareMap hwmap) {
         this.hwmap = hwmap;
+
+
         FrontLeft = hwmap.get(DcMotorEx.class, "FrontLeft");
         FrontRight = hwmap.get(DcMotorEx.class, "FrontRight");
         BackLeft = hwmap.get(DcMotorEx.class, "BackLeft");
@@ -84,11 +88,18 @@ public class drivetrain implements subsystem {
         FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        if (isCompBot) {
+            FrontLeft.setDirection(DcMotorEx.Direction.REVERSE);
+            FrontRight.setDirection(DcMotorEx.Direction.FORWARD);
+            BackLeft.setDirection(DcMotorEx.Direction.REVERSE);
+            BackRight.setDirection(DcMotorEx.Direction.FORWARD);
 
-        FrontLeft.setDirection(DcMotorEx.Direction.FORWARD);
-        FrontRight.setDirection(DcMotorEx.Direction.REVERSE);
-        BackLeft.setDirection(DcMotorEx.Direction.FORWARD);
-        BackRight.setDirection(DcMotorEx.Direction.REVERSE);
+        } else {
+            FrontLeft.setDirection(DcMotorEx.Direction.FORWARD);
+            FrontRight.setDirection(DcMotorEx.Direction.REVERSE);
+            BackLeft.setDirection(DcMotorEx.Direction.FORWARD);
+            BackRight.setDirection(DcMotorEx.Direction.REVERSE);
+        }
 
 
         ArrayList<DcMotorEx> leftMotors = new ArrayList<>();

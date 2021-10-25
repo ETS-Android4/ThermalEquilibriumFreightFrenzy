@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode.baseopmode;
+package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.baseopmode.baseAuto;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.stateMachine.actions.driveToPositionDifferential;
 

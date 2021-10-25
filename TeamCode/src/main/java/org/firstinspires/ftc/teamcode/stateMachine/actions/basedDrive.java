@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.stateMachine.actions;
 
 import org.firstinspires.ftc.teamcode.basedControl.basedControl;
+import org.firstinspires.ftc.teamcode.basedControl.controllerCoefficients;
 import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
 import org.firstinspires.ftc.teamcode.subsystems.dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
+
+import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
 
 public class basedDrive implements action {
 
@@ -18,13 +21,20 @@ public class basedDrive implements action {
 
 	protected basedControl turnPid;
 	protected basedControl drivePid;
-	protected PIDFCoefficients turnCoefficients = new PIDFCoefficients(0.9, 0, 0.1);
-	protected PIDFCoefficients driveCoefficients = new PIDFCoefficients(0.1, 0, 0.01);
+	protected PIDFCoefficients turnCoefficients;
+	protected PIDFCoefficients driveCoefficients;
 
 
 	public basedDrive(robot robot, double targetDistance) {
 		this.robot = robot;
 		this.targetDistance = targetDistance;
+		if (isCompBot) {
+			turnCoefficients = controllerCoefficients.compBotDriveCorrect;
+			driveCoefficients = controllerCoefficients.compBotDrive;
+		} else {
+			turnCoefficients = controllerCoefficients.protoBotDriveCorrect;
+			driveCoefficients = controllerCoefficients.protoBotDrive;
+		}
 	}
 
 	@Override

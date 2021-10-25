@@ -12,30 +12,41 @@ import java.util.List;
 public class scheduler {
 
 
-    List<LynxModule> allHubs;
+	List<LynxModule> allHubs;
 
-    ElapsedTime timer = new ElapsedTime();
-    // which action are we currently on
-    private int currentState = 0;
+	ElapsedTime timer = new ElapsedTime();
+	// which action are we currently on
+	private int currentState = 0;
 
-    // if we have started the current action
-    private boolean hasStartedAction = false;
+	// if we have started the current action
+	private boolean hasStartedAction = false;
 
-    ArrayList<action> actionList;
-    // array of subsystems that need their update method called every loop
-    ArrayList<subsystem> subsystemList;
+	ArrayList<action> actionList;
 
-    protected action currentPersistentAction = null;
+	ArrayList<teleopAction> teleopActionArrayList;
+	// array of subsystems that need their update method called every loop
+	ArrayList<subsystem> subsystemList;
 
-    public scheduler(ArrayList<action> actions) {
-        this.actionList = actions;
-    }
+	protected action currentPersistentAction = null;
+
+	public scheduler(ArrayList<subsystem> subsystems, ArrayList<teleopAction> teleActions, HardwareMap hwmap) {
+		this.subsystemList = subsystems;
+		this.teleopActionArrayList = teleActions;
+		allHubs = hwmap.getAll(LynxModule.class);
+		for (LynxModule hub : allHubs) {
+			hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+		}
+	}
+
+	public scheduler(ArrayList<action> actions) {
+		this.actionList = actions;
+	}
 
 
-    public scheduler(HardwareMap hwmap, ArrayList<action> actions, ArrayList<subsystem> subsystems) {
-        this.actionList = actions;
-        this.subsystemList = subsystems;
-        allHubs = hwmap.getAll(LynxModule.class);
+	public scheduler(HardwareMap hwmap, ArrayList<action> actions, ArrayList<subsystem> subsystems) {
+		this.actionList = actions;
+		this.subsystemList = subsystems;
+		allHubs = hwmap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
@@ -54,25 +65,43 @@ public class scheduler {
 
     }
 
-    /**
-     * update each of the robot subsystems
-     */
-    public void updateRobot() {
-        // update each of the subsystems
-        for (subsystem ss : subsystemList) {
-            ss.update();
-        }
-    }
+	/**
+	 * update each of the robot subsystems
+	 */
+	public void updateRobot() {
+		// update each of the subsystems
+		for (subsystem ss : subsystemList) {
+			ss.update();
+		}
+	}
 
-    /**
-     * is iterated through our finite state machine
-     */
-    public void updateStateMachine() {
 
-        // check if the current action has started
-        if (!hasStartedAction) {
-            actionList.get(currentState).startAction();
-            hasStartedAction = true;
+	public void updateTeleop() {
+		updateRobot();
+		for (teleopAction action : teleopActionArrayList) {
+
+			if (action.shouldRun()) {
+				if (!action.hasPerformedInitialRun()) {
+					action.initialRun();
+				} else {
+					action.periodic();
+				}
+				if (action.isComplete()) {
+					action.reset();
+				}
+			}
+		}
+	}
+
+	/**
+	 * is iterated through our finite state machine
+	 */
+	public void updateStateMachine() {
+
+		// check if the current action has started
+		if (!hasStartedAction) {
+			actionList.get(currentState).startAction();
+			hasStartedAction = true;
         }
 
         // check if the action is complete and if we can move on

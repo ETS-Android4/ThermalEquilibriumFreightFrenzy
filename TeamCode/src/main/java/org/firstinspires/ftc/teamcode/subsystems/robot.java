@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit;
+import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.intake;
 
 import java.util.ArrayList;
 
@@ -12,7 +14,13 @@ public class robot {
     private final ArrayList<subsystem> subsystems = new ArrayList<>();
 
 
+    public final static boolean isCompBot = true;
+
     public VoltageSensor batterVoltageSensor;
+
+    public intake Intake = new intake();
+
+    public deposit Deposit = new deposit();
 
     public drivetrain driveTrain = new drivetrain(batterVoltageSensor);
 
@@ -28,9 +36,7 @@ public class robot {
      */
     public robot() {
 
-        subsystems.add(driveTrain);
-        subsystems.add(dashBoard);
-        subsystems.add(odometry);
+
 
     }
 
@@ -45,6 +51,9 @@ public class robot {
         driveTrain.init(hwmap);
         dashBoard.init(hwmap);
         odometry.init(hwmap);
+        subsystems.add(driveTrain);
+        subsystems.add(dashBoard);
+        subsystems.add(odometry);
     }
 
     /**
@@ -54,6 +63,10 @@ public class robot {
      */
     public void init(HardwareMap hwmap) {
         initMinimal(hwmap);
+        Intake.init(hwmap);
+        Deposit.init(hwmap);
+        subsystems.add(Intake);
+        subsystems.add(Deposit);
     }
 
     /**
@@ -65,7 +78,13 @@ public class robot {
         driveTrain.initNoReset(hwmap);
         dashBoard.initNoReset(hwmap);
         odometry.initNoReset(hwmap);
-
+        Intake.initNoReset(hwmap);
+        Deposit.initNoReset(hwmap);
+        subsystems.add(Intake);
+        subsystems.add(Deposit);
+        subsystems.add(driveTrain);
+        subsystems.add(dashBoard);
+        subsystems.add(odometry);
     }
 
     /**

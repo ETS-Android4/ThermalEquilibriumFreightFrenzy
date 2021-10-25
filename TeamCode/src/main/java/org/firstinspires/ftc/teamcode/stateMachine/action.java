@@ -2,11 +2,15 @@ package org.firstinspires.ftc.teamcode.stateMachine;
 
 public interface action {
 
-    public void startAction();
-    public void runAction();
-    public void stopAction();
-    public boolean isActionComplete();
-    public boolean isActionPersistent();
+	void startAction();
+
+	void runAction();
+
+	void stopAction();
+
+	boolean isActionComplete();
+
+	boolean isActionPersistent();
 
 
 }

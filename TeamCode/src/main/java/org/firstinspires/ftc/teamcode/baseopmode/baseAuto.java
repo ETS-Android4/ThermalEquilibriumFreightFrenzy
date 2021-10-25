@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class baseAuto extends LinearOpMode {
 
-	org.firstinspires.ftc.teamcode.subsystems.robot robot;
+	protected robot robot;
 
 	protected ArrayList<action> actions = new ArrayList<>();
 	protected Vector3D startingPosition = new Vector3D();
@@ -32,7 +32,7 @@ public class baseAuto extends LinearOpMode {
 	@Override
 	public void runOpMode() {
 		robot = new robot();
-		robot.init(hardwareMap);
+		robot.initMinimal(hardwareMap);
 
 		addActions();
 		setStartingPosition();

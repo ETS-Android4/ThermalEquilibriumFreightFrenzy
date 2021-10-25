@@ -3,15 +3,19 @@ package org.firstinspires.ftc.teamcode.stateMachine.actions;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.basedControl.basedControl;
+import org.firstinspires.ftc.teamcode.basedControl.controllerCoefficients;
 import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
+
+import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
 
 public class basedTurn implements action {
 
 	robot robot;
 	basedControl pid;
-	PIDFCoefficients coefficients = new PIDFCoefficients(1.55, 0.01, 0.06);
+
+	PIDFCoefficients coefficients;
 	double targetAngle;
 	boolean isComplete = false;
 	ElapsedTime timer = new ElapsedTime();
@@ -20,6 +24,11 @@ public class basedTurn implements action {
 	public basedTurn(robot robot, double targetAngle) {
 		this.robot = robot;
 		this.targetAngle = targetAngle;
+		if (isCompBot) {
+			coefficients = controllerCoefficients.compBotTurn;
+		} else {
+			coefficients = controllerCoefficients.protoBotTurn;
+		}
 	}
 
 	@Override
