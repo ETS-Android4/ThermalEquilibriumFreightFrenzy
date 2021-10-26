@@ -4,8 +4,6 @@ package homeostasis.Filters;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.normalizeRadians;
-
 @Config
 public class angleKalmanFilter {
 
@@ -48,38 +46,17 @@ public class angleKalmanFilter {
 	 * @return estimated angle from kalman filter
 	 */
 	public double updateKalmanEstimate(double model, double sensor2) {
-
-
 		currentModel = model;
 		currentSensor2 = sensor2;
-
-
-		double u = normalizeRadians(currentModel - previousModel);
-
-		double angularVelocity = u / timer.seconds();
-		System.out.println("robot angular velocity is " + angularVelocity);
-		timer.reset();;
-
-		p = p_previous + Q;
-
-		if (false) {
-			kalmanGain = 0;
-			x = normalizeRadians(x + currentSensor2);
-		} else {
-			x = x_previous + u;
-			kalmanGain = p * H * (1 / (H * p * H + R));
-			x = normalizeRadians(x + kalmanGain * normalizeRadians((currentSensor2) - H * normalizeRadians(x - x_previous)));
-		}
-
+		previousModel = model;
+		previousSensor2 = sensor2;
+		x = x_previous;
+		p = p_previous;
+		kalmanGain = p / (p + R);
+		x = x + kalmanGain * (currentSensor2 - x);
+		p = (1 - kalmanGain) * p;
 		x_previous = x;
-
-		previousModel = currentModel;
-		previousSensor2 = currentSensor2;
-
-		p = I - kalmanGain * H * p;
-
 		p_previous = p;
-
 		return x;
 	}
 
