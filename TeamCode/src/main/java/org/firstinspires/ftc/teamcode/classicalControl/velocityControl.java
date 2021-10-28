@@ -31,11 +31,11 @@ public class velocityControl {
 	public void voltageCorrectedControl(double targetVelocity, double targetVoltage) {
 		double state = motor.getState().getVelocity();
 		double target = rateLimiter.updateEstimate(targetVelocity);
-		double output = pidController.calculateOutput(target,state);
+		double output = pidController.calculateOutputPFOnly(target, state);
 		dashboard.packet.put("measured velo", state);
 		dashboard.packet.put("rate limited velo", target);
 		dashboard.packet.put("target velo", targetVelocity);
-		motor.input(output * (12.5/targetVoltage));
+		motor.input(output * (12.5 / targetVoltage));
 	}
 
 	public void controlMotor(double targetVelocity) {

@@ -39,9 +39,8 @@ public class commandDeposit implements teleopAction {
 
 		switch (state) {
 			case DISARMED:
-
-
 				break;
+
 			case IN:
 				// cringe imo
 				if (timer.milliseconds() > DEPOSIT_DURATION) {

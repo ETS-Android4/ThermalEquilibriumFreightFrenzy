@@ -186,6 +186,23 @@ public class basedControl {
 		return error;
 	}
 
+	/**
+	 * an improved feedback controller designed specifically for angle control
+	 * <p>
+	 * The idea is to use two exponential functions as a piecewise function to generate our command input
+	 * <p>
+	 * the function Kp^e(t) - H is our controllers feedback calculation
+	 * <p>
+	 * This method allows us to better approximate the static friction of our drivetrain and compensate for it
+	 * <p>
+	 * stable under the https://en.wikipedia.org/wiki/Lyapunov_stability assuming friction is apart of the equation
+	 * <p>
+	 * hysteresis amount is the percentage relative to 0 that we go over, such as 96 percent would be 4% over the minimum motor power
+	 * <p>
+	 * The idea with the hysteresis is that a minimum power will act as a feed forward to counter our drivetrains static friction
+	 *
+	 * @return the control input for angles
+	 */
 	protected double nonlinearAngleControl() {
 		double hysteresisAmount = 0.96;
 		if (error > 0) {

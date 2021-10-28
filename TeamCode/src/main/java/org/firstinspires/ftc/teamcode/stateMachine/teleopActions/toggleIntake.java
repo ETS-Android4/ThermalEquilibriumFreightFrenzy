@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.stateMachine.teleopActions;
 import org.firstinspires.ftc.teamcode.stateMachine.teleopAction;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
 
-import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.IN;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.COLLECTION;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.intake.intakeStates.OFF;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.intake.intakeStates.ON;
 
@@ -15,7 +15,6 @@ public class toggleIntake implements teleopAction {
 
 	public toggleIntake(robot robot) {
 		this.robot = robot;
-
 	}
 
 	@Override
@@ -25,7 +24,7 @@ public class toggleIntake implements teleopAction {
 
 	@Override
 	public void periodic() {
-		if (robot.Deposit.getState().equals(IN)) {
+		if (robot.Deposit.getState().equals(COLLECTION)) {
 			robot.Intake.setState(ON);
 		} else robot.Intake.setState(OFF);
 	}
