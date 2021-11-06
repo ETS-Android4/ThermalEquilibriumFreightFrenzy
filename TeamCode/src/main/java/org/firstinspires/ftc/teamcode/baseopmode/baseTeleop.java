@@ -22,7 +22,7 @@ public class baseTeleop extends LinearOpMode {
 	@Override
 	public void runOpMode() throws InterruptedException {
 		robot = new robot();
-		robot.initMinimal(hardwareMap);
+		robot.init(hardwareMap);
 
 		addActions();
 		scheduler = new scheduler(robot.getSubsystems(), actions, hardwareMap);

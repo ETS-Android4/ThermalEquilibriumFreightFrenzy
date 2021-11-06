@@ -29,7 +29,7 @@ public class baseAuto extends LinearOpMode {
 	@Override
 	public void runOpMode() {
 		robot = new robot();
-		robot.initMinimal(hardwareMap);
+		robot.init(hardwareMap);
 
 		addActions();
 		setStartingPosition();
@@ -39,8 +39,6 @@ public class baseAuto extends LinearOpMode {
 		waitForStart();
 
 		while (opModeIsActive()) {
-
-
 			scheduler.updateStateMachineAndRobot();
 		}
 

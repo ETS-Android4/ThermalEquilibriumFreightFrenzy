@@ -82,6 +82,7 @@ public class basedControl {
 
 	/**
 	 * calculate pid output with normal linear values
+	 *
 	 * @param state current measurement of our system
 	 * @return input to the plant
 	 */
@@ -91,9 +92,17 @@ public class basedControl {
 		return output;
 	}
 
+	public double stateReferenceCalculate(double reference, double state) {
+		this.reference = reference;
+		calculateErrorNormal(state);
+		baseCalculate();
+		return output;
+	}
+
 
 	/**
 	 * calculate pid output with angle values
+	 *
 	 * @param state current measurement of our system (radians)
 	 * @return input to the plant
 	 */
@@ -230,5 +239,9 @@ public class basedControl {
 	 */
 	public void setReference(double reference) {
 		this.reference = reference;
+	}
+
+	public double getReference() {
+		return reference;
 	}
 }

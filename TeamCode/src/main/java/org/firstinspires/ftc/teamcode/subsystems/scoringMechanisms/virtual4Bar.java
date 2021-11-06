@@ -2,19 +2,22 @@ package org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 public class virtual4Bar implements subsystem {
 
 	protected final double IN = 0;
-	protected final double LOW = 0;
-	protected final double MID = 0;
-	protected final double HIGH = 0;
+	protected final double LOW = 0.5;
+	protected final double MID = 0.5;
+	protected final double HIGH = 0.5;
 	protected Servo left;
 	protected Servo right;
 	protected deposit.depositStates state = deposit.depositStates.IN;
 	protected double lastPosition = 1000;
+
+	ElapsedTime timer = new ElapsedTime();
 
 	@Override
 	public void init(HardwareMap hwmap) {
@@ -56,6 +59,7 @@ public class virtual4Bar implements subsystem {
 				// theoretically nothing should change?
 				break;
 		}
+		timer.reset();
 
 	}
 

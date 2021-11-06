@@ -33,7 +33,7 @@ public class basedTurn implements action {
 
 	@Override
 	public void startAction() {
-		pid = new basedControl(coefficients, targetAngle, 3, 0.004, Math.toRadians(1));
+		pid = new basedControl(coefficients, targetAngle, 3, 0.08, Math.toRadians(1));
 		timer.reset();
 	}
 

@@ -45,7 +45,9 @@ public class commandDeposit implements teleopAction {
 				// cringe imo
 				if (timer.milliseconds() > DEPOSIT_DURATION) {
 					actionIsComplete = true;
+					reset();
 				}
+
 				break;
 			case AT_HIGH:
 			case AT_MID:
@@ -59,6 +61,8 @@ public class commandDeposit implements teleopAction {
 				}
 				break;
 		}
+
+		System.out.println("current state is " + state);
 
 		robot.Deposit.setState(state);
 	}
@@ -79,7 +83,10 @@ public class commandDeposit implements teleopAction {
 	public boolean shouldRun() {
 
 
-		if (isRunning) return true;
+		if (isRunning) {
+			System.out.println("is currently running!!");
+			return true;
+		}
 
 		boolean high = highButton();
 		boolean mid = midButton();
@@ -90,12 +97,20 @@ public class commandDeposit implements teleopAction {
 
 			if (high) {
 				state = deposit.depositStates.AT_HIGH;
+				System.out.println("high!!");
+
 			} else if (mid) {
 				state = deposit.depositStates.AT_MID;
+				System.out.println("mid!!");
+
 			} else {
 				state = deposit.depositStates.AT_LOW;
+				System.out.println("low!!");
+
 			}
 		}
+
+		robot.Deposit.setState(state);
 
 		return isRunning;
 	}
@@ -117,14 +132,14 @@ public class commandDeposit implements teleopAction {
 
 
 	public boolean highButton() {
-		return gamepad1.y;
+		return gamepad1.triangle;
 	}
 
 	public boolean midButton() {
-		return gamepad1.x;
+		return gamepad1.square;
 	}
 
 	public boolean lowButton() {
-		return gamepad1.a;
+		return gamepad1.cross;
 	}
 }

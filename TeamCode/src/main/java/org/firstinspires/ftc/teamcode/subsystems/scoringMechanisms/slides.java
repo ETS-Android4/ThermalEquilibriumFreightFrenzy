@@ -25,11 +25,13 @@ public class slides implements subsystem {
 
 	protected double IN = 0;
 	protected double COLLECTION = 0;
-	protected double LOW = 0;
-	protected double MID = 0;
-	protected double HIGH = 0;
+	protected double LOW = 100;
+	protected double MID = 100;
+	protected double HIGH = 200;
 
 	protected double referencePosition = 0;
+
+	protected double error = 100;
 
 	@Override
 	public void init(HardwareMap hwmap) {
@@ -47,8 +49,8 @@ public class slides implements subsystem {
 		right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 		ArrayList<DcMotorEx> motors = new ArrayList<>();
-		motors.add(left);
 		motors.add(right);
+		motors.add(left);
 		slides = new DcMotorPlant(motors);
 
 	}
@@ -85,14 +87,17 @@ public class slides implements subsystem {
 				// theoretically no change
 				break;
 		}
-		slideController.setReference(referencePosition);
-		double controllerCommand = slideController.calculate(subsystemState().getPosition());
+		System.out.println("reference position is " + referencePosition);
+		double controllerCommand = slideController.stateReferenceCalculate(referencePosition, subsystemState().getPosition());
 		slides.input(controllerCommand);
+		error = slideController.getError();
+		System.out.println("controller error is " + error + " controller setpoint is " + slideController.getError());
+
 
 	}
 
 	public double getControllerError() {
-		return slideController.getError();
+		return error;
 	}
 
 	/**

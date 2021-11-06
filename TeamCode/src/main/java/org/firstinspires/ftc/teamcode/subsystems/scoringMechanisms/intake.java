@@ -19,7 +19,7 @@ public class intake implements subsystem {
 
 	@Override
 	public void init(HardwareMap hwmap) {
-		intakeMotor = hwmap.get(DcMotorEx.class, "intake");
+		intakeMotor = hwmap.get(DcMotorEx.class, "Intake");
 		intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 	}
 

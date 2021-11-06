@@ -11,17 +11,13 @@ import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 public class deposit implements subsystem {
 
 	public double slideErrorTolerance = 5;
-	protected slides slideSystem;
-	protected virtual4Bar v4b;
-	protected bucket bucketSystem;
+	protected slides slideSystem = new slides();
+	protected virtual4Bar v4b = new virtual4Bar();
+	protected bucket bucketSystem = new bucket();
 	protected depositStates state = depositStates.IN;
 
 	@Override
 	public void init(HardwareMap hwmap) {
-		slideSystem = new slides();
-		v4b = new virtual4Bar();
-		bucketSystem = new bucket();
-
 		bucketSystem.init(hwmap);
 		slideSystem.init(hwmap);
 		v4b.init(hwmap);
@@ -29,10 +25,6 @@ public class deposit implements subsystem {
 
 	@Override
 	public void initNoReset(HardwareMap hwmap) {
-		slideSystem = new slides();
-		v4b = new virtual4Bar();
-		bucketSystem = new bucket();
-
 		bucketSystem.initNoReset(hwmap);
 		slideSystem.initNoReset(hwmap);
 		v4b.initNoReset(hwmap);
