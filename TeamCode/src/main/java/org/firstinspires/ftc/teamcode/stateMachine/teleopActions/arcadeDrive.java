@@ -24,7 +24,7 @@ public class arcadeDrive implements teleopAction {
 
 	@Override
 	public void periodic() {
-		robot.driveTrain.robotRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x);
+		robot.driveTrain.robotRelative(-gamepad1.right_stick_y, gamepad1.left_stick_x);
 	}
 
 	@Override
