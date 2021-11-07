@@ -82,13 +82,13 @@ public class commandDeposit implements teleopAction {
 				transitionToDeposit();
 				break;
 			case DEPOSITING:
-				if (timer.milliseconds() > DEPOSIT_DURATION * 2) {
+				if (slidesDownButton()) {
 					state = GOING_IN;
 					timer.reset();
 				}
 				break;
 			case GOING_IN:
-				if (slidesDownButton()) {
+				if (timer.milliseconds() > DEPOSIT_DURATION) {
 					state = IN;
 					timer.reset();
 				}
