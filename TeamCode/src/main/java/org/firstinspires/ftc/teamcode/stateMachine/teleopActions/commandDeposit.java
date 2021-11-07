@@ -88,7 +88,7 @@ public class commandDeposit implements teleopAction {
 				}
 				break;
 			case GOING_IN:
-				if (timer.milliseconds() > DEPOSIT_DURATION * 2) {
+				if (slidesDownButton()) {
 					state = IN;
 					timer.reset();
 				}
@@ -101,7 +101,7 @@ public class commandDeposit implements teleopAction {
 	}
 
 	protected void transitionToDeposit() {
-		if (gamepad1.right_bumper) {//if (robot.Deposit.isSlideWithinTolerance() && timer.milliseconds() > DEPOSIT_DURATION) {
+		if (activeDepositButton()) {//if (robot.Deposit.isSlideWithinTolerance() && timer.milliseconds() > DEPOSIT_DURATION) {
 			state = deposit.depositStates.DEPOSITING;
 			timer.reset();
 		}
@@ -174,5 +174,13 @@ public class commandDeposit implements teleopAction {
 
 	public boolean lowButton() {
 		return gamepad1.cross;
+	}
+
+	public boolean activeDepositButton() {
+		return gamepad1.right_bumper;
+	}
+
+	public boolean slidesDownButton() {
+		return gamepad1.left_bumper;
 	}
 }
