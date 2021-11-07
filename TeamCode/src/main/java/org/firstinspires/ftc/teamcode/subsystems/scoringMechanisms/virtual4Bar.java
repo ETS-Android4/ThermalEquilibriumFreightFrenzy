@@ -11,7 +11,7 @@ public class virtual4Bar implements subsystem {
 	protected final double IN = 0;
 	protected final double LOW = 0.5;
 	protected final double MID = 0.5;
-	protected final double HIGH = 0.5;
+	protected final double HIGH = 0.75;
 	protected Servo left;
 	protected Servo right;
 	protected deposit.depositStates state = deposit.depositStates.IN;
@@ -44,6 +44,10 @@ public class virtual4Bar implements subsystem {
 				break;
 			case IN:
 			case COLLECTION:
+			case GOING_TO_LOW:
+			case GOING_TO_MID:
+			case GOING_TO_HIGH:
+			case GOING_IN:
 				setPosition(IN);
 				break;
 			case AT_HIGH:

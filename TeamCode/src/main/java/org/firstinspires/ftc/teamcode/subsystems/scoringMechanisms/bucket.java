@@ -13,12 +13,13 @@ public class bucket implements subsystem {
 
 	double lastPosition = 1000;
 
-	double IN = 0;
+	double IN = 1;
 	double OUT = 0;
 
 	@Override
 	public void init(HardwareMap hwmap) {
 		bucketServo = hwmap.get(Servo.class, "bucket");
+		setPosition(IN);
 	}
 
 	@Override

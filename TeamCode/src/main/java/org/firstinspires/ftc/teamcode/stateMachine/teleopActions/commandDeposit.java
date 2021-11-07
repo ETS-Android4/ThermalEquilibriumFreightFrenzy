@@ -7,11 +7,18 @@ import org.firstinspires.ftc.teamcode.stateMachine.teleopAction;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit;
 
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.AT_HIGH;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.AT_LOW;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.AT_MID;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.GOING_IN;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.GOING_TO_HIGH;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.GOING_TO_LOW;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.GOING_TO_MID;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.IN;
 
 public class commandDeposit implements teleopAction {
 
-	protected final double DEPOSIT_DURATION = 300;
+	protected final double DEPOSIT_DURATION = 370;
 	protected org.firstinspires.ftc.teamcode.subsystems.robot robot;
 	protected Gamepad gamepad1;
 	protected Gamepad gamepad2;
@@ -49,13 +56,39 @@ public class commandDeposit implements teleopAction {
 				}
 
 				break;
+			case COLLECTION:
+				break;
+			case GOING_TO_HIGH:
+				if (robot.Deposit.tolerantEnoughForDeploy()) {
+					state = AT_HIGH;
+				}
+				timer.reset();
+				break;
+			case GOING_TO_MID:
+				if (robot.Deposit.tolerantEnoughForDeploy()) {
+					state = AT_MID;
+				}
+				timer.reset();
+				break;
+			case GOING_TO_LOW:
+				if (robot.Deposit.tolerantEnoughForDeploy()) {
+					state = AT_LOW;
+				}
+				timer.reset();
+				break;
 			case AT_HIGH:
 			case AT_MID:
 			case AT_LOW:
 				transitionToDeposit();
 				break;
 			case DEPOSITING:
-				if (timer.milliseconds() > DEPOSIT_DURATION) {
+				if (timer.milliseconds() > DEPOSIT_DURATION * 2) {
+					state = GOING_IN;
+					timer.reset();
+				}
+				break;
+			case GOING_IN:
+				if (timer.milliseconds() > DEPOSIT_DURATION * 2) {
 					state = IN;
 					timer.reset();
 				}
@@ -68,7 +101,7 @@ public class commandDeposit implements teleopAction {
 	}
 
 	protected void transitionToDeposit() {
-		if (robot.Deposit.isSlideWithinTolerance()) {
+		if (gamepad1.right_bumper) {//if (robot.Deposit.isSlideWithinTolerance() && timer.milliseconds() > DEPOSIT_DURATION) {
 			state = deposit.depositStates.DEPOSITING;
 			timer.reset();
 		}
@@ -96,15 +129,15 @@ public class commandDeposit implements teleopAction {
 			isRunning = true;
 
 			if (high) {
-				state = deposit.depositStates.AT_HIGH;
+				state = GOING_TO_HIGH;
 				System.out.println("high!!");
 
 			} else if (mid) {
-				state = deposit.depositStates.AT_MID;
+				state = GOING_TO_MID;
 				System.out.println("mid!!");
 
 			} else {
-				state = deposit.depositStates.AT_LOW;
+				state = GOING_TO_LOW;
 				System.out.println("low!!");
 
 			}

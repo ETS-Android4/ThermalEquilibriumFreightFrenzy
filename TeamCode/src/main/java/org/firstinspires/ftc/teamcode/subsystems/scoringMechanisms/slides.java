@@ -27,7 +27,7 @@ public class slides implements subsystem {
 	protected double COLLECTION = 0;
 	protected double LOW = 100;
 	protected double MID = 100;
-	protected double HIGH = 200;
+	protected double HIGH = 720; // tune this imo
 
 	protected double referencePosition = 0;
 
@@ -67,32 +67,33 @@ public class slides implements subsystem {
 		}
 
 		switch (state) {
-
 			case IN:
 				referencePosition = IN;
 				break;
 			case COLLECTION:
 				referencePosition = COLLECTION;
 				break;
+			case GOING_TO_HIGH:
 			case AT_HIGH:
 				referencePosition = HIGH;
 				break;
+			case GOING_TO_MID:
 			case AT_MID:
 				referencePosition = MID;
 				break;
+			case GOING_TO_LOW:
 			case AT_LOW:
 				referencePosition = LOW;
 				break;
 			case DEPOSITING:
-				// theoretically no change
+			case GOING_IN:
 				break;
 		}
 		System.out.println("reference position is " + referencePosition);
 		double controllerCommand = slideController.stateReferenceCalculate(referencePosition, subsystemState().getPosition());
 		slides.input(controllerCommand);
 		error = slideController.getError();
-		System.out.println("controller error is " + error + " controller setpoint is " + slideController.getError());
-
+		System.out.println("controller error is " + error + " controller setpoint is " + slideController.getReference());
 
 	}
 

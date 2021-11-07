@@ -35,10 +35,10 @@ public class deposit implements subsystem {
 
 		slideSystem.setState(state);
 		v4b.setState(state);
-
+		bucketSystem.setState(state);
 		slideSystem.update();
 		v4b.update();
-
+		bucketSystem.update();
 	}
 
 	public depositStates getState() {
@@ -68,14 +68,22 @@ public class deposit implements subsystem {
 		return Math.abs(slideSystem.getControllerError()) < slideErrorTolerance;
 	}
 
+	public boolean tolerantEnoughForDeploy() {
+		return Math.abs(slideSystem.getControllerError()) < 10;
+	}
+
 	public enum depositStates {
 		DISARMED, // motor power is cut
 		IN, // everything is in, ready for going over
 		COLLECTION,
+		GOING_TO_HIGH,
+		GOING_TO_MID,
+		GOING_TO_LOW,
 		AT_HIGH, // at high but not deposited
 		AT_MID, // at mid but not deposited
 		AT_LOW, // at low but not deposited
-		DEPOSITING //depositing
+		DEPOSITING, //depositing
+		GOING_IN
 	}
 }
 
