@@ -28,9 +28,9 @@ public class toggleKatesStupidFuckingBox implements teleopAction {
 	@Override
 	public void periodic() {
 		if (gamepad1.right_bumper) {
-			robot.Deposit.setBucketSystemState(deposit.depositStates.DEPOSITING);
+			robot.bucketSys.setState(deposit.depositStates.DEPOSITING);
 		} else {
-			robot.Deposit.setBucketSystemState(deposit.depositStates.IN);
+			robot.bucketSys.setState(deposit.depositStates.IN);
 		}
 	}
 

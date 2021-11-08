@@ -13,19 +13,16 @@ public class deposit implements subsystem {
 	public double slideErrorTolerance = 5;
 	protected slides slideSystem = new slides();
 	protected virtual4Bar v4b = new virtual4Bar();
-	protected bucket bucketSystem = new bucket();
 	protected depositStates state = depositStates.IN;
 
 	@Override
 	public void init(HardwareMap hwmap) {
-		bucketSystem.init(hwmap);
 		slideSystem.init(hwmap);
 		v4b.init(hwmap);
 	}
 
 	@Override
 	public void initNoReset(HardwareMap hwmap) {
-		bucketSystem.initNoReset(hwmap);
 		slideSystem.initNoReset(hwmap);
 		v4b.initNoReset(hwmap);
 	}
@@ -38,7 +35,6 @@ public class deposit implements subsystem {
 
 		slideSystem.update();
 		v4b.update();
-		bucketSystem.update();
 	}
 
 	public depositStates getState() {
@@ -47,10 +43,6 @@ public class deposit implements subsystem {
 
 	public void setState(depositStates state) {
 		this.state = state;
-	}
-
-	public void setBucketSystemState(depositStates state) {
-		this.bucketSystem.setState(state);
 	}
 
 	/**

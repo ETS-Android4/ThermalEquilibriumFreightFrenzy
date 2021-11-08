@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.bucket;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.intake;
 
@@ -24,6 +25,7 @@ public class robot {
 
     public drivetrain driveTrain = new drivetrain(batterVoltageSensor);
 
+    public bucket bucketSys = new bucket();
 
     public dashboard dashBoard = new dashboard();
 
@@ -62,9 +64,14 @@ public class robot {
      * @param hwmap HardwareMap instance
      */
     public void init(HardwareMap hwmap) {
+
         initMinimal(hwmap);
+
         Intake.init(hwmap);
         Deposit.init(hwmap);
+        bucketSys.init(hwmap);
+
+        subsystems.add(bucketSys);
         subsystems.add(Intake);
         subsystems.add(Deposit);
     }
