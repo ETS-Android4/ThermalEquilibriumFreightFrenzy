@@ -6,14 +6,14 @@ import org.firstinspires.ftc.teamcode.stateMachine.teleopAction;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit;
 
-public class toggleKatesStupidFuckingBox implements teleopAction {
+public class toggleBox implements teleopAction {
 
 	protected robot robot;
 	protected Gamepad gamepad1;
 	protected Gamepad gamepad2;
 
 
-	public toggleKatesStupidFuckingBox(robot robot, Gamepad gamepad1, Gamepad gamepad2) {
+	public toggleBox(robot robot, Gamepad gamepad1, Gamepad gamepad2) {
 		this.robot = robot;
 		this.gamepad1 = gamepad1;
 		this.gamepad2 = gamepad2;
