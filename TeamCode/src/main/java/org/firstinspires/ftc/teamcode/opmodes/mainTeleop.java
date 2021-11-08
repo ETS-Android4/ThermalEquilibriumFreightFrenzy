@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.stateMachine.teleopActions.arcadeDrive;
 import org.firstinspires.ftc.teamcode.stateMachine.teleopActions.commandDeposit;
 import org.firstinspires.ftc.teamcode.stateMachine.teleopActions.goToCollection;
 import org.firstinspires.ftc.teamcode.stateMachine.teleopActions.toggleIntake;
+import org.firstinspires.ftc.teamcode.stateMachine.teleopActions.toggleKatesStupidFuckingBox;
 
 
 @TeleOp
@@ -17,6 +18,7 @@ public class mainTeleop extends baseTeleop {
 		actions.add(new toggleIntake(robot, gamepad1, gamepad2));
 		actions.add(new commandDeposit(robot, gamepad1, gamepad2));
 		actions.add(new goToCollection(robot, gamepad1, gamepad2));
+		actions.add(new toggleKatesStupidFuckingBox(robot, gamepad1, gamepad2));
 	}
 }
 

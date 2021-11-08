@@ -35,7 +35,7 @@ public class deposit implements subsystem {
 
 		slideSystem.setState(state);
 		v4b.setState(state);
-		bucketSystem.setState(state);
+
 		slideSystem.update();
 		v4b.update();
 		bucketSystem.update();
@@ -47,6 +47,10 @@ public class deposit implements subsystem {
 
 	public void setState(depositStates state) {
 		this.state = state;
+	}
+
+	public void setBucketSystemState(depositStates state) {
+		this.bucketSystem.setState(state);
 	}
 
 	/**
