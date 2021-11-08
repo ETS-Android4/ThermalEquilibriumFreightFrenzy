@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.stateMachine.teleopActions;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.humanInteraction.ButtonPress;
 import org.firstinspires.ftc.teamcode.stateMachine.teleopAction;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit;
@@ -29,6 +30,8 @@ public class commandDeposit implements teleopAction {
 	protected boolean actionIsComplete = false;
 	protected ElapsedTime timer = new ElapsedTime();
 
+	protected ButtonPress depositButton = new ButtonPress();
+
 	public commandDeposit(robot robot, Gamepad gamepad1, Gamepad gamepad2) {
 		this.robot = robot;
 		this.gamepad1 = gamepad1;
@@ -43,6 +46,8 @@ public class commandDeposit implements teleopAction {
 
 	@Override
 	public void periodic() {
+
+		depositButton.button(slidesDownButton());
 
 		switch (state) {
 			case DISARMED:
@@ -82,13 +87,13 @@ public class commandDeposit implements teleopAction {
 				transitionToDeposit();
 				break;
 			case DEPOSITING:
-				if (slidesDownButton()) {
+				if (depositButton.release()) {
 					state = GOING_IN;
 					timer.reset();
 				}
 				break;
 			case GOING_IN:
-				if (!slidesDownButton()) {
+				if (timer.milliseconds() > DEPOSIT_DURATION * 2) {
 					state = IN;
 					timer.reset();
 				}
