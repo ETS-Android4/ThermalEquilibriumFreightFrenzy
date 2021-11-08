@@ -182,10 +182,10 @@ public class commandDeposit implements teleopAction {
 	}
 
 	public boolean activeDepositButton() {
-		return gamepad1.right_bumper;
+		return gamepad1.left_bumper;
 	}
 
 	public boolean slidesDownButton() {
-		return gamepad1.left_bumper;
+		return gamepad1.right_bumper;
 	}
 }
