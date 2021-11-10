@@ -3,10 +3,13 @@ package org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.filter.LowPassFilter;
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 public class bucket implements subsystem {
 
+	protected double lowPassFilterGain = 0.9; // 0 < x < 1
+	protected LowPassFilter filter = new LowPassFilter(lowPassFilterGain);
 	protected Servo bucketServo;
 
 	protected deposit.depositStates state = deposit.depositStates.IN;
@@ -54,6 +57,7 @@ public class bucket implements subsystem {
 	 * @param position servo position
 	 */
 	protected void setPosition(double position) {
+		position = filter.updateEstimate(position);
 
 		if (position != lastPosition) {
 			bucketServo.setPosition(position);
