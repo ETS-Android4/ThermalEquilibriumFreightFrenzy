@@ -121,7 +121,7 @@ public class commandDeposit implements teleopAction {
 
 	@Override
 	public boolean shouldRun() {
-		boolean intakeButtonState = gamepad1.right_trigger > 0.5;
+		boolean intakeButtonState = gamepad1.right_trigger > 0.5 || gamepad1.left_trigger > 0.5;
 		intakeButton.button(intakeButtonState);
 
 		if (isRunning) {
