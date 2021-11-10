@@ -8,10 +8,10 @@ import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 public class virtual4Bar implements subsystem {
 
-	protected final double IN = 0;
+	protected final double IN = 0.15;
 	protected final double LOW = 0.5;
 	protected final double MID = 0.5;
-	protected final double HIGH = 0.75;
+	protected final double HIGH = 0.9;
 	protected Servo left;
 	protected Servo right;
 	protected deposit.depositStates state = deposit.depositStates.IN;
