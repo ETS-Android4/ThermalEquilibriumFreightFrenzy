@@ -8,7 +8,8 @@ import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 public class virtual4Bar implements subsystem {
 
-	protected final double IN = 0.15;
+	protected final double COLLECTION = 0.15;
+	protected final double IN = 0;
 	protected final double LOW = 0.5;
 	protected final double MID = 0.5;
 	protected final double HIGH = 0.9;
@@ -42,8 +43,10 @@ public class virtual4Bar implements subsystem {
 				setPosition(IN);
 				System.out.println("disarmed");
 				break;
-			case IN:
 			case COLLECTION:
+				setPosition(COLLECTION);
+				break;
+			case IN:
 			case GOING_TO_LOW:
 			case GOING_TO_MID:
 			case GOING_TO_HIGH:

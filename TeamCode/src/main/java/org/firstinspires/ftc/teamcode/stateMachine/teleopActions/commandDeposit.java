@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.AT_HIGH;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.AT_LOW;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.AT_MID;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.COLLECTION;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.GOING_IN;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.GOING_TO_HIGH;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.deposit.depositStates.GOING_TO_LOW;
@@ -31,6 +32,7 @@ public class commandDeposit implements teleopAction {
 	protected ElapsedTime timer = new ElapsedTime();
 
 	protected ButtonPress depositButton = new ButtonPress();
+	protected ButtonPress intakeButton = new ButtonPress();
 
 	public commandDeposit(robot robot, Gamepad gamepad1, Gamepad gamepad2) {
 		this.robot = robot;
@@ -119,12 +121,18 @@ public class commandDeposit implements teleopAction {
 
 	@Override
 	public boolean shouldRun() {
-
+		boolean intakeButtonState = gamepad1.right_trigger > 0.5;
+		intakeButton.button(intakeButtonState);
 
 		if (isRunning) {
 			System.out.println("is currently running!!");
 			return true;
+		} else if (intakeButtonState) {
+			state = COLLECTION;
+		} else if (intakeButton.release()) {
+			state = IN;
 		}
+
 
 		boolean high = highButton();
 		boolean mid = midButton();

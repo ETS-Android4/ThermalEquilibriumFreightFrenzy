@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 public class bucket implements subsystem {
 
-	protected double lowPassFilterGain = 0.9; // 0 < x < 1
+	protected double lowPassFilterGain = 0.97; // 0 < x < 1
 	protected LowPassFilter filter = new LowPassFilter(lowPassFilterGain);
 	protected Servo bucketServo;
 

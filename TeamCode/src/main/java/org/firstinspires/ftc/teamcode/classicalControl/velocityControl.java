@@ -35,7 +35,7 @@ public class velocityControl {
 		dashboard.packet.put("measured velo", state);
 		dashboard.packet.put("rate limited velo", target);
 		dashboard.packet.put("target velo", targetVelocity);
-		motor.input(output * (12.5 / targetVoltage));
+		motor.input(output * (13.9 / targetVoltage));
 	}
 
 	public void controlMotor(double targetVelocity) {
