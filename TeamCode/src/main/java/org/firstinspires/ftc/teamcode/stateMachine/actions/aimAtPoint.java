@@ -16,7 +16,7 @@ import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
 public class aimAtPoint implements action {
 
     // 1 degree angle tolerance
-    double allowedTimeSeconds = 3;
+    double allowedTimeSeconds = 2;
     Vector3D targetPosition;
     double error;
     boolean reversed;
@@ -47,6 +47,7 @@ public class aimAtPoint implements action {
         initializeController();
 
     }
+
     public aimAtPoint(robot robot, Vector3D targetPoint) {
         this.robot = robot;
         this.targetPosition = targetPoint;
@@ -55,10 +56,11 @@ public class aimAtPoint implements action {
         this.reverseAngle = false;
         initializeController();
     }
-    public aimAtPoint(robot robot, Vector3D targetPoint, boolean reverseAngle) {
+
+    public aimAtPoint(robot robot, Vector3D targetPoint, boolean reverseAngle, boolean reversed) {
         this.robot = robot;
         this.targetPosition = targetPoint;
-        this.reversed = false;
+        this.reversed = reversed;
         this.angleOffset = 0;
         this.reverseAngle = reverseAngle;
         initializeController();

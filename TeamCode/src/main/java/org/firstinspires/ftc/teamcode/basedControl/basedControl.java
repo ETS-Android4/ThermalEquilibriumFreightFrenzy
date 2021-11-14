@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
+import org.firstinspires.ftc.teamcode.subsystems.robot;
 import org.firstinspires.ftc.teamcode.utils.RingBuffer;
 
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
@@ -214,6 +215,10 @@ public class basedControl {
 	 */
 	protected double nonlinearAngleControl() {
 		double hysteresisAmount = 0.96;
+
+		if (robot.isCompBot) {
+			hysteresisAmount = 0.80;
+		}
 		if (error > 0) {
 			return Math.pow(coefficients.Kp, error) - hysteresisAmount;
 		}

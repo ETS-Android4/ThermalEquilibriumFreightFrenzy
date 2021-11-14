@@ -39,7 +39,7 @@ public class differentialDriveOdom implements subsystem {
 	public differentialDriveOdom() {
 		if (isCompBot) {
 			trackWidth = compBotTrackWidth;
-			gearRatio = 14.0 / 22;
+			gearRatio = 20.0 / 24.0;
 		} else {
 			trackWidth = testBotTrackWidth;
 			gearRatio = 1;

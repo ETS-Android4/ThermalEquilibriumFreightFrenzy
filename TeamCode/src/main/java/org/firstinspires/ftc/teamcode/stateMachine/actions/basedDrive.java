@@ -23,7 +23,7 @@ public class basedDrive implements action {
 	protected basedControl drivePid;
 	protected PIDFCoefficients turnCoefficients;
 	protected PIDFCoefficients driveCoefficients;
-
+	protected Vector3D targetPosition = null;
 
 	public basedDrive(robot robot, double targetDistance) {
 		this.robot = robot;
@@ -37,11 +37,28 @@ public class basedDrive implements action {
 		}
 	}
 
+	public basedDrive(robot robot, Vector3D targetPosition, double scaler) {
+		this.robot = robot;
+		if (isCompBot) {
+			turnCoefficients = controllerCoefficients.compBotDriveCorrect;
+			driveCoefficients = controllerCoefficients.compBotDrive;
+		} else {
+			turnCoefficients = controllerCoefficients.protoBotDriveCorrect;
+			driveCoefficients = controllerCoefficients.protoBotDrive;
+		}
+		this.targetDistance = scaler;
+		this.targetPosition = targetPosition;
+	}
+
 	@Override
 	public void startAction() {
 		initialPosition = robot.odometry.subsystemState();
 		turnPid = new basedControl(turnCoefficients, initialPosition.getAngleRadians(), 3, 0.004, Math.toRadians(1));
 		drivePid = new basedControl(driveCoefficients, Math.abs(targetDistance), 3, 0.3, 1);
+		if (targetPosition != null) {
+			this.targetDistance = Math.abs(this.targetPosition.distanceToPose(initialPosition)) * this.targetDistance;
+			drivePid.setReference(Math.abs(this.targetDistance));
+		}
 	}
 
 	@Override
@@ -50,10 +67,10 @@ public class basedDrive implements action {
 		distance = initialPosition.distanceToPose(robot.odometry.subsystemState());
 		dashboard.packet.put("distance traveled", distance);
 
-		double drive = drivePid.calculate(distance);
+		double drive = drivePid.calculate(distance) * Math.signum(targetDistance);
 		double turn = turnPid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
 
-		robot.driveTrain.robotRelative(drive,turn);
+		robot.driveTrain.robotRelative(drive, turn);
 
 		isComplete = drivePid.isComplete();
 
