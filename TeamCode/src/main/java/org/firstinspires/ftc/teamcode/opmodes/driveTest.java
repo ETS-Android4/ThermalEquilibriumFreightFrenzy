@@ -11,6 +11,11 @@ import org.firstinspires.ftc.teamcode.stateMachine.actions.basedTurn;
 public class driveTest extends baseAuto {
 
     @Override
+    public void setStartingPosition() {
+
+    }
+
+    @Override
     public void addActions() {
 
         double distance = 40;

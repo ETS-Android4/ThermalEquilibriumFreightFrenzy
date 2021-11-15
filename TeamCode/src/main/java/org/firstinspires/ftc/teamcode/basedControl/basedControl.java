@@ -71,11 +71,14 @@ public class basedControl {
 		updateTime();
 		calculateDerivative();
 		calculateIntegral();
+		double out1 = (error * coefficients.Kp) + (integral_sum * coefficients.Ki);
 
-		output = (error * coefficients.Kp) +
+		if (Math.abs(out1) < coefficients.H) {
+			out1 = coefficients.H * Math.signum(out1);
+		}
+		output = out1 +
 				(reference * coefficients.Kf) +
-				(derivative * coefficients.Kd) +
-				(integral_sum * coefficients.Ki);
+				(derivative * coefficients.Kd);
 
 		lastError = error;
 	}

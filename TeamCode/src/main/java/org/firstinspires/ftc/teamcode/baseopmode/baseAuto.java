@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.subsystems.robot;
 
 import java.util.ArrayList;
 
-public class baseAuto extends LinearOpMode {
+public abstract class baseAuto extends LinearOpMode {
 
 	protected robot robot;
 
@@ -17,14 +17,10 @@ public class baseAuto extends LinearOpMode {
 	protected Vector3D startingPosition = new Vector3D();
 
 
-	public void setStartingPosition() {
-
-	}
+	public abstract void setStartingPosition();
 
 
-	public void addActions() {
-
-	}
+	public abstract void addActions();
 
 	@Override
 	public void runOpMode() {
