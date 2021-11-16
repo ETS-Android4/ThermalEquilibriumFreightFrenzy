@@ -15,7 +15,7 @@ public class robot {
     private final ArrayList<subsystem> subsystems = new ArrayList<>();
 
 
-    public final static boolean isCompBot = false;
+    public final static boolean isCompBot = true;
 
     public VoltageSensor batterVoltageSensor;
 
