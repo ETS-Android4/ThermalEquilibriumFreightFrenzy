@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.classicalControl;
 
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.basedControl.basedControl;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.subsystems.dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
@@ -12,11 +13,11 @@ import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 public class DifferentialDriveController {
 
 
-	PIDFCoefficients omegaCoefficients = new PIDFCoefficients(0.76,0,0.00);
-	PIDFCoefficients driveCoefficients = new PIDFCoefficients(0.65,0,0);
+	PIDFCoefficients omegaCoefficients = new PIDFCoefficients(0.76, 0, 0.00);
+	PIDFCoefficients driveCoefficients = new PIDFCoefficients(0.65, 0, 0);
 	public static final double MAX_VELO = 75;
-	ProfiledPIDController distanceController = new ProfiledPIDController(driveCoefficients, 20, 20);
-	NonlinearPID omegaController = new NonlinearPID(omegaCoefficients);
+	basedControl distanceController = new basedControl(driveCoefficients, 0, 3, 0.3, 1);
+	basedControl omegaController = new basedControl(omegaCoefficients, 0, 3, 0.08, Math.toRadians(1));
 
 
 	protected double Kp3 = 0.23;
@@ -30,9 +31,6 @@ public class DifferentialDriveController {
 
 	public DifferentialDriveController(robot robot) {
 		this.robot = robot;
-
-		omegaController.setEnableLowPassDerivative(false);
-		omegaController.setIntegralZeroCrossoverDetection(true);
 	}
 
 	/**
@@ -59,11 +57,11 @@ public class DifferentialDriveController {
 			omegaError = omegaError2;
 			driveMultiplier = -1;
 		}
-		double driveComponent = driveMultiplier * distanceController.calculateProfiledOutput(0,-distance) / (Kp6 * Range.clip( Math.abs(omegaError),1,Math.PI * 2));
-		double omegaComponent = Math.min(Kp3 * distance, 1) * omegaController.calculateOutput(-omegaError);
+		double driveComponent = driveMultiplier * distanceController.calculate(-distance) / (Kp6 * Range.clip(Math.abs(omegaError), 1, Math.PI * 2));
+		double omegaComponent = Math.min(Kp3 * distance, 1) * omegaController.calculate(-omegaError);
 
-		double clippedTurn = Range.clip(omegaComponent,-1,1);
-		return new Vector3D(Range.clip(driveComponent,-1,1) * scaler, 0,clippedTurn * scaler);
+		double clippedTurn = Range.clip(omegaComponent, -1, 1);
+		return new Vector3D(Range.clip(driveComponent, -1, 1) * scaler, 0, clippedTurn * scaler);
 
 	}
 

@@ -9,6 +9,8 @@ import org.firstinspires.ftc.teamcode.subsystems.robot;
 
 import java.util.ArrayList;
 
+import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
+
 public abstract class baseAuto extends LinearOpMode {
 
 	protected robot robot;
@@ -25,7 +27,11 @@ public abstract class baseAuto extends LinearOpMode {
 	@Override
 	public void runOpMode() {
 		robot = new robot();
-		robot.init(hardwareMap);
+		if (isCompBot) {
+			robot.init(hardwareMap);
+		} else {
+			robot.initMinimal(hardwareMap);
+		}
 
 		addActions();
 		setStartingPosition();

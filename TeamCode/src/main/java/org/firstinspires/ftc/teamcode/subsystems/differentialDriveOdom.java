@@ -4,6 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 
 import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
@@ -18,6 +19,7 @@ public class differentialDriveOdom implements subsystem {
 	protected Vector3D positionEstimate = new Vector3D();
 	protected Vector3D positionEstimateDeltaFieldRelative = new Vector3D();
 	protected Vector3D positionEstimateDeltaRobotRelative = new Vector3D();
+	private double pitchAngle = 0;
 	private double leftPrev = 0;
 	private double rightPrev = 0;
 	private final double gearRatio;
@@ -77,6 +79,7 @@ public class differentialDriveOdom implements subsystem {
 		updateIMU();
 
 		double xDelta = (leftDelta + rightDelta) / 2;
+		xDelta = xDelta * Math.cos(pitchAngle);
 		double yDelta = 0;
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
 		encoderAngle += thetaDelta;
@@ -123,8 +126,9 @@ public class differentialDriveOdom implements subsystem {
 	}
 
 	public void updateIMU() {
-
-		IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
+		Orientation angle = imu.getAngularOrientation();
+		IMU_angle = normalizeAngleRR(angle.firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
+		pitchAngle = angle.thirdAngle;
 		angularVelocity = imu.getAngularVelocity().zRotationRate;
 		//revIMUAngle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
 		//IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());

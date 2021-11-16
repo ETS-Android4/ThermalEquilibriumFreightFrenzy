@@ -39,7 +39,7 @@ public class basedTurn implements action {
 
 	@Override
 	public void runAction() {
-		double output = pid.calculateAngle(robot.odometry.subsystemState().getAngleRadians());
+		double output = pid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
 		robot.driveTrain.robotRelative(0, output);
 		isComplete = (pid.isComplete() || timer.seconds() > timeout) && pid.isStable();
 	}
