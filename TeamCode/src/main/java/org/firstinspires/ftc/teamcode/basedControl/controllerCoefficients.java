@@ -10,8 +10,8 @@ public class controllerCoefficients {
 	public static final PIDFCoefficients compBotDriveCorrect = new PIDFCoefficients(0.9, 0, 0.1);
 
 	// controller coefficients for off season 6wd
-	public static final PIDFCoefficients protoBotTurn = new PIDFCoefficients(0.45, 0, 0.05, 0, 0, 0.03800000000000003);
-	public static final PIDFCoefficients protoBotDrive = new PIDFCoefficients(0.1, 0, 0.01, 0, 0, 0.03800000000000003);
+	public static final PIDFCoefficients protoBotTurn = new PIDFCoefficients(0.49, 0, 0.055, 0, 0, 0.05000000000000004);
+	public static final PIDFCoefficients protoBotDrive = new PIDFCoefficients(0.1, 0, 0.01, 0, 0, 0.048500000000000036);
 	public static final PIDFCoefficients protoBotDriveCorrect = new PIDFCoefficients(0.9, 0, 0.1);
 
 	// controller coefficients for linear slide subsystem

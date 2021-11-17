@@ -59,7 +59,7 @@ public class scheduler {
     public void updateStateMachineAndRobot() {
 
 
-        updateStateMachine();
+        updateActions();
 
         updateRobot();
 
@@ -96,17 +96,17 @@ public class scheduler {
 	/**
 	 * is iterated through our finite state machine
 	 */
-	public void updateStateMachine() {
+	public void updateActions() {
 
 		// check if the current action has started
 		if (!hasStartedAction) {
 			actionList.get(currentState).startAction();
 			hasStartedAction = true;
-        }
+		}
 
-        // check if the action is complete and if we can move on
-        if (actionList.get(currentState).isActionComplete() && currentState < actionList.size() - 1) {
-            actionList.get(currentState).stopAction();
+		// check if the action is complete and if we can move on
+		if (actionList.get(currentState).isActionComplete() && currentState < actionList.size() - 1) {
+			actionList.get(currentState).stopAction();
             currentState += 1;
             if (actionList.get(currentState).isActionPersistent()) {
                 currentPersistentAction = actionList.get(currentState);
