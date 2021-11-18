@@ -82,7 +82,7 @@ public class differentialDriveOdom implements subsystem {
 		updateIMU();
 
 		double xDelta = (leftDelta + rightDelta) / 2;
-		xDelta = xDelta * Math.cos(pitchAngle);
+		//xDelta = xDelta * Math.cos(pitchAngle);
 		double yDelta = 0;
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
 		encoderAngle += thetaDelta;
