@@ -129,6 +129,7 @@ public class differentialDriveOdom implements subsystem {
 		Orientation angle = imu.getAngularOrientation();
 		IMU_angle = normalizeAngleRR(angle.firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
 		pitchAngle = angle.thirdAngle;
+		dashboard.packet.put("pitch angle", pitchAngle);
 		angularVelocity = imu.getAngularVelocity().zRotationRate;
 		//revIMUAngle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
 		//IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
