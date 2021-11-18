@@ -33,7 +33,7 @@ public class differentialDriveOdom implements subsystem {
 	double encoderAngle = 0;
 	double xDot = 0;
 
-	LowPassFilter pitchFilter = new LowPassFilter(0.97);
+	LowPassFilter pitchFilter = new LowPassFilter(0.5);
 
 
 	double angularVelocity = 0;
