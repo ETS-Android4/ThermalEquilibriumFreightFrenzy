@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.filter.LowPassFilter;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 
 import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
@@ -31,6 +32,8 @@ public class differentialDriveOdom implements subsystem {
 	protected double IMU_angle = 0;
 	double encoderAngle = 0;
 	double xDot = 0;
+
+	LowPassFilter pitchFilter = new LowPassFilter(0.97);
 
 
 	double angularVelocity = 0;
@@ -128,7 +131,7 @@ public class differentialDriveOdom implements subsystem {
 	public void updateIMU() {
 		Orientation angle = imu.getAngularOrientation();
 		IMU_angle = normalizeAngleRR(angle.firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
-		pitchAngle = angle.thirdAngle;
+		pitchAngle = pitchFilter.updateEstimate(angle.thirdAngle);
 		dashboard.packet.put("pitch angle", pitchAngle);
 		angularVelocity = imu.getAngularVelocity().zRotationRate;
 		//revIMUAngle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
