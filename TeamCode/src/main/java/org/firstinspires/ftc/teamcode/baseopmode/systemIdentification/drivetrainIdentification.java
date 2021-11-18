@@ -29,8 +29,7 @@ public class drivetrainIdentification extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            if (rampTimer.seconds() > 1)
-            {
+            if (rampTimer.seconds() > 0.5) {
                 power = 1;
             }
 
@@ -40,7 +39,7 @@ public class drivetrainIdentification extends LinearOpMode {
             robot.driveTrain.update();
             robot.dashBoard.update();
 
-            System.out.println("step response: " + power + ", " + robot.driveTrain.rightMotorSys.getState().getVelocity() + ", " + robot.driveTrain.leftMotorSys.getState().getVelocity());
+            System.out.println("step response: " + power + ", " + robot.driveTrain.rightMotorSys.getState().getPosition() + ", " + robot.driveTrain.leftMotorSys.getState().getVelocity());
 
         }
 
