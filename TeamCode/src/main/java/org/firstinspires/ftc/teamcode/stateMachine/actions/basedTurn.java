@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.basedControl.basedControl;
 import org.firstinspires.ftc.teamcode.basedControl.controllerCoefficients;
 import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
+import org.firstinspires.ftc.teamcode.subsystems.dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
 
 import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
@@ -33,7 +34,8 @@ public class basedTurn implements action {
 
 	@Override
 	public void startAction() {
-		pid = new basedControl(coefficients, targetAngle, 3, 0.08, Math.toRadians(1));
+		pid = new basedControl(coefficients, targetAngle, 3, 0.04, Math.toRadians(1));
+
 		timer.reset();
 	}
 
@@ -41,7 +43,9 @@ public class basedTurn implements action {
 	public void runAction() {
 		double output = pid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
 		robot.driveTrain.robotRelative(0, output);
-		isComplete = (pid.isComplete() || timer.seconds() > timeout) && pid.isStable();
+		dashboard.packet.put("power",output);
+		dashboard.packet.put("error",pid.getError());
+		isComplete = (pid.isComplete()) && pid.isStable();
 	}
 
 	@Override

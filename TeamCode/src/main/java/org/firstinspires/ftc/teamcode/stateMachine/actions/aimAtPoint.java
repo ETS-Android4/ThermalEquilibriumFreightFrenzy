@@ -88,7 +88,7 @@ public class aimAtPoint implements action {
         }
 
         this.controller.setReference(theta);
-        double power = Range.clip(this.controller.calculateAngle(robot.getRobotPose().getAngleRadians()), -max_power, max_power);
+        double power = Range.clip(this.controller.calculateLinearAngle(robot.getRobotPose().getAngleRadians()), -max_power, max_power);
         error = this.controller.getError();
         robot.driveTrain.robotRelative(0, power);
 

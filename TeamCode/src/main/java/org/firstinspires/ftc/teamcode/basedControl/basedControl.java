@@ -156,6 +156,9 @@ public class basedControl {
 	public boolean isStable() {
 		return Math.abs(stability_threshold) > Math.abs(derivative);
 	}
+	public boolean isVeryStable() {
+		return Math.abs(stability_threshold / 4) > Math.abs(derivative);
+	}
 
 	/**
 	 * conditions for if we should integrate
