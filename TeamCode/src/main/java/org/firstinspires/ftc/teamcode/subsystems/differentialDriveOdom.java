@@ -32,6 +32,7 @@ public class differentialDriveOdom implements subsystem {
 	protected double IMU_angle = 0;
 	double encoderAngle = 0;
 	double xDot = 0;
+	protected long counter = 0;
 
 	LowPassFilter pitchFilter = new LowPassFilter(0.5);
 
@@ -79,12 +80,13 @@ public class differentialDriveOdom implements subsystem {
 		double rightDelta = right - rightPrev;
 		leftPrev = left;
 		rightPrev = right;
-		updateIMU();
 
 		double xDelta = (leftDelta + rightDelta) / 2;
 		//xDelta = xDelta * Math.cos(pitchAngle);
 		double yDelta = 0;
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
+
+
 		encoderAngle += thetaDelta;
 		encoderAngle = normalizeAngleRR(encoderAngle);
 
@@ -94,11 +96,13 @@ public class differentialDriveOdom implements subsystem {
 		// we need some second order dynamics imo (in my option)
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
-
-		positionEstimate.setAngleRad(IMU_angle);
+		if (counter % 3 == 0) {
+			updateIMU();
+			positionEstimate.setAngleRad(IMU_angle);
+		}
 		drawRobot(positionEstimate, dashboard.packet);
 		dashboard.packet.put("imu angle ", IMU_angle);
-
+		++counter;
 
 	}
 
@@ -131,11 +135,8 @@ public class differentialDriveOdom implements subsystem {
 	public void updateIMU() {
 		Orientation angle = imu.getAngularOrientation();
 		IMU_angle = normalizeAngleRR(angle.firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
-		pitchAngle = pitchFilter.updateEstimate(angle.thirdAngle);
 		dashboard.packet.put("pitch angle", pitchAngle);
 		angularVelocity = imu.getAngularVelocity().zRotationRate;
-		//revIMUAngle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
-		//IMU_angle = normalizeAngleRR(imu.getAngularOrientation().firstAngle + initialPosition.getAngleRadians());
 	}
 
 	public Vector3D getVelocity() {

@@ -18,11 +18,9 @@ public class driveTest extends baseAuto {
     @Override
     public void addActions() {
 
-        double distance = 30;
+        double distance = 50;
         actions.add(new basedDrive(robot, distance));
-        actions.add(new basedTurn(robot, Math.toRadians(180)));
-        actions.add(new basedDrive(robot, distance));
-        actions.add(new basedTurn(robot, Math.toRadians(0)));
+        actions.add(new basedDrive(robot, -distance));
 
 
     }
