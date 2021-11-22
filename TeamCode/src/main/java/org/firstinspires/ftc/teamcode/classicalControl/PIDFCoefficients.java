@@ -45,4 +45,13 @@ public class PIDFCoefficients {
     }
 
 
+    /**
+     * create a duplicate object without the feedforward terms
+     * @return feedback only coefficients
+     */
+    public PIDFCoefficients noFeedforward() {
+        return new PIDFCoefficients(this.Kp,this.Ki,this.Kd,0,0,0);
+    }
+
+
 }

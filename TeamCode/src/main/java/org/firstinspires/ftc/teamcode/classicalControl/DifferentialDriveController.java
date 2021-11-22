@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.classicalControl;
 
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.basedControl.basedControl;
+import org.firstinspires.ftc.teamcode.basedControl.controller;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.subsystems.dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
@@ -16,8 +16,8 @@ public class DifferentialDriveController {
 	PIDFCoefficients omegaCoefficients = new PIDFCoefficients(0.76, 0, 0.00);
 	PIDFCoefficients driveCoefficients = new PIDFCoefficients(0.65, 0, 0);
 	public static final double MAX_VELO = 75;
-	basedControl distanceController = new basedControl(driveCoefficients, 0, 3, 0.3, 1);
-	basedControl omegaController = new basedControl(omegaCoefficients, 0, 3, 0.08, Math.toRadians(1));
+	controller distanceController = new controller(driveCoefficients, 0, 3, 0.3, 1);
+	controller omegaController = new controller(omegaCoefficients, 0, 3, 0.08, Math.toRadians(1));
 
 
 	protected double Kp3 = 0.23;

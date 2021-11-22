@@ -21,13 +21,53 @@ public class RedDuckAuto extends baseAuto {
 
     @Override
     public void addActions() {
-        actions.add(new basedDrive(robot,goalPosition,-0.6));
+//        // drive to goal to deposit
+//        actions.add(new basedDrive(robot,goalPosition,-0.6));
+//        actions.add(new aimAtPoint(robot,goalPosition,false, true));
+//
+//        // drive to carousel
+//        actions.add(new aimAtPoint(robot,carousel,false,false));
+//        actions.add(new basedDrive(robot,carousel,0.5));
+//
+//        // collect duck
+//        actions.add(new basedTurn(robot, startPosition.getAngleRadians()));
+//
+//        // deposit the duck
+//        actions.add(new basedDrive(robot,goalPosition,-0.6));
+//        actions.add(new aimAtPoint(robot,goalPosition,false, true));
+//
+//        // go to park
+//        actions.add(new aimAtPoint(robot, park, false, true));
+//        actions.add(new basedDrive(robot,park,-1));
+//
+//        // make sure we are parked
+//        actions.add(new basedTurn(robot,Math.toRadians(-90)));
+//        actions.add(new basedDrive(robot,-5));
+
+        // drive to goal to deposit
+        actions.add(new basedDrive(robot,-5));
+        actions.add(new basedDrive(robot,goalPosition,-1, -18));
         actions.add(new aimAtPoint(robot,goalPosition,false, true));
+
+        // drive to carousel
         actions.add(new aimAtPoint(robot,carousel,false,false));
-        actions.add(new basedDrive(robot,carousel,0.5));
+        actions.add(new basedDrive(robot,carousel,1,-24));
+
+        // collect duck
+        actions.add(new basedTurn(robot, startPosition.getAngleRadians()));
+        actions.add(new basedDrive(robot, 3));
+        actions.add(new basedDrive(robot,-3));
+
+        // deposit the duck
+        actions.add(new basedDrive(robot,goalPosition,-1, -18));
+        actions.add(new aimAtPoint(robot,goalPosition,false, true));
+
+        // go to park
         actions.add(new aimAtPoint(robot, park, false, true));
         actions.add(new basedDrive(robot,park,-1));
+
+        // make sure we are parked
         actions.add(new basedTurn(robot,Math.toRadians(-90)));
-        actions.add(new basedDrive(robot,-4));
+        actions.add(new basedDrive(robot,-5));
     }
 }

@@ -20,7 +20,15 @@ public class driveTest extends baseAuto {
 
         double distance = 50;
         actions.add(new basedDrive(robot, distance));
-        actions.add(new basedDrive(robot, -distance));
+        actions.add(new basedTurn(robot, Math.toRadians(90)));
+        actions.add(new basedDrive(robot, distance));
+        actions.add(new basedTurn(robot, Math.toRadians(180)));
+        actions.add(new basedDrive(robot, distance));
+        actions.add(new basedTurn(robot, Math.toRadians(270)));
+        actions.add(new basedDrive(robot, distance));
+        actions.add(new basedTurn(robot, Math.toRadians(0)));
+
+
 
 
     }

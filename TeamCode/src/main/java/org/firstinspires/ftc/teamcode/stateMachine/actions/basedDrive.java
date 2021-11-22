@@ -1,21 +1,17 @@
 package org.firstinspires.ftc.teamcode.stateMachine.actions;
 
 import com.acmerobotics.roadrunner.profile.MotionProfile;
-import com.acmerobotics.roadrunner.profile.MotionProfileBuilder;
 import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.basedControl.basedControl;
+import org.firstinspires.ftc.teamcode.basedControl.controller;
 import org.firstinspires.ftc.teamcode.basedControl.controllerCoefficients;
 import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
-import org.firstinspires.ftc.teamcode.filter.LowPassFilter;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
 import org.firstinspires.ftc.teamcode.subsystems.dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
-
-import java.util.Vector;
 
 import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
 
@@ -28,11 +24,12 @@ public class basedDrive implements action {
 	protected robot robot;
 	protected Vector3D initialPosition;
 
-	protected basedControl turnPid;
-	protected basedControl drivePid;
+	protected controller turnPid;
+	protected controller drivePid;
 	protected PIDFCoefficients turnCoefficients;
 	protected PIDFCoefficients driveCoefficients;
 	protected Vector3D targetPosition = null;
+	protected double additionalDistance = 0;
 
 	ElapsedTime timer = new ElapsedTime();
 
@@ -54,7 +51,7 @@ public class basedDrive implements action {
 	 *
 	 * Note: this will set the target angle to the initial angle to the target position
 	 *
-	 * also takes in a scalar parameter, often we dont actually want to travel a full distance
+	 * also takes in a scalar parameter, often we don't actually want to travel a full distance
 	 * instead we want to travel a percentage of the target distance, the scalar is used for this.
 	 *
 	 * For example, a scalar of 0.8 will make the robot go 80% of the way to the point
@@ -78,12 +75,27 @@ public class basedDrive implements action {
 		this.targetDistance = scalar;
 		this.targetPosition = targetPosition;
 	}
+	public basedDrive(robot robot, Vector3D targetPosition, double scalar, double additionalDistance) {
+		this.robot = robot;
+		if (isCompBot) {
+			turnCoefficients = controllerCoefficients.compBotDriveCorrect;
+			driveCoefficients = controllerCoefficients.compBotDrive;
+		} else {
+			turnCoefficients = controllerCoefficients.protoBotDriveCorrect;
+			driveCoefficients = controllerCoefficients.protoBotDrive;
+		}
+		this.targetDistance = scalar;
+
+		this.targetPosition = targetPosition;
+		this.additionalDistance = additionalDistance * Math.signum(targetDistance);
+
+	}
 
 	@Override
 	public void startAction() {
 		initialPosition = robot.odometry.subsystemState();
-		turnPid = new basedControl(turnCoefficients, initialPosition.getAngleRadians(), 3, 0.004, Math.toRadians(1));
-		drivePid = new basedControl(driveCoefficients, Math.abs(targetDistance), 3, 0.3, 1);
+		turnPid = new controller(turnCoefficients, initialPosition.getAngleRadians(), 3, 0.004, Math.toRadians(1));
+		drivePid = new controller(driveCoefficients, Math.abs(targetDistance), 3, 0.3, 1);
 		if (targetPosition != null) {
 
 			Vector3D positionError = targetPosition.getError(initialPosition);
@@ -100,6 +112,8 @@ public class basedDrive implements action {
 				turnPid.setReference(omega2);
 			}
 		}
+
+		this.targetDistance += additionalDistance;
 		if (isCompBot) {
 			profile = MotionProfileGenerator.generateSimpleMotionProfile(
 					new MotionState(0,0,0),
@@ -132,7 +146,7 @@ public class basedDrive implements action {
 		double turn = turnPid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
 
 		robot.driveTrain.robotRelative(drive, turn);
-		isComplete = (drivePid.isComplete() || drivePid.isVeryStable()) && profile.duration() < timer.seconds();
+		isComplete = ((drivePid.isComplete() || drivePid.isVeryStable()) || drivePid.isBasicallyStopped()) && profile.duration() < timer.seconds();
 
 
 		dashboard.packet.put("distance traveled", distance);

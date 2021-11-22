@@ -11,7 +11,6 @@ public class findStaticFrictionTurn implements action {
 	double iteration = 0.0005;
 	boolean isComplete = false;
 	Vector3D initialPosition;
-	double validDistance = 0.05;
 
 	public findStaticFrictionTurn(robot robot) {
 		this.robot = robot;
@@ -27,7 +26,7 @@ public class findStaticFrictionTurn implements action {
 
 		robot.driveTrain.setMotorPowers(power, -power);
 		power += iteration;
-		if (robot.getRobotPose().angle.getRadians() > Math.abs(0.1)) {
+		if (robot.getRobotPose().angle.getRadians() > Math.abs(0.17)) {
 			isComplete = true;
 		}
 		dashboard.packet.put("turn power", power);

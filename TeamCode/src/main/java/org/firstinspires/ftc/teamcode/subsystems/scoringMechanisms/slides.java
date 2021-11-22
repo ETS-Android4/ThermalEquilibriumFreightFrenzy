@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.basedControl.basedControl;
+import org.firstinspires.ftc.teamcode.basedControl.controller;
 import org.firstinspires.ftc.teamcode.basedControl.controllerCoefficients;
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
@@ -16,7 +16,7 @@ import homeostasis.utils.state;
 
 public class slides implements subsystem {
 
-	protected basedControl slideController = new basedControl(controllerCoefficients.slideCoefficients, 0, 5, 0.1, 2);
+	protected controller slideController = new controller(controllerCoefficients.slideCoefficients, 0, 5, 0.1, 2);
 	protected DcMotorPlant slides;
 	protected DcMotorEx left;
 	protected DcMotorEx right;

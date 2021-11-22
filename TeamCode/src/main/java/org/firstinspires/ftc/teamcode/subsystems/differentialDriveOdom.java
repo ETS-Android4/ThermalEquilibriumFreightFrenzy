@@ -34,7 +34,6 @@ public class differentialDriveOdom implements subsystem {
 	double xDot = 0;
 	protected long counter = 0;
 
-	LowPassFilter pitchFilter = new LowPassFilter(0.5);
 
 
 	double angularVelocity = 0;
@@ -96,7 +95,7 @@ public class differentialDriveOdom implements subsystem {
 		// we need some second order dynamics imo (in my option)
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
-		if (counter % 3 == 0) {
+		if (counter % 5 == 0) {
 			updateIMU();
 			positionEstimate.setAngleRad(IMU_angle);
 		}

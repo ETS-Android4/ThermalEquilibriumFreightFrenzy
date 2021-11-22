@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.stateMachine.actions;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.basedControl.basedControl;
+import org.firstinspires.ftc.teamcode.basedControl.controller;
 import org.firstinspires.ftc.teamcode.basedControl.controllerCoefficients;
 import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.stateMachine.action;
@@ -14,13 +14,12 @@ import static org.firstinspires.ftc.teamcode.subsystems.robot.isCompBot;
 public class basedTurn implements action {
 
 	robot robot;
-	basedControl pid;
+	controller pid;
 
 	PIDFCoefficients coefficients;
 	double targetAngle;
 	boolean isComplete = false;
 	ElapsedTime timer = new ElapsedTime();
-	double timeout = 3;
 
 	public basedTurn(robot robot, double targetAngle) {
 		this.robot = robot;
@@ -34,7 +33,7 @@ public class basedTurn implements action {
 
 	@Override
 	public void startAction() {
-		pid = new basedControl(coefficients, targetAngle, 3, 0.04, Math.toRadians(1));
+		pid = new controller(coefficients, targetAngle, 3, 0.04, Math.toRadians(1));
 
 		timer.reset();
 	}
@@ -45,7 +44,7 @@ public class basedTurn implements action {
 		robot.driveTrain.robotRelative(0, output);
 		dashboard.packet.put("power",output);
 		dashboard.packet.put("error",pid.getError());
-		isComplete = (pid.isComplete()) && pid.isStable();
+		isComplete = ((pid.isComplete()) && pid.isStable()) || pid.isBasicallyStopped();
 	}
 
 	@Override

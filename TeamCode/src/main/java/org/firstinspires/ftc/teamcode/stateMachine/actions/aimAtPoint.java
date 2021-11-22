@@ -4,7 +4,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.basedControl.basedControl;
+import org.firstinspires.ftc.teamcode.basedControl.controller;
 import org.firstinspires.ftc.teamcode.basedControl.controllerCoefficients;
 import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
@@ -27,7 +27,7 @@ public class aimAtPoint implements action {
     private boolean isWithinTolerance = false;
     private final boolean reverseAngle;
 
-    private basedControl controller;
+    private org.firstinspires.ftc.teamcode.basedControl.controller controller;
 
 
     /**
@@ -120,7 +120,7 @@ public class aimAtPoint implements action {
         } else {
             coefficients = controllerCoefficients.protoBotTurn;
         }
-        this.controller = new basedControl(coefficients, 0, 3, 0.004, Math.toRadians(1));
+        this.controller = new controller(coefficients, 0, 3, 0.004, Math.toRadians(1));
 
     }
 }

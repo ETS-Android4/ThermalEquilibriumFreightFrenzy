@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.utils.RingBuffer;
 
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 
-public class basedControl {
+public class controller {
 
 	// coefficients of the controller
 	protected PIDFCoefficients coefficients;
@@ -52,7 +52,7 @@ public class basedControl {
 	 * @param bufferLength        how long our buffer should be
 	 * @param stability_threshold how stable our derivative needs to be inorder to stop
 	 */
-	public basedControl(PIDFCoefficients coefficients, double reference, int bufferLength, double stability_threshold, double exitTolerance) {
+	public controller(PIDFCoefficients coefficients, double reference, int bufferLength, double stability_threshold, double exitTolerance) {
 		this.reference = reference;
 		this.bufferLength = bufferLength;
 		this.stability_threshold = stability_threshold;
@@ -160,6 +160,9 @@ public class basedControl {
 		return Math.abs(stability_threshold / 4) > Math.abs(derivative);
 	}
 
+	public boolean isBasicallyStopped() {
+		return Math.abs(derivative) < 1e-4;
+	}
 	/**
 	 * conditions for if we should integrate
 	 * @return true if we should integrate
