@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.vision;
 
 
+
+import com.acmerobotics.dashboard.config.Config;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -12,10 +15,20 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
 
+@Config
 public class ContourPipeline extends OpenCvPipeline {
 	private Mat alternateColorSpace = new Mat();
-	public Scalar lower = new Scalar(0,0,0);
-	public Scalar higher = new Scalar(255,255,255);
+
+	public static Scalar lower = new Scalar(123.4,145.0,0);
+	public static Scalar higher = new Scalar(255,255,82.3);
+
+	public static double low1 = 90;
+	public static double low2 = 140;
+	public static double low3 = 100;
+	public static double high1 = 109;
+	public static double high2 = 190;
+	public static double high3 = 110;
+
 	private Mat maskedInputMat = new Mat();
 	private Mat binaryMat      = new Mat();
 
@@ -25,6 +38,9 @@ public class ContourPipeline extends OpenCvPipeline {
 
 	@Override
 	public Mat processFrame(Mat input) {
+
+		lower = new Scalar(low1,low2,low3);
+		higher = new Scalar(high1, high2, high3);
 
 		int columns = input.cols();
 
@@ -49,25 +65,30 @@ public class ContourPipeline extends OpenCvPipeline {
 		double largestContourSize = 0;
 		int largestContourIndex = 0;
 		for (int i = 0; i < contours.size(); ++i) {
+
 			double area = Imgproc.contourArea(contours.get(i));
 			if (area > largestContourSize) {
 				largestContourSize = area;
 				largestContourIndex = i;
 			}
 		}
-		MatOfPoint largestContour = contours.get(largestContourIndex);
-		Rect rectangle = Imgproc.boundingRect(largestContour);
-		Imgproc.drawContours(input,contours,largestContourIndex,new Scalar(255,0,0));
-		Imgproc.rectangle(input,rectangle,new Scalar(0,255,255));
-		int boundingBoxPosition = rectangle.x;
-		if (boundingBoxPosition < left) {
-			TSEPosition = position.LEFT;
-		} else if (boundingBoxPosition > left && boundingBoxPosition < right) {
-			TSEPosition = position.MIDDLE;
-		} else {
-			TSEPosition = position.RIGHT;
+		try {
+			MatOfPoint largestContour = contours.get(largestContourIndex);
+			Rect rectangle = Imgproc.boundingRect(largestContour);
+			Imgproc.drawContours(input,contours,largestContourIndex,new Scalar(255,0,0));
+			Imgproc.rectangle(input,rectangle,new Scalar(0,255,255));
+			int boundingBoxPosition = rectangle.x;
+			if (boundingBoxPosition < left) {
+				TSEPosition = position.LEFT;
+			} else if (boundingBoxPosition > left && boundingBoxPosition < right) {
+				TSEPosition = position.MIDDLE;
+			} else {
+				TSEPosition = position.RIGHT;
+			}
+			Imgproc.putText(input,"" + TSEPosition,new Point(rectangle.x - 30,rectangle.y - 20),2,1,new Scalar(255,0,0));
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("out of bounds exception was caught, try extending the detection tolerances");
 		}
-		Imgproc.putText(input,"" + TSEPosition,new Point(rectangle.x - 30,rectangle.y - 20),2,1,new Scalar(255,0,0));
 
 		return input;
 	}
@@ -78,5 +99,8 @@ public class ContourPipeline extends OpenCvPipeline {
 		RIGHT
 	}
 
+	public position getTSEPosition() {
+		return TSEPosition;
+	}
 
 }

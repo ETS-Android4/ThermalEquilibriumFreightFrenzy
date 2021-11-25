@@ -29,6 +29,9 @@ public class robot {
 
     public dashboard dashBoard = new dashboard();
 
+    public DuckDetection duckDetection = new DuckDetection(dashBoard);
+
+
 
     public differentialDriveOdom odometry = new differentialDriveOdom();
 
@@ -53,9 +56,11 @@ public class robot {
         driveTrain.init(hwmap);
         dashBoard.init(hwmap);
         odometry.init(hwmap);
+        duckDetection.init(hwmap);
         subsystems.add(driveTrain);
         subsystems.add(dashBoard);
         subsystems.add(odometry);
+        subsystems.add(duckDetection);
     }
 
     /**

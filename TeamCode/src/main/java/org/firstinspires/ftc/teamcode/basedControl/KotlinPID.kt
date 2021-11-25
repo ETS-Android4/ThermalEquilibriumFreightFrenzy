@@ -20,19 +20,21 @@ class KotlinPID(var coefficients: PIDFCoefficients, var reference: Double) {
         computeIntegral(dt)
         computeDerivative(dt)
         timer.reset()
-        return output()
+        return output
     }
 
     private fun computeError(reference: Double, state: Double) : Double = reference - state
 
     private fun computeIntegral(dt: Double) {
-        integral += error * dt;
+        integral += error * dt
     }
 
     private fun computeDerivative(dt: Double) {
         derivative = (error - lastError) / dt
     }
 
-    private fun output() = error * coefficients.Kp + integral * coefficients.Ki + derivative * coefficients.Kd
+
+    private val output
+        get() = error * coefficients.Kp + integral * coefficients.Ki + derivative * coefficients.Kd
 }
 
