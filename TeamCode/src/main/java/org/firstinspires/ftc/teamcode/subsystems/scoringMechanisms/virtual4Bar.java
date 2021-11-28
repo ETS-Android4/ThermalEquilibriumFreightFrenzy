@@ -12,7 +12,7 @@ public class virtual4Bar implements subsystem {
 	protected final double IN = 0.08;
 	protected final double LOW = 0.5;
 	protected final double MID = 0.5;
-	protected final double HIGH = 0.8;
+	protected final double HIGH = 0.84;
 	protected Servo left;
 	protected Servo right;
 	protected deposit.depositStates state = deposit.depositStates.IN;
