@@ -37,7 +37,7 @@ public class commandDeposit implements teleopAction {
 
 	protected Vector3D poseAtRelease = new Vector3D();
 
-	protected final double  DISTANCE_FOR_SLIDES_DOWN = 7;
+	protected final double DISTANCE_FOR_SLIDES_DOWN = 3.5;
 
 	public commandDeposit(robot robot, Gamepad gamepad1, Gamepad gamepad2) {
 		this.robot = robot;

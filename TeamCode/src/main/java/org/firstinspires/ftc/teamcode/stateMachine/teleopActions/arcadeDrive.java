@@ -11,6 +11,9 @@ public class arcadeDrive implements teleopAction {
 	protected Gamepad gamepad1;
 	protected Gamepad gamepad2;
 
+	protected double scalar = 1;
+	protected final double slow_scalar = 0.5;
+
 	public arcadeDrive(robot robot, Gamepad gamepad1, Gamepad gamepad2) {
 		this.robot = robot;
 		this.gamepad1 = gamepad1;
@@ -24,7 +27,13 @@ public class arcadeDrive implements teleopAction {
 
 	@Override
 	public void periodic() {
-		robot.driveTrain.robotRelative(-gamepad1.right_stick_y, gamepad1.left_stick_x);
+		if (slowModeButton()) {
+			scalar = slow_scalar;
+		} else {
+			scalar = 1;
+		}
+		robot.driveTrain.robotRelative(-gamepad1.right_stick_y * scalar,
+				                      gamepad1.left_stick_x * scalar);
 	}
 
 	@Override
@@ -59,5 +68,9 @@ public class arcadeDrive implements teleopAction {
 				+ Math.abs(gamepad1.right_stick_x);
 
 		return joystickTotal > 0.05;
+	}
+
+	public boolean slowModeButton() {
+		return gamepad1.right_bumper;
 	}
 }
