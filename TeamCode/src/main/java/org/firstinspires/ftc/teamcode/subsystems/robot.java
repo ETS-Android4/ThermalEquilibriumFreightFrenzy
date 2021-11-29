@@ -32,7 +32,6 @@ public class robot {
     //public DuckDetection duckDetection = new DuckDetection(dashBoard);
 
 
-
     public differentialDriveOdom odometry = new differentialDriveOdom();
 
 

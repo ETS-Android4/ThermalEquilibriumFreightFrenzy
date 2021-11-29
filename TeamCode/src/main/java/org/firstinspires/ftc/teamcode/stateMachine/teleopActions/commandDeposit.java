@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.stateMachine.teleopActions;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.humanInteraction.ButtonPress;
 import org.firstinspires.ftc.teamcode.stateMachine.teleopAction;
 import org.firstinspires.ftc.teamcode.subsystems.robot;
@@ -33,6 +34,10 @@ public class commandDeposit implements teleopAction {
 
 	protected ButtonPress depositButton = new ButtonPress();
 	protected ButtonPress intakeButton = new ButtonPress();
+
+	protected Vector3D poseAtRelease = new Vector3D();
+
+	protected final double  DISTANCE_FOR_SLIDES_DOWN = 7;
 
 	public commandDeposit(robot robot, Gamepad gamepad1, Gamepad gamepad2) {
 		this.robot = robot;
@@ -87,9 +92,10 @@ public class commandDeposit implements teleopAction {
 			case AT_MID:
 			case AT_LOW:
 				transitionToDeposit();
+				poseAtRelease = robot.getRobotPose();
 				break;
 			case DEPOSITING:
-				if (depositButton.release()) {
+				if (robot.getRobotPose().distanceToPose(poseAtRelease) > DISTANCE_FOR_SLIDES_DOWN) {
 					state = GOING_IN;
 					timer.reset();
 				}
