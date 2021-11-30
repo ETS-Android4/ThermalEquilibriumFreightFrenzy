@@ -174,6 +174,14 @@ public class drivetrain implements subsystem {
         double rightPower = xSpeed - turnSpeed;
         setMotorPowersRaw(leftPower, rightPower);
     }
+
+    public void robotRelativeRawClipped(double xSpeed, double turnSpeed, double max) {
+        xSpeed = Range.clip(xSpeed,-max,max);
+        turnSpeed = Range.clip(turnSpeed,-max,max);
+        double leftPower = xSpeed + turnSpeed;
+        double rightPower = xSpeed - turnSpeed;
+        setMotorPowersRaw(leftPower, rightPower);
+    }
     public void STOP() {
         setMotorPowers(0,0);
     }

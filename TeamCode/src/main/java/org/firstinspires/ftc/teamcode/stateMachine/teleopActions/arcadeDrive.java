@@ -32,8 +32,8 @@ public class arcadeDrive implements teleopAction {
 		} else {
 			scalar = 1;
 		}
-		robot.driveTrain.robotRelativeRaw(-gamepad1.right_stick_y * scalar,
-				 					     gamepad1.left_stick_x * scalar);
+		robot.driveTrain.robotRelativeRawClipped(-gamepad1.right_stick_y,
+				 					     gamepad1.left_stick_x,scalar);
 	}
 
 	@Override
