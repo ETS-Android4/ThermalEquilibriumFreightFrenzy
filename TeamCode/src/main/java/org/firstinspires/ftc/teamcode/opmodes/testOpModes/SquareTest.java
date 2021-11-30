@@ -18,7 +18,7 @@ public class SquareTest extends BaseAuto {
     @Override
     public void addActions() {
 
-        double distance = 50;
+        double distance = 20;
         actions.add(new Drive(robot, distance));
         actions.add(new Turn(robot, Math.toRadians(90)));
         actions.add(new Drive(robot, distance));

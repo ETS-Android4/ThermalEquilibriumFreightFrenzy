@@ -40,13 +40,7 @@ public class Drive implements action {
 	public Drive(Robot robot, double targetDistance) {
 		this.robot = robot;
 		this.targetDistance = targetDistance;
-		if (isCompBot) {
-			turnCoefficients = controllerCoefficients.compBotDriveCorrect;
-			driveCoefficients = controllerCoefficients.compBotDrive;
-		} else {
-			turnCoefficients = controllerCoefficients.protoBotDriveCorrect;
-			driveCoefficients = controllerCoefficients.protoBotDrive;
-		}
+		initializeCoefficients();
 	}
 
 	/**
@@ -68,71 +62,29 @@ public class Drive implements action {
 	 */
 	public Drive(Robot robot, Vector3D targetPosition, double scalar) {
 		this.robot = robot;
-		if (isCompBot) {
-			turnCoefficients = controllerCoefficients.compBotDriveCorrect;
-			driveCoefficients = controllerCoefficients.compBotDrive;
-		} else {
-			turnCoefficients = controllerCoefficients.protoBotDriveCorrect;
-			driveCoefficients = controllerCoefficients.protoBotDrive;
-		}
+		initializeCoefficients();
 		this.targetDistance = scalar;
 		this.targetPosition = targetPosition;
 	}
 	public Drive(Robot robot, Vector3D targetPosition, double scalar, double additionalDistance) {
 		this.robot = robot;
-		if (isCompBot) {
-			turnCoefficients = controllerCoefficients.compBotDriveCorrect;
-			driveCoefficients = controllerCoefficients.compBotDrive;
-		} else {
-			turnCoefficients = controllerCoefficients.protoBotDriveCorrect;
-			driveCoefficients = controllerCoefficients.protoBotDrive;
-		}
+		initializeCoefficients();
 		this.targetDistance = scalar;
-
 		this.targetPosition = targetPosition;
 		this.additionalDistance = additionalDistance * Math.signum(targetDistance);
 
 	}
+
+
 
 	@Override
 	public void startAction() {
 		initialPosition = robot.odometry.subsystemState();
 		turnPid = new RobustPID(turnCoefficients, initialPosition.getAngleRadians(), 3, 0.004, Math.toRadians(1));
 		drivePid = new RobustPID(driveCoefficients, Math.abs(targetDistance), 3, 0.3, 1);
-		if (targetPosition != null) {
-
-			Vector3D positionError = targetPosition.getError(initialPosition);
-			double omega1 = Math.atan2(positionError.getY(),positionError.getX());
-			double omega2 = Math.atan2(positionError.getY(),positionError.getX()) - Math.toRadians(180);
-
-			this.targetDistance = Math.abs(this.targetPosition.distanceToPose(initialPosition)) * this.targetDistance;
-			drivePid.setReference(Math.abs(this.targetDistance));
-
-			if (this.targetDistance > 0) {
-				turnPid.setReference(omega1);
-			}
-			else {
-				turnPid.setReference(omega2);
-			}
-		}
-
+		initializeTargetAngle();
 		this.targetDistance += additionalDistance;
-		if (isCompBot) {
-			profile = MotionProfileGenerator.generateSimpleMotionProfile(
-					new MotionState(0,0,0),
-					new MotionState(Math.abs(this.targetDistance),0,0),
-					controllerCoefficients.compBotVelocity,
-					controllerCoefficients.compBotAcceleration,
-					controllerCoefficients.compBotJerk);
-		} else {
-			profile = MotionProfileGenerator.generateSimpleMotionProfile(
-					new MotionState(0,0,0),
-					new MotionState(Math.abs(this.targetDistance),0,0),
-					controllerCoefficients.protoBotJerk,
-					controllerCoefficients.protoBotAcceleration,
-					controllerCoefficients.protoBotJerk);
-		}
-
+		generateMotionProfile();
 		timer = new ElapsedTime();
 		timer.reset();
 	}
@@ -153,8 +105,7 @@ public class Drive implements action {
 
 
 		Dashboard.packet.put("distance traveled", distance);
-
-		Dashboard.packet.put("target ", targetDistProfile);
+		Dashboard.packet.put("target distance", targetDistProfile);
 
 	}
 
@@ -173,5 +124,52 @@ public class Drive implements action {
 	@Override
 	public boolean isActionPersistent() {
 		return true;
+	}
+
+
+	public void generateMotionProfile() {
+		if (isCompBot) {
+			profile = MotionProfileGenerator.generateSimpleMotionProfile(
+					new MotionState(0,0,0),
+					new MotionState(Math.abs(this.targetDistance),0,0),
+					controllerCoefficients.compBotVelocity,
+					controllerCoefficients.compBotAcceleration,
+					controllerCoefficients.compBotJerk);
+		} else {
+			profile = MotionProfileGenerator.generateSimpleMotionProfile(
+					new MotionState(0,0,0),
+					new MotionState(Math.abs(this.targetDistance),0,0),
+					controllerCoefficients.protoBotVelocity,
+					controllerCoefficients.protoBotAcceleration,
+					controllerCoefficients.protoBotJerk);
+		}
+	}
+
+	public void initializeCoefficients() {
+		if (isCompBot) {
+			turnCoefficients = controllerCoefficients.compBotDriveCorrect;
+			driveCoefficients = controllerCoefficients.compBotDrive;
+		} else {
+			turnCoefficients = controllerCoefficients.protoBotDriveCorrect;
+			driveCoefficients = controllerCoefficients.protoBotDrive;
+		}
+	}
+
+	public void initializeTargetAngle() {
+		if (targetPosition != null) {
+
+			Vector3D positionError = targetPosition.getError(initialPosition);
+			double omega1 = Math.atan2(positionError.getY(),positionError.getX());
+			double omega2 = Math.atan2(positionError.getY(),positionError.getX()) - Math.toRadians(180);
+			this.targetDistance = Math.abs(this.targetPosition.distanceToPose(initialPosition)) * this.targetDistance;
+			drivePid.setReference(Math.abs(this.targetDistance));
+
+			if (this.targetDistance > 0) {
+				turnPid.setReference(omega1);
+			}
+			else {
+				turnPid.setReference(omega2);
+			}
+		}
 	}
 }

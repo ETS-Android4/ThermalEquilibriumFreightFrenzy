@@ -19,13 +19,13 @@ import static org.firstinspires.ftc.teamcode.subsystems.Robot.isCompBot;
  */
 public class AimAtPoint implements action {
 
-    // 1 degree angle tolerance
     double allowedTimeSeconds = 2;
     Vector3D targetPosition;
     double error;
     boolean reversed;
     double angleOffset;
     ElapsedTime timeout = new ElapsedTime();
+
     double max_power = 0.7;
     private final Robot robot;
     private boolean isWithinTolerance = false;
