@@ -19,9 +19,9 @@ public class Robot {
 
     public VoltageSensor batterVoltageSensor;
 
-    public org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake Intake = new Intake();
+    public Intake Intake = new Intake();
 
-    public org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit Deposit = new Deposit();
+    public Deposit Deposit = new Deposit();
 
     public Drivetrain driveTrain = new Drivetrain(batterVoltageSensor);
 
@@ -35,9 +35,7 @@ public class Robot {
     public DifferentialDriveOdometry odometry = new DifferentialDriveOdometry();
 
 
-    /**
-     * full robot constructor, use for competition deployment
-     */
+
     public Robot() {
 
 
