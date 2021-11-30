@@ -149,8 +149,8 @@ public class drivetrain implements subsystem {
     }
 
     public void setMotorPowersRaw(double left, double right) {
-        left = Range.clip(left,-1,1) * MAX_DRIVE_MOTOR_TPS;
-        right = Range.clip(right,-1,1) * MAX_DRIVE_MOTOR_TPS;
+        left = Range.clip(left,-1,1);
+        right = Range.clip(right,-1,1);
         leftMotorSys.input(left);
         rightMotorSys.input(right);
 
