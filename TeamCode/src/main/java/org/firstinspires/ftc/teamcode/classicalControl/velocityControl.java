@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.classicalControl;
 
-import org.firstinspires.ftc.teamcode.filter.LowPassFilter;
-import org.firstinspires.ftc.teamcode.subsystems.dashboard;
+import org.firstinspires.ftc.teamcode.Filter.LowPassFilter;
+import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 
 import homeostasis.systems.DcMotorPlant;
 
@@ -32,9 +32,9 @@ public class velocityControl {
 		double state = motor.getState().getVelocity();
 		double target = rateLimiter.updateEstimate(targetVelocity);
 		double output = pidController.calculateOutputPFOnly(target, state);
-		dashboard.packet.put("measured velo", state);
-		dashboard.packet.put("rate limited velo", target);
-		dashboard.packet.put("target velo", targetVelocity);
+		Dashboard.packet.put("measured velo", state);
+		Dashboard.packet.put("rate limited velo", target);
+		Dashboard.packet.put("target velo", targetVelocity);
 		motor.input(output * (13.8 / targetVoltage));
 	}
 

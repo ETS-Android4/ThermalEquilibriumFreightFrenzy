@@ -4,8 +4,8 @@ package homeostasis.Filters;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.filter.LowPassFilter;
-import org.firstinspires.ftc.teamcode.subsystems.dashboard;
+import org.firstinspires.ftc.teamcode.Filter.LowPassFilter;
+import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 
 /**
  *
@@ -39,9 +39,9 @@ public class VelocityKalmanFilter extends SISOKalmanFilter {
 
 		timer.reset();
 
-		dashboard.packet.put("d",derivedVelocity);
-		dashboard.packet.put("q",quantized);
-		dashboard.packet.put("e",velocityEstimate);
+		Dashboard.packet.put("d",derivedVelocity);
+		Dashboard.packet.put("q",quantized);
+		Dashboard.packet.put("e",velocityEstimate);
 		System.out.println("quantized: " + quantized + " derived: " + derivedVelocity + " estimated " + velocityEstimate);
 
 		return quantized; // TODO change this back to the velocity estimate once the kalman filter works

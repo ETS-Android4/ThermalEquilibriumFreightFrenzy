@@ -5,9 +5,9 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 
-import static org.firstinspires.ftc.teamcode.subsystems.drivetrain.ROBOT_RADIUS;
+import static org.firstinspires.ftc.teamcode.subsystems.Drivetrain.ROBOT_RADIUS;
 
 public class utils {
 
@@ -17,7 +17,7 @@ public class utils {
      * Makes sure an angle is in the range of -180 to 180
      *
      * @param angle angle we want to unwrap
-     * @return
+     * @return the corrected angle
      */
     public static double AngleWrap(double angle){
         while (angle<-Math.PI){
@@ -32,7 +32,7 @@ public class utils {
     /**
      * Makes sure an angle is in the range of -180 to 180
      * @param degrees angle we want to unwrap
-     * @return
+     * @return the corrected angle in degrees
      */
     public static double AngleWrapDeg(double degrees) {
         while (degrees < -180) {
@@ -53,7 +53,7 @@ public class utils {
     }
 
     /**
-     * angle normalization from roadrunnner
+     * angle normalization from road runner
      * @param radians the angle in radians we want to normalize
      * @return the modified angle in radians
      */

@@ -2,10 +2,10 @@ package org.firstinspires.ftc.teamcode.classicalControl;
 
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.basedControl.controller;
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
-import org.firstinspires.ftc.teamcode.subsystems.dashboard;
-import org.firstinspires.ftc.teamcode.subsystems.robot;
+import org.firstinspires.ftc.teamcode.controls.RobustPID;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
+import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobotGreen;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
@@ -16,20 +16,20 @@ public class DifferentialDriveController {
 	PIDFCoefficients omegaCoefficients = new PIDFCoefficients(0.76, 0, 0.00);
 	PIDFCoefficients driveCoefficients = new PIDFCoefficients(0.65, 0, 0);
 	public static final double MAX_VELO = 75;
-	controller distanceController = new controller(driveCoefficients, 0, 3, 0.3, 1);
-	controller omegaController = new controller(omegaCoefficients, 0, 3, 0.08, Math.toRadians(1));
+	RobustPID distanceController = new RobustPID(driveCoefficients, 0, 3, 0.3, 1);
+	RobustPID omegaController = new RobustPID(omegaCoefficients, 0, 3, 0.08, Math.toRadians(1));
 
 
 	protected double Kp3 = 0.23;
 	protected double Kp6 = 7;
 	protected double threshold = 2;
-	protected robot robot;
+	protected Robot robot;
 	protected double scaler = 0;
 	protected double scalerChangeSize = 0.035;
 
 	protected Vector3D output;
 
-	public DifferentialDriveController(robot robot) {
+	public DifferentialDriveController(Robot robot) {
 		this.robot = robot;
 	}
 
@@ -72,7 +72,7 @@ public class DifferentialDriveController {
 	public boolean driveToPosition(Vector3D position) {
 		output = controllerOutput(position);
 		robot.driveTrain.robotRelative(output.getX(),output.getAngleRadians());
-		drawRobotGreen(position, dashboard.packet);
+		drawRobotGreen(position, Dashboard.packet);
 		return robot.getRobotPose().distanceToPose(position) < threshold + 1.5;
 	}
 

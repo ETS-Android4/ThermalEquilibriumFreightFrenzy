@@ -3,9 +3,9 @@ package org.firstinspires.ftc.teamcode.classicalControl;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.HenoGoat.EasyOnlineMotionProfile;
+import org.firstinspires.ftc.teamcode.MotionProfiling.EasyOnlineMotionProfile;
 import org.firstinspires.ftc.teamcode.WPILIB.TrapezoidProfile;
-import org.firstinspires.ftc.teamcode.subsystems.dashboard;
+import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 
 public class ProfiledPIDController extends NonlinearPID {
 
@@ -76,7 +76,7 @@ public class ProfiledPIDController extends NonlinearPID {
 
 
         profile.updateProfile(reference - state);
-        dashboard.packet.put("motion profiled reference is ",profile.getPosition());
+        Dashboard.packet.put("motion profiled reference is ",profile.getPosition());
         lastReference = reference;
 
         return calculateOutput(profile.getPosition(),state) * scaler;

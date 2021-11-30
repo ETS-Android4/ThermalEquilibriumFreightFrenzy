@@ -2,7 +2,7 @@ package homeostasis.systems.systemIdentification;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import homeostasis.systems.plant;
+import homeostasis.systems.Plant;
 
 import static homeostasis.systems.systemIdentification.findConstraints.measurementStates.END;
 import static homeostasis.systems.systemIdentification.findConstraints.measurementStates.MINIMUM_POWER_TESTING;
@@ -24,7 +24,7 @@ public class findConstraints {
     // for minimum power detection we wait this many milliseconds before iterating
     private long iterationDelayMS = 10;
     // the plant we are characterizing
-    private plant plant;
+    private Plant plant;
     // the speed we need to reach before the minimum power has been obtained
     private double minimumSpeed;
     // current found minimum power
@@ -36,7 +36,7 @@ public class findConstraints {
      * @param plant        the system we are characterizing
      * @param minimumSpeed the minimum speed we need to reach before we conclude minimum power characterization
      */
-    public findConstraints(plant plant, double minimumSpeed) {
+    public findConstraints(Plant plant, double minimumSpeed) {
 
         this.plant = plant;
         this.minimumSpeed = minimumSpeed;
@@ -71,9 +71,7 @@ public class findConstraints {
                 break;
             // find maximum acceleration and velocity
             case ACCEL_VELO_TESTING:
-                if (true) {
                     STATE = END;
-                }
                 break;
             // END case
             case END:

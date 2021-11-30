@@ -3,15 +3,15 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.stateMachine.scheduler;
-import org.firstinspires.ftc.teamcode.subsystems.robot;
+import org.firstinspires.ftc.teamcode.CommandBase.scheduler;
+import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
 import java.util.ArrayList;
 
 @Autonomous
 public class LocalizationTest extends LinearOpMode {
 
-    robot robot = new robot();
+    Robot robot = new Robot();
 
     @Override
     public void runOpMode() {

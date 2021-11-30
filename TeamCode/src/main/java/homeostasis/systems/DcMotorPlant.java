@@ -8,11 +8,11 @@ import com.qualcomm.robotcore.util.Range;
 import java.util.ArrayList;
 
 import homeostasis.Filters.VelocityKalmanFilter;
-import homeostasis.utils.state;
+import homeostasis.utils.State;
 
-public class DcMotorPlant extends plant {
+public class DcMotorPlant extends Plant {
 
-    protected state motorState = new state(0, 0);
+    protected State motorState = new State(0, 0);
 
     protected DcMotorEx motor;
 
@@ -75,8 +75,8 @@ public class DcMotorPlant extends plant {
      * @return system state
      */
     @Override
-    public state getState() {
-        this.motorState = new state(motors.get(0).getCurrentPosition(), velocityObserver.lowPassVelocity());
+    public State getState() {
+        this.motorState = new State(motors.get(0).getCurrentPosition(), velocityObserver.lowPassVelocity());
         return motorState;
     }
 

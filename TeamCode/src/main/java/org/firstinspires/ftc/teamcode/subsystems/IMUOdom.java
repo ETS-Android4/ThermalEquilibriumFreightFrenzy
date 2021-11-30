@@ -3,16 +3,17 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.utils.Quadratic;
 import org.firstinspires.ftc.teamcode.utils.Regression;
 import org.firstinspires.ftc.teamcode.utils.SizedStack;
 
 
+@Deprecated
 public class IMUOdom implements subsystem {
 
 	protected boolean hasRun = false;
-	protected drivetrain drive;
+	protected Drivetrain drive;
 	protected Vector3D imuPos ;
 	protected Vector3D imuPosDelta;
 	protected Vector3D accel;
@@ -22,7 +23,7 @@ public class IMUOdom implements subsystem {
 	private int callCounter = 0;
 
 
-	public IMUOdom (drivetrain drive) {
+	public IMUOdom (Drivetrain drive) {
 		// initialize our accel stacks to be 0
 		accels.add(new Vector3D());
 		accels.add(new Vector3D());

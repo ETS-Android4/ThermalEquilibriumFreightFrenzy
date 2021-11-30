@@ -4,13 +4,14 @@ import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 
 
 import kauailabs.navx.ftc.AHRS;
 
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngleRR;
 
+@Deprecated
 public class navxIMU implements subsystem {
 
 	private AHRS navx_device;

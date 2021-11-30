@@ -11,8 +11,8 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 public class DuckDetection implements subsystem {
 
-	dashboard dash;
-	public DuckDetection(dashboard dashboardInstance) {
+	Dashboard dash;
+	public DuckDetection(Dashboard dashboardInstance) {
 		this.dash = dashboardInstance;
 	}
 

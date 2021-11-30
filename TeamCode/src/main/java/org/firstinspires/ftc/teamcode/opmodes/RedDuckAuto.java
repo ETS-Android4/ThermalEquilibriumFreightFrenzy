@@ -2,14 +2,14 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.baseopmode.baseAuto;
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
-import org.firstinspires.ftc.teamcode.stateMachine.actions.aimAtPoint;
-import org.firstinspires.ftc.teamcode.stateMachine.actions.basedDrive;
-import org.firstinspires.ftc.teamcode.stateMachine.actions.basedTurn;
+import org.firstinspires.ftc.teamcode.TemplateOpModes.BaseAuto;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.CommandBase.actions.aimAtPoint;
+import org.firstinspires.ftc.teamcode.CommandBase.actions.basedDrive;
+import org.firstinspires.ftc.teamcode.CommandBase.actions.basedTurn;
 
 @Autonomous
-public class RedDuckAuto extends baseAuto {
+public class RedDuckAuto extends BaseAuto {
     public Vector3D startPosition = new Vector3D(-39, -56, Math.toRadians(-90));
     public Vector3D goalPosition = new Vector3D(-12, -24, 0);
     public Vector3D carousel = new Vector3D(-72,-72,0);

@@ -18,8 +18,8 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.teamcode.filter.LowPassFilter;
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.Filter.LowPassFilter;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.LynxModuleUtil;
 
 import java.util.Arrays;
@@ -101,8 +101,6 @@ public class SampleTankDrive extends TankDrive {
 
 		setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-		if (RUN_USING_ENCODER && MOTOR_VELO_PID != null) {
-		}
 
 		// TODO: reverse any motors using DcMotor.setDirection()
 
@@ -228,8 +226,6 @@ public class SampleTankDrive extends TankDrive {
 	public Vector3D getIMUAccel() {
 		Acceleration accel = imu.getLinearAcceleration();
 
-
-		//noinspection SuspiciousNameCombination
 		return new Vector3D(accel.xAccel,accel.yAccel,accel.zAccel,0,0).scale(39.3701 * 9.83,false);
 	}
 

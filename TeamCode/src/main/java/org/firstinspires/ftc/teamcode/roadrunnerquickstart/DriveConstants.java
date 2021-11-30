@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
 
-import org.firstinspires.ftc.teamcode.subsystems.drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 
 /*
  * Constants shared between multiple drive types.
@@ -64,8 +64,8 @@ public class DriveConstants {
      * forces acceleration-limited profiling). All distance units are inches.
      */
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
-            drivetrain.MAX_ROBOT_VELOCITY, drivetrain.MAX_ROBOT_ACCELERATION, 0.0,
-            drivetrain.MAX_ANGULAR_VELOCITY, drivetrain.MAX_ANGULAR_ACCELERATION, 0.0
+            Drivetrain.MAX_ROBOT_VELOCITY, Drivetrain.MAX_ROBOT_ACCELERATION, 0.0,
+            Drivetrain.MAX_ANGULAR_VELOCITY, Drivetrain.MAX_ANGULAR_ACCELERATION, 0.0
     );
 
 
