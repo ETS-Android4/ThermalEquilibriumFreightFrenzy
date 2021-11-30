@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 public class Regression {
 
 	/**
-	 * drip too hard 🥶
+	 *
 	 * https://rosettacode.org/wiki/Polynomial_regression#Java
 	 * @param x x inputs, ie time steps
 	 * @param y y inputs, ie values at the time steps
