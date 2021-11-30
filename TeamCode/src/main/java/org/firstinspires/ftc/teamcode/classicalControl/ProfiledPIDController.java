@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.classicalControl;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.MotionProfiling.EasyOnlineMotionProfile;
+import org.firstinspires.ftc.teamcode.motionProfiling.EasyOnlineMotionProfile;
 import org.firstinspires.ftc.teamcode.WPILIB.TrapezoidProfile;
 import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 

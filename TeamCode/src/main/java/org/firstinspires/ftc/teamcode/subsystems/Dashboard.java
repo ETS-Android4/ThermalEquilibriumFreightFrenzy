@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
-import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 
 public class Dashboard implements subsystem {
 

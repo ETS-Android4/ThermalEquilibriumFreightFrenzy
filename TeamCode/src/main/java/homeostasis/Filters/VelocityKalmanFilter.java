@@ -4,7 +4,7 @@ package homeostasis.Filters;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Filter.LowPassFilter;
+import org.firstinspires.ftc.teamcode.filter.LowPassFilter;
 import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 
 /**

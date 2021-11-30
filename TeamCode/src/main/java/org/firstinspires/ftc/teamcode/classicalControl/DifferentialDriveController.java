@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.classicalControl;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.controls.RobustPID;
-import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 

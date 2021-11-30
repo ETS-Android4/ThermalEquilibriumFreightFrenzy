@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Filter.LowPassFilter;
+import org.firstinspires.ftc.teamcode.filter.LowPassFilter;
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 public class Bucket implements subsystem {

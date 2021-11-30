@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Bucket;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
@@ -53,11 +53,9 @@ public class Robot {
         driveTrain.init(hwmap);
         dashBoard.init(hwmap);
         odometry.init(hwmap);
-        //duckDetection.init(hwmap);
         subsystems.add(driveTrain);
         subsystems.add(dashBoard);
         subsystems.add(odometry);
-        //subsystems.add(duckDetection);
     }
 
     /**
@@ -72,7 +70,6 @@ public class Robot {
         Intake.init(hwmap);
         Deposit.init(hwmap);
         bucketSys.init(hwmap);
-
         subsystems.add(bucketSys);
         subsystems.add(Intake);
         subsystems.add(Deposit);

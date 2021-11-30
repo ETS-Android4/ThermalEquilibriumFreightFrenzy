@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 
 import static org.firstinspires.ftc.teamcode.subsystems.Robot.isCompBot;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobot;

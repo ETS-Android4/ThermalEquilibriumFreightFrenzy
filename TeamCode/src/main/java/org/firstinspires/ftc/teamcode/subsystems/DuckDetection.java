@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.vision.ContourPipeline;
+import org.firstinspires.ftc.teamcode.vision.TSEContourPipeline;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -17,7 +17,7 @@ public class DuckDetection implements subsystem {
 	}
 
 	OpenCvWebcam webcam;
-	ContourPipeline pipeline = new ContourPipeline();
+	TSEContourPipeline pipeline = new TSEContourPipeline();
 
 	@Override
 	public void init(HardwareMap hwmap) {
@@ -56,7 +56,7 @@ public class DuckDetection implements subsystem {
 	}
 
 	@Override
-	public ContourPipeline.position subsystemState() {
+	public TSEContourPipeline.position subsystemState() {
 		return pipeline.getTSEPosition();
 	}
 
