@@ -153,7 +153,6 @@ public class drivetrain implements subsystem {
         right = Range.clip(right,-1,1);
         leftMotorSys.input(left);
         rightMotorSys.input(right);
-
     }
 
     /**

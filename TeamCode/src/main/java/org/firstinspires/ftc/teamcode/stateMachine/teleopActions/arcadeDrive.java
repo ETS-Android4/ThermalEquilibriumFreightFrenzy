@@ -27,8 +27,8 @@ public class arcadeDrive implements teleopAction {
 
 	@Override
 	public void periodic() {
-		if (slowModeButton()) {
-			scalar = slow_scalar;
+		if (gamepad1.right_bumper) {
+			scalar = 0.5;
 		} else {
 			scalar = 1;
 		}
@@ -70,7 +70,5 @@ public class arcadeDrive implements teleopAction {
 		return joystickTotal > 0.05;
 	}
 
-	public boolean slowModeButton() {
-		return gamepad1.right_bumper;
-	}
+
 }
