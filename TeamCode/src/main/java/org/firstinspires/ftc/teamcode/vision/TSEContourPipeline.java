@@ -22,12 +22,12 @@ public class TSEContourPipeline extends OpenCvPipeline {
 	public static Scalar lower = new Scalar(123.4,145.0,0);
 	public static Scalar higher = new Scalar(255,255,82.3);
 
-	public static double low1 = 90;
-	public static double low2 = 140;
-	public static double low3 = 100;
-	public static double high1 = 109;
-	public static double high2 = 190;
-	public static double high3 = 110;
+	public static double low1 = 65;
+	public static double low2 = 60;
+	public static double low3 = 90;
+	public static double high1 = 180;
+	public static double high2 = 120;
+	public static double high3 = 120;
 
 	private Mat maskedInputMat = new Mat();
 	private Mat binaryMat      = new Mat();

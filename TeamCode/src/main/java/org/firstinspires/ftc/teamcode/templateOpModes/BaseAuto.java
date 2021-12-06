@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.commandBase.action;
 import org.firstinspires.ftc.teamcode.commandBase.Scheduler;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
+import org.firstinspires.ftc.teamcode.vision.TSEContourPipeline;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ public abstract class BaseAuto extends LinearOpMode {
 	protected ArrayList<action> actions = new ArrayList<>();
 	protected Vector3D startingPosition = new Vector3D();
 
+	protected TSEContourPipeline.position TSEPosition = TSEContourPipeline.position.RIGHT;
 
 	public abstract void setStartingPosition();
 
@@ -33,12 +35,18 @@ public abstract class BaseAuto extends LinearOpMode {
 			robot.initMinimal(hardwareMap);
 		}
 
-		addActions();
 		setStartingPosition();
 
-		Scheduler scheduler = new Scheduler(hardwareMap, actions, robot.getSubsystems());
+		while (!isStopRequested() && !isStarted() && isCompBot) {
+			TSEPosition = robot.duckDetection.subsystemState();
+		}
+
 
 		waitForStart();
+		System.out.println("Final detected position was " + TSEPosition);
+
+		addActions();
+		Scheduler scheduler = new Scheduler(hardwareMap, actions, robot.getSubsystems());
 
 		while (opModeIsActive()) {
 			scheduler.updateStateMachineAndRobot();

@@ -57,9 +57,6 @@ public class Bucket implements subsystem {
 	 * @param position servo position
 	 */
 	protected void setPosition(double position) {
-		if (position != IN) {
-			position = filter.updateEstimate(position);
-		}
 
 		if (position != lastPosition) {
 			bucketServo.setPosition(position);

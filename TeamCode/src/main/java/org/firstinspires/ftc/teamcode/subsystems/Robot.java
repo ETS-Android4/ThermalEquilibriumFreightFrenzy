@@ -15,7 +15,7 @@ public class Robot {
     private final ArrayList<subsystem> subsystems = new ArrayList<>();
 
 
-    public final static boolean isCompBot = false;
+    public final static boolean isCompBot = true;
 
     public VoltageSensor batterVoltageSensor;
 
@@ -29,9 +29,9 @@ public class Robot {
 
     public Dashboard dashBoard = new Dashboard();
 
-    //public DuckDetection duckDetection = new DuckDetection(dashBoard);
+    public DuckDetection duckDetection = new DuckDetection(dashBoard);
 
-
+    public DuckWheel duckwheel = new DuckWheel();
     public DifferentialDriveOdometry odometry = new DifferentialDriveOdometry();
 
 
@@ -70,9 +70,13 @@ public class Robot {
         Intake.init(hwmap);
         Deposit.init(hwmap);
         bucketSys.init(hwmap);
+        duckDetection.init(hwmap);
+        duckwheel.init(hwmap);
         subsystems.add(bucketSys);
         subsystems.add(Intake);
         subsystems.add(Deposit);
+        subsystems.add(duckDetection);
+        subsystems.add(duckwheel);
     }
 
     /**

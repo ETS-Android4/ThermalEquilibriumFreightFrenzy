@@ -92,7 +92,7 @@ public class DifferentialDriveOdometry implements subsystem {
 
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
-		if (counter % 2 == 0) {
+		if (true){// (counter % 2 == 0) {
 			updateIMU();
 			positionEstimate.setAngleRad(IMU_angle);
 		}

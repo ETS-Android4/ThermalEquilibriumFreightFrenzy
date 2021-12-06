@@ -18,9 +18,9 @@ public class controllerCoefficients {
 	public static final PIDFCoefficients slideCoefficients = new PIDFCoefficients(0.007, 0.08, 0);
 
 
-	public static final double compBotVelocity = 100;
-	public static final double compBotAcceleration = 100;
-	public static final double compBotJerk = 250;
+	public static final double compBotVelocity = 70;
+	public static final double compBotAcceleration = 50;
+	public static final double compBotJerk = 100;
 	public static final double protoBotVelocity = 100;
 	public static final double protoBotAcceleration = 100;
 	public static final double protoBotJerk = 250;
