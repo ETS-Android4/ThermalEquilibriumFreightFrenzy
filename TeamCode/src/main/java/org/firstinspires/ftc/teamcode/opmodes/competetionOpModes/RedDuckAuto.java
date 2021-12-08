@@ -31,28 +31,6 @@ public class RedDuckAuto extends BaseAuto {
 
     @Override
     public void addActions() {
-//        // drive to goal to deposit
-//        actions.add(new basedDrive(robot,goalPosition,-0.6));
-//        actions.add(new aimAtPoint(robot,goalPosition,false, true));
-//
-//        // drive to carousel
-//        actions.add(new aimAtPoint(robot,carousel,false,false));
-//        actions.add(new basedDrive(robot,carousel,0.5));
-//
-//        // collect duck
-//        actions.add(new basedTurn(robot, startPosition.getAngleRadians()));
-//
-//        // deposit the duck
-//        actions.add(new basedDrive(robot,goalPosition,-0.6));
-//        actions.add(new aimAtPoint(robot,goalPosition,false, true));
-//
-//        // go to park
-//        actions.add(new aimAtPoint(robot, park, false, true));
-//        actions.add(new basedDrive(robot,park,-1));
-//
-//        // make sure we are parked
-//        actions.add(new basedTurn(robot,Math.toRadians(-90)));
-//        actions.add(new basedDrive(robot,-5));
 
         // deploy slides
         actions.add(new GoToHighDeposit(robot));
