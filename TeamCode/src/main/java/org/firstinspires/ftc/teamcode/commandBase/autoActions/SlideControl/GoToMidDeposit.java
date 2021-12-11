@@ -8,6 +8,8 @@ import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
 
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_HIGH;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_LOW;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_MID;
 
 public class GoToMidDeposit implements action {
 	protected boolean isComplete = false;
@@ -46,17 +48,21 @@ public class GoToMidDeposit implements action {
 				timer.reset();
 				break;
 			case GOING_TO_MID:
+				if (robot.Deposit.tolerantEnoughForDeploy()) {
+					state = AT_MID;
+				}
 				break;
 			case GOING_TO_LOW:
+				if (robot.Deposit.tolerantEnoughForDeploy()) {
+					state = AT_LOW;
+				}
 				break;
 			case AT_HIGH:
+			case AT_MID:
+			case AT_LOW:
 				if (timer.milliseconds() > TIME_FOR_COMPLETION) {
 					isComplete = true;
 				}
-				break;
-			case AT_MID:
-				break;
-			case AT_LOW:
 				break;
 			case DEPOSITING:
 				break;

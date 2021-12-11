@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Bucket;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.TapeTurret;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class Robot {
     public DuckWheel duckwheel = new DuckWheel();
     public DifferentialDriveOdometry odometry = new DifferentialDriveOdometry();
 
-
+    public TapeTurret turret = new TapeTurret();
 
     public Robot() {
 
@@ -72,11 +73,13 @@ public class Robot {
         bucketSys.init(hwmap);
         duckDetection.init(hwmap);
         duckwheel.init(hwmap);
+        turret.init(hwmap);
         subsystems.add(bucketSys);
         subsystems.add(Intake);
         subsystems.add(Deposit);
         subsystems.add(duckDetection);
         subsystems.add(duckwheel);
+        subsystems.add(turret);
     }
 
     /**

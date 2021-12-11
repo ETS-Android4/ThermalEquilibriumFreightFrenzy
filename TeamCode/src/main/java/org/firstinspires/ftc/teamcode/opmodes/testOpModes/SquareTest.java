@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes.testOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
-import org.firstinspires.ftc.teamcode.commandBase.autoActions.Drive;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.Drive;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.Turn;
 
 

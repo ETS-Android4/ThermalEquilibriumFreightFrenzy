@@ -2,17 +2,19 @@ package org.firstinspires.ftc.teamcode.opmodes.competetionOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.commandBase.autoActions.Delay;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.Misc.Delay;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.DepositFreight;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToBottomDeposit;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToHighDeposit;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToInState;
-import org.firstinspires.ftc.teamcode.commandBase.autoActions.TurnOnIntake;
-import org.firstinspires.ftc.teamcode.commandBase.autoActions.setDuckWheel;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToMidDeposit;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.Intake.TurnOnIntake;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.Ducks.setDuckWheel;
 import org.firstinspires.ftc.teamcode.subsystems.DuckWheel;
 import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.AimAtPoint;
-import org.firstinspires.ftc.teamcode.commandBase.autoActions.Drive;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.Drive;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.Turn;
 
 @Autonomous
@@ -21,7 +23,9 @@ public class RedDuckAuto extends BaseAuto {
     public Vector3D goalPosition;
     public Vector3D carousel;
     public Vector3D park;
-
+    public Vector3D leftCapStone;
+    public Vector3D middleCapstone;
+    public Vector3D rightCapstone;
     public double DISTANCE_BACK_FROM_GOAL = -13;
 
     @Override
@@ -30,6 +34,9 @@ public class RedDuckAuto extends BaseAuto {
         goalPosition = new Vector3D(-12, -24, 0);
         carousel = new Vector3D(-72,-60,0);
         park = new Vector3D(-60,-35,0);
+        leftCapStone = new Vector3D(-48 - 2, -36,0);
+        middleCapstone = new Vector3D(-48 - 12, -36,0);
+        rightCapstone = new Vector3D(-48 - 20, -36,0 );
         robot.setRobotPose(startPosition);
 
     }
@@ -46,11 +53,14 @@ public class RedDuckAuto extends BaseAuto {
 
             case LEFT:
                 // scoring level 1
+                actions.add(new GoToBottomDeposit(robot));
                 break;
             case MIDDLE:
                 // scoring level 2
+                actions.add(new GoToMidDeposit(robot));
                 break;
             case RIGHT:
+                // scoring level 3
                 actions.add(new GoToHighDeposit(robot));
                 break;
         }
@@ -58,7 +68,29 @@ public class RedDuckAuto extends BaseAuto {
 
         // drive to goal to deposit
         actions.add(new Drive(robot,-5));
-        actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL));
+
+
+        switch (TSEPosition) {
+            case LEFT:
+                actions.add(new AimAtPoint(robot, leftCapStone, false, true));
+                actions.add(new Drive(robot,leftCapStone,-1));
+                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL + 3));
+
+                break;
+            case MIDDLE:
+                actions.add(new AimAtPoint(robot, middleCapstone, false, true));
+
+                actions.add(new Drive(robot,middleCapstone,-1));
+                actions.add(new Drive(robot,goalPosition,-1 , DISTANCE_BACK_FROM_GOAL + 2));
+
+                break;
+            case RIGHT:
+                actions.add(new AimAtPoint(robot, rightCapstone, false, true));
+
+                actions.add(new Drive(robot,rightCapstone,-1));
+                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL));
+                break;
+        }
         actions.add(new AimAtPoint(robot,goalPosition,false, true));
         actions.add(new DepositFreight(robot));
 

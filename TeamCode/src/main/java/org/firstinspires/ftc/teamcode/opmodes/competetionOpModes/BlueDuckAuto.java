@@ -15,6 +15,10 @@ public class BlueDuckAuto extends RedDuckAuto {
 		carousel = new Vector3D(-72,60,0);
 		park = new Vector3D(-60,35,0);
 		robot.setRobotPose(startPosition);
+		leftCapStone = new Vector3D(-48 - 20, 36,0 );
+		middleCapstone = new Vector3D(-48 - 12, 36,0);
+		rightCapstone = new Vector3D(-48 - 2, 36,0);
+
 	}
 
 	@Override

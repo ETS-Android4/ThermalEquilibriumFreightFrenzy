@@ -120,7 +120,7 @@ public class EliminationPipeline extends OpenCvPipeline {
 		}
 		Imgproc.putText(input,"" + TSEPosition + " area is: " + largestContourSize, new Point(columns / 2.0, binaryMat.width() / 2.0),2,1,new Scalar(255,0,0));
 
-		return binaryMat;
+		return input;
 	}
 
 	public enum position {

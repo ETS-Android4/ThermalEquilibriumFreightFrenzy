@@ -11,7 +11,7 @@ public class Virtual4bar implements subsystem {
 	protected final double COLLECTION = 0.15;
 	protected final double IN = 0.08;
 	protected final double LOW = 0.5;
-	protected final double MID = 0.5;
+	protected final double MID = 0.7;
 	protected final double HIGH = 0.90;
 	protected Servo left;
 	protected Servo right;
