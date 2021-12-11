@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
-import org.firstinspires.ftc.teamcode.commandBase.autoActions.AimAtPoint;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.AimAtPoint;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Drive;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Delay;
-import org.firstinspires.ftc.teamcode.commandBase.autoActions.GoToInState;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToInState;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.TurnOffIntake;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.TurnOnIntake;
 
@@ -19,6 +19,11 @@ public class RedWarehouseAuto extends BaseAuto {
 
 	public void setStartingPosition() {
 		robot.setRobotPose(startPosition);
+	}
+
+	@Override
+	public void setVisionSettings() {
+
 	}
 
 	public void addActions() {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commandBase.autoActions;
+package org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 

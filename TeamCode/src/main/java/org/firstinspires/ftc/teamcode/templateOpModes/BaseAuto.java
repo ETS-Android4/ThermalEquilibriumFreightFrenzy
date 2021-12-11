@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.templateOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.commandBase.Scheduler;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.commandBase.action;
-import org.firstinspires.ftc.teamcode.commandBase.Scheduler;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.vision.TSEContourPipeline;
 
@@ -23,6 +23,7 @@ public abstract class BaseAuto extends LinearOpMode {
 
 	public abstract void setStartingPosition();
 
+	public abstract void setVisionSettings();
 
 	public abstract void addActions();
 
@@ -31,6 +32,7 @@ public abstract class BaseAuto extends LinearOpMode {
 		robot = new Robot();
 		if (isCompBot) {
 			robot.init(hardwareMap);
+			setVisionSettings();
 		} else {
 			robot.initMinimal(hardwareMap);
 		}
@@ -54,5 +56,11 @@ public abstract class BaseAuto extends LinearOpMode {
 
 	}
 
+	public void setVisionForRightVisible() {
+		robot.duckDetection.set_side(true);
+	}
 
+	public void setVisionForLeftVisible() {
+		robot.duckDetection.set_side(false);
+	}
 }

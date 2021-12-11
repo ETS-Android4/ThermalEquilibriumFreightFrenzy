@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commandBase.autoActions;
+package org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -8,22 +8,21 @@ import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
 
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_HIGH;
-import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.GOING_IN;
-import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.IN;
 
 /**
- * Puts the slides back in the robot.
+ * Move the scoring mechanism to deposit in the high goal.
+ *
+ * DOES NOT MOVE THE ROBOT TOWARDS THE DEPOSIT LOCATION
  */
-public class GoToInState implements action {
+public class GoToHighDeposit implements action {
 
-	private static final double DEPOSIT_DURATION = 370;
 	protected boolean isComplete = false;
-	protected Deposit.depositStates state = Deposit.depositStates.DEPOSITING;
+	protected Deposit.depositStates state = Deposit.depositStates.GOING_TO_HIGH;
 	protected double TIME_FOR_COMPLETION = 300;
 	Robot robot;
 	ElapsedTime timer = new ElapsedTime();
 
-	public GoToInState(Robot robot) {
+	public GoToHighDeposit(Robot robot) {
 		this.robot = robot;
 	}
 
@@ -42,7 +41,7 @@ public class GoToInState implements action {
 			case DISARMED:
 				break;
 			case IN:
-				isComplete = true;
+
 				break;
 			case COLLECTION:
 				break;
@@ -66,14 +65,8 @@ public class GoToInState implements action {
 			case AT_LOW:
 				break;
 			case DEPOSITING:
-				timer.reset();
-				state = GOING_IN;
 				break;
 			case GOING_IN:
-				if (timer.milliseconds() > DEPOSIT_DURATION * 1.2) {
-					state = IN;
-					timer.reset();
-				}
 				break;
 		}
 

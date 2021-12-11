@@ -1,20 +1,18 @@
-package org.firstinspires.ftc.teamcode.commandBase.autoActions;
+package org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl;
 
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.commandBase.action;
 import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
-public class FindStaticFrictionForward implements action {
-
+public class FindStaticFrictionTurn implements action {
 	Robot robot;
 	double power = 0;
-	double iteration = 0.0003;
+	double iteration = 0.0005;
 	boolean isComplete = false;
 	Vector3D initialPosition;
-	double validDistance = 0.025;
 
-	public FindStaticFrictionForward(Robot robot) {
+	public FindStaticFrictionTurn(Robot robot) {
 		this.robot = robot;
 	}
 
@@ -26,12 +24,12 @@ public class FindStaticFrictionForward implements action {
 	@Override
 	public void runAction() {
 
-		robot.driveTrain.setMotorPowers(power, power);
+		robot.driveTrain.setMotorPowers(power, -power);
 		power += iteration;
-		if (robot.getRobotPose().distanceToPose(initialPosition) > validDistance) {
+		if (robot.getRobotPose().angle.getRadians() > Math.abs(0.17)) {
 			isComplete = true;
 		}
-		Dashboard.packet.put("drive power", power);
+		Dashboard.packet.put("turn power", power);
 
 
 	}
@@ -44,13 +42,15 @@ public class FindStaticFrictionForward implements action {
 	@Override
 	public boolean isActionComplete() {
 		if (isComplete) {
-			System.out.println("minimum motor power forward is " + power);
+			System.out.println("minimum motor power turn is " + power);
 		}
 		return isComplete;
 	}
+
 
 	@Override
 	public boolean isActionPersistent() {
 		return false;
 	}
+
 }
