@@ -74,6 +74,9 @@ public class DifferentialDriveOdometry implements subsystem {
 		double left = encoderTicksToInches(FrontLeft.getCurrentPosition());
 		double right = encoderTicksToInches(FrontRight.getCurrentPosition());
 
+		double leftVelo = encoderTicksToInches(FrontLeft.getVelocity());
+		double rightVelo = encoderTicksToInches(FrontRight.getVelocity());
+
 		double leftDelta = left - leftPrev;
 		double rightDelta = right - rightPrev;
 		leftPrev = left;
@@ -83,6 +86,7 @@ public class DifferentialDriveOdometry implements subsystem {
 		double yDelta = 0;
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
 
+		xDot = (leftVelo + rightVelo) / 2;
 
 		encoderAngle += thetaDelta;
 		encoderAngle = normalizeAngleRR(encoderAngle);

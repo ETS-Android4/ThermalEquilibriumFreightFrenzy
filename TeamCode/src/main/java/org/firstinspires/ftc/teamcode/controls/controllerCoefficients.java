@@ -19,8 +19,8 @@ public class controllerCoefficients {
 
 
 	public static final double compBotVelocity = 70;
-	public static final double compBotAcceleration = 50;
-	public static final double compBotJerk = 100;
+	public static final double compBotAcceleration = 90;
+	public static final double compBotJerk = 130;
 	public static final double protoBotVelocity = 100;
 	public static final double protoBotAcceleration = 100;
 	public static final double protoBotJerk = 250;

@@ -69,28 +69,24 @@ public class RedDuckAuto extends BaseAuto {
         // drive to goal to deposit
         actions.add(new Drive(robot,-5));
 
-
         switch (TSEPosition) {
             case LEFT:
                 actions.add(new AimAtPoint(robot, leftCapStone, false, true));
                 actions.add(new Drive(robot,leftCapStone,-1));
                 actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL + 3));
-
                 break;
             case MIDDLE:
                 actions.add(new AimAtPoint(robot, middleCapstone, false, true));
-
                 actions.add(new Drive(robot,middleCapstone,-1));
                 actions.add(new Drive(robot,goalPosition,-1 , DISTANCE_BACK_FROM_GOAL + 2));
-
                 break;
             case RIGHT:
                 actions.add(new AimAtPoint(robot, rightCapstone, false, true));
-
                 actions.add(new Drive(robot,rightCapstone,-1));
                 actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL));
                 break;
         }
+
         actions.add(new AimAtPoint(robot,goalPosition,false, true));
         actions.add(new DepositFreight(robot));
 
