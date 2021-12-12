@@ -59,7 +59,7 @@ public class DifferentialDriveOdometry implements subsystem {
 	public void init(HardwareMap hwmap) {
 
 		if (isCompBot) {
-			imu = hwmap.get(BNO055IMU.class, "imu1");
+			imu = hwmap.get(BNO055IMU.class, "imu 1");
 		} else {
 			imu = hwmap.get(BNO055IMU.class, "imu");
 		}
