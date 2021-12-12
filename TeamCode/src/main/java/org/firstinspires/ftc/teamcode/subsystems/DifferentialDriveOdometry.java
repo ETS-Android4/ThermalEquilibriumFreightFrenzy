@@ -1,11 +1,15 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.AxesSigns;
+import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.BNO055IMUUtil;
 
 import static org.firstinspires.ftc.teamcode.subsystems.Robot.isCompBot;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobot;
@@ -53,7 +57,12 @@ public class DifferentialDriveOdometry implements subsystem {
 
 	@Override
 	public void init(HardwareMap hwmap) {
-		imu = hwmap.get(BNO055IMU.class, "imu");
+
+		if (isCompBot) {
+			imu = hwmap.get(BNO055IMU.class, "imu1");
+		} else {
+			imu = hwmap.get(BNO055IMU.class, "imu");
+		}
 		BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 		parameters.mode = BNO055IMU.SensorMode.IMU;
 		parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
