@@ -43,6 +43,8 @@ public class RobustPID {
 	protected double exitTolerance;
 	// if the derivative is above this, we are not considering the system stable
 	protected double stability_threshold;
+	// previous feedback output for adaptive feedforward control
+	protected double previous_feedback = 0;
 
 	/**
 	 * construct PID with buffer length and stability threshold
@@ -79,7 +81,8 @@ public class RobustPID {
 		output = out1 +
 				(reference * coefficients.Kf) +
 				(derivative * coefficients.Kd);
-
+		previous_feedback = output;
+		output += adaptiveFeedforward();
 		lastError = error;
 	}
 
@@ -257,5 +260,9 @@ public class RobustPID {
 
 	public double getReference() {
 		return reference;
+	}
+
+	public double adaptiveFeedforward() {
+		return previous_feedback * (0.25 * coefficients.Kp);
 	}
 }
