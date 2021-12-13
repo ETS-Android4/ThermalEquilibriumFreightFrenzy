@@ -242,7 +242,13 @@ public class RobustPID {
 	}
 
 	public void antiWindup() {
-		integral_sum = Range.clip(integral_sum, -0.5, 0.5);
+
+		double max_integral = 1;
+
+		if (Math.abs(integral_sum) * coefficients.Ki > max_integral) {
+			integral_sum = Math.signum(integral_sum) * max_integral / coefficients.Ki;
+		}
+
 		if ((lastError > 0 && error < 0) || ((lastError < 0 && error > 0))) {
 			integral_sum = 0;
 		}
@@ -261,6 +267,7 @@ public class RobustPID {
 	public double getReference() {
 		return reference;
 	}
+
 
 	public double adaptiveFeedforward() {
 		return previous_feedback * (0.25 * coefficients.Kp);
