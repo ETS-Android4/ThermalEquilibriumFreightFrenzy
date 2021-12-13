@@ -124,7 +124,7 @@ public class AimAtPoint implements action {
         } else {
             coefficients = controllerCoefficients.protoBotTurn;
         }
-        this.controller = new RobustPID(coefficients, 0, 3, 0.004, Math.toRadians(1));
+        this.controller = new RobustPID(coefficients, 0, 3, 0.008, Math.toRadians(1));
 
     }
 }

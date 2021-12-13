@@ -14,7 +14,7 @@ public class DepositFreight implements action {
 	protected Robot robot;
 	protected boolean isComplete = false;
 	protected ElapsedTime timer = new ElapsedTime();
-	protected double depositTime = 300;
+	protected double depositTime = 130;
 
 	public DepositFreight(Robot robot) {
 		this.robot = robot;

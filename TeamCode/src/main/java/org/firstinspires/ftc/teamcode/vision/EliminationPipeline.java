@@ -28,6 +28,8 @@ public class EliminationPipeline extends OpenCvPipeline {
 	public static double high2 = 190;
 	public static double high3 = 130;
 
+	public boolean hasStarted = false;
+
 	public static double minimum_contour_size = 40000;
 
 	public boolean right_is_visible = false;
@@ -119,8 +121,12 @@ public class EliminationPipeline extends OpenCvPipeline {
 			System.out.println("out of bounds exception was caught, try extending the detection tolerances or it isnt visible lol");
 		}
 		Imgproc.putText(input,"" + TSEPosition + " area is: " + largestContourSize, new Point(columns / 2.0, binaryMat.width() / 2.0),2,1,new Scalar(255,0,0));
-
+		hasStarted = true;
 		return input;
+	}
+
+	public boolean isHasStarted() {
+		return hasStarted;
 	}
 
 	public enum position {

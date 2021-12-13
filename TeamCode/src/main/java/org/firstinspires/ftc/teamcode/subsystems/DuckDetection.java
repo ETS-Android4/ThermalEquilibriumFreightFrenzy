@@ -64,4 +64,9 @@ public class DuckDetection implements subsystem {
 	public void set_side(boolean is_right_visible) {
 		this.pipeline.setRight_is_visible(is_right_visible);
 	}
+
+	public boolean hasStarted() {
+		return this.pipeline.hasStarted;
+	}
+
 }

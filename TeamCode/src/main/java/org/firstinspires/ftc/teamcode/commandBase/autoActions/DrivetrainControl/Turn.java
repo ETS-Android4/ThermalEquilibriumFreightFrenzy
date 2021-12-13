@@ -33,7 +33,7 @@ public class Turn implements action {
 
 	@Override
 	public void startAction() {
-		pid = new RobustPID(coefficients, targetAngle, 3, 0.04, Math.toRadians(1));
+		pid = new RobustPID(coefficients, targetAngle, 3, 0.02, Math.toRadians(1));
 
 		timer.reset();
 	}
