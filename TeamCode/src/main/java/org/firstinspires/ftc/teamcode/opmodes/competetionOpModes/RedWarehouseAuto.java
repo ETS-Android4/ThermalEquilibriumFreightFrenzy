@@ -37,7 +37,7 @@ public class RedWarehouseAuto extends BaseAuto {
 		actions.add(new AimAtPoint(robot, pickupPosition));
 		actions.add(new GoToInState(robot));
 		actions.add(new Drive(robot, pickupPosition, 0.8));
-		actions.add(new TurnOnIntake(robot));
+		actions.add(new TurnOnIntake(robot,true));
 		actions.add(new Drive(robot, pickupPosition, 0.6));
 		actions.add(new Delay(300));
 		actions.add(new TurnOffIntake(robot));

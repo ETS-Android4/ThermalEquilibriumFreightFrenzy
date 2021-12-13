@@ -11,16 +11,22 @@ import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
 public class TurnOnIntake implements action {
 	protected Robot robot;
 	protected boolean isComplete = false;
+	protected boolean forward;
 
-	public TurnOnIntake(Robot robot) {
+	public TurnOnIntake(Robot robot, boolean forward) {
 		this.robot = robot;
+		this.forward = forward;
 	}
 
 	@Override
 	public void startAction() {
 		robot.bucketSys.setState(Deposit.depositStates.COLLECTION);
 		robot.Deposit.setState(Deposit.depositStates.COLLECTION);
-		robot.Intake.setState(Intake.intakeStates.ON);
+		if (forward) {
+			robot.Intake.setState(Intake.intakeStates.ON);
+		} else {
+			robot.Intake.setState(Intake.intakeStates.REVERSE);
+		}
 		isComplete = true;
 	}
 

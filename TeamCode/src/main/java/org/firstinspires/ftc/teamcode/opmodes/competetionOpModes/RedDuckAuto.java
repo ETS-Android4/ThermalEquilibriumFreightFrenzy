@@ -94,14 +94,14 @@ public class RedDuckAuto extends BaseAuto {
         //actions.add(new AimAtPoint(robot,carousel,false,false));
         actions.add(new Drive(robot,carousel,1,+1));
         actions.add(new GoToInState(robot));
-        actions.add(new TurnOnIntake(robot));
+        actions.add(new TurnOnIntake(robot,true));
         actions.add(new Turn(robot,-165));
 
        //actions.add(new Turn(robot, startPosition.getAngleRadians()));
 
         // push wheel against carousel
         actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
-        actions.add(new TurnOnIntake(robot));
+        actions.add(new TurnOnIntake(robot, true));
         actions.add(new Drive(robot, 3));
         actions.add(new Delay(1200));
         actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
