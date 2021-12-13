@@ -86,7 +86,7 @@ public class RedDuckAuto extends BaseAuto {
                 // push wheel against carousel
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
                 actions.add(new TurnOnIntake(robot, true));
-                actions.add(new Drive(robot, 6));
+                actions.add(new Drive(robot, 7.5));
                 actions.add(new Delay(2500));
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Turn(robot,Math.toRadians(-105)));
@@ -153,6 +153,43 @@ public class RedDuckAuto extends BaseAuto {
                 break;
             case RIGHT:
 
+                actions.add(new Drive(robot,-20));
+                actions.add(new AimAtPoint(robot, goalPosition, false, true));
+                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL +1));
+                actions.add(new DepositFreight(robot));
+
+                // drive to carousel
+                actions.add(new Drive(robot,carousel,1,-2));
+                actions.add(new GoToInState(robot));
+                actions.add(new TurnOnIntake(robot,false));
+                actions.add(new Turn(robot,Math.toRadians(-90)));
+
+                // push wheel against carousel
+                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
+                actions.add(new TurnOnIntake(robot, true));
+                actions.add(new Drive(robot, 7.5));
+                actions.add(new Delay(2500));
+                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
+                actions.add(new Turn(robot,Math.toRadians(-105)));
+                actions.add(new Drive(robot, 3));
+                actions.add(new TurnOffIntake(robot));
+
+                // deposit the duck
+                actions.add(new GoToHighDeposit(robot));
+                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL ));
+
+                // actions.add(new AimAtPoint(robot,goalPosition,false, true));
+                actions.add(new DepositFreight(robot));
+
+                // go to park
+                actions.add(new Drive(robot, 10));
+                actions.add(new AimAtPoint(robot, park, false, true));
+                actions.add(new GoToInState(robot));
+                actions.add(new Drive(robot,park,-1));
+
+                // make sure we are parked
+                actions.add(new Turn(robot,Math.toRadians(-90)));
+                actions.add(new Drive(robot,-4.5));
                 break;
         }
 
