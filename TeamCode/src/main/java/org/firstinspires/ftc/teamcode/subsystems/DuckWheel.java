@@ -11,7 +11,7 @@ public class DuckWheel implements subsystem{
 	protected DuckWheelState state = DuckWheelState.OFF;
 
 	protected double previousPower = 0;
-	protected final double TURN_POWER = -1;
+	protected final double TURN_POWER = -.5;
 
 	@Override
 	public void init(HardwareMap hwmap) {
