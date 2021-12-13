@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobotGreen;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 
+@Deprecated
 public class DifferentialDriveController {
 
 

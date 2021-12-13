@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.motionProfiling.EasyOnlineMotionProfile;
 import org.firstinspires.ftc.teamcode.WPILIB.TrapezoidProfile;
 import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 
+@Deprecated
 public class ProfiledPIDController extends NonlinearPID {
 
     protected double MAX_ACCELERATION;

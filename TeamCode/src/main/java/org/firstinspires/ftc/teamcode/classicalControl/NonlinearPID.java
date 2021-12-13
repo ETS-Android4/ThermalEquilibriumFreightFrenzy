@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 
+@Deprecated
 public class NonlinearPID {
 
     // Proportional gain
