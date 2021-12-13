@@ -30,6 +30,8 @@ public class DuckWheel implements subsystem{
 			case ON:
 				setServoPower(TURN_POWER);
 				break;
+			case OTHER_ON:
+				setServoPower(-TURN_POWER);
 			case OFF:
 				setServoPower(0);
 				break;
@@ -55,6 +57,7 @@ public class DuckWheel implements subsystem{
 
 	public enum DuckWheelState {
 		ON,
+		OTHER_ON,
 		OFF
 	}
 }
