@@ -39,9 +39,8 @@ public abstract class BaseAuto extends LinearOpMode {
 
 		setStartingPosition();
 
-		while (((!isStopRequested() && !isStarted()) || !robot.duckDetection.hasStarted()) && isCompBot) {
+		while (!isStopRequested() && !isStarted() && isCompBot) {
 			TSEPosition = robot.duckDetection.subsystemState();
-			System.out.println("current detected position is" + TSEPosition);
 		}
 
 

@@ -64,7 +64,7 @@ public class DifferentialDriveOdometry implements subsystem {
 			imu = hwmap.get(BNO055IMU.class, "imu");
 		}
 		BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-		parameters.mode = BNO055IMU.SensorMode.IMU;
+		parameters.mode = BNO055IMU.SensorMode.NDOF;
 		parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
 		imu.initialize(parameters);
 		FrontLeft = hwmap.get(DcMotorEx.class, "FrontLeft");

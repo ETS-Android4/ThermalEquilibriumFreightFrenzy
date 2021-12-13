@@ -97,8 +97,8 @@ public class Drive implements action {
 		double targetDistProfile = profile.get(timer.seconds()).getX();
 		drivePid.setReference(targetDistProfile);
 
-		double drive = drivePid.calculate(distance) * Math.signum(targetDistance);
 		double turn = turnPid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
+		double drive = drivePid.calculate(distance) * Math.signum(targetDistance) * Math.cos(turnPid.getError());
 
 		robot.driveTrain.robotRelative(drive, turn);
 		isComplete = ((drivePid.isComplete() || drivePid.isVeryStable()) || drivePid.isBasicallyStopped()) && profile.duration() < timer.seconds();
