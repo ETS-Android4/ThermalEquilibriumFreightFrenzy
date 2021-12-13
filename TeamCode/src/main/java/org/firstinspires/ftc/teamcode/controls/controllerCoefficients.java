@@ -10,7 +10,7 @@ public class controllerCoefficients {
 	public static final PIDFCoefficients compBotDriveCorrect = compBotTurn.noFeedforward();
 
 	// controller coefficients for off season 6wd
-	public static final PIDFCoefficients protoBotTurn = new PIDFCoefficients(0.59, 0.16, 0.01, 0, 0, 0.05350000000000004);
+	public static final PIDFCoefficients protoBotTurn = new PIDFCoefficients(0.59, 0.16, 0.01, 0, 0, 0.0580);
 	public static final PIDFCoefficients protoBotDrive = new PIDFCoefficients(0.18238, 0, 0.00993, 0, 0,0.04770000000000017);
 	public static final PIDFCoefficients protoBotDriveCorrect = protoBotTurn.noFeedforward();
 

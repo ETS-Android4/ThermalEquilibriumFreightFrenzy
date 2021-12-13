@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
 import static org.firstinspires.ftc.teamcode.subsystems.Robot.isCompBot;
+import static org.firstinspires.ftc.teamcode.utils.utils.sin_c;
 
 /**
  * drive the robot a desired distance or position.
@@ -98,7 +99,7 @@ public class Drive implements action {
 		drivePid.setReference(targetDistProfile);
 
 		double turn = turnPid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
-		double drive = drivePid.calculate(distance) * Math.signum(targetDistance) * Math.cos(turnPid.getError());
+		double drive = drivePid.calculate(distance) * Math.signum(targetDistance) * sin_c(turnPid.getError());
 
 		robot.driveTrain.robotRelative(drive, turn);
 		isComplete = ((drivePid.isComplete() || drivePid.isVeryStable()) || drivePid.isBasicallyStopped()) && profile.duration() < timer.seconds();

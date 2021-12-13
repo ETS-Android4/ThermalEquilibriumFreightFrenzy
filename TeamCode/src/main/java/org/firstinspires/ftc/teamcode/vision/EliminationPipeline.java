@@ -20,6 +20,7 @@ public class EliminationPipeline extends OpenCvPipeline {
 
 	public static Scalar lower = new Scalar(123.4,145.0,0);
 	public static Scalar higher = new Scalar(255,255,82.3);
+	public static boolean tuning_mode = false;
 
 	public static double low1 = 40;
 	public static double low2 = 80;
@@ -122,6 +123,11 @@ public class EliminationPipeline extends OpenCvPipeline {
 		}
 		Imgproc.putText(input,"" + TSEPosition + " area is: " + largestContourSize, new Point(columns / 2.0, binaryMat.width() / 2.0),2,1,new Scalar(255,0,0));
 		hasStarted = true;
+
+		if (tuning_mode) {
+			return binaryMat;
+		}
+
 		return input;
 	}
 

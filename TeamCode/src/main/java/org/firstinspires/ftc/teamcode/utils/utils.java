@@ -184,4 +184,21 @@ public class utils {
         packet.put(label + " z" , vector.getZ());
         packet.put(label + " theta" , vector.getAngleRadians());
     }
+
+    /**
+     * sin c function, traditionally used for signal processing but produces a nice shape for
+     * scaling our differential drive controller to fix angle error.
+     * @param x value we want to calculate sin c for.
+     * @return sin_c of x.
+     */
+    public static double sin_c(double x) {
+        if (x == 0) return 1;
+
+        try {
+            return Math.sin(x) / x;
+        } catch (ArithmeticException e) {
+            System.out.println("divide by zero occured, defaulting to 1");
+            return 1;
+        }
+    }
 }

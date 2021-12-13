@@ -7,12 +7,15 @@ import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.utils.RingBuffer;
 
+import static org.apache.commons.math3.util.Precision.EPSILON;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 
 public class RobustPID {
 
 	// coefficients of the controller
 	protected PIDFCoefficients coefficients;
+
+	protected final double EPSILON = 1e-2;
 
 	// elapsed timer used for integral and derivative calculations
 	protected ElapsedTime timer;
@@ -75,7 +78,7 @@ public class RobustPID {
 		calculateIntegral();
 		double out1 = (error * coefficients.Kp) + (integral_sum * coefficients.Ki);
 
-		if (Math.abs(out1) < coefficients.H) {
+		if (Math.abs(out1) < coefficients.H && Math.abs(error) > EPSILON) {
 			out1 = coefficients.H * Math.signum(out1);
 		}
 		output = out1 +
