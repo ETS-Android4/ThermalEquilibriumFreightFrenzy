@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.competetionOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.Intake.TurnOffIntake;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Misc.Delay;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.DepositFreight;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToBottomDeposit;
@@ -31,8 +32,8 @@ public class RedDuckAuto extends BaseAuto {
     @Override
     public void setStartingPosition() {
         startPosition = new Vector3D(-39, -56, Math.toRadians(-90));
-        goalPosition = new Vector3D(-12, -24, 0);
-        carousel = new Vector3D(-72,-60,0);
+        goalPosition = new Vector3D(-12, -20, 0);
+        carousel = new Vector3D(-60,-50,0);
         park = new Vector3D(-60,-35,0);
         leftCapStone = new Vector3D(-48 - 2, -36,0);
         middleCapstone = new Vector3D(-48 - 12, -36,0);
@@ -67,13 +68,13 @@ public class RedDuckAuto extends BaseAuto {
         // deploy slides
 
         // drive to goal to deposit
-        actions.add(new Drive(robot,-5));
+        actions.add(new Drive(robot,-15));
 
         switch (TSEPosition) {
             case LEFT:
                 actions.add(new AimAtPoint(robot, goalPosition, false, true));
                 //actions.add(new Drive(robot,leftCapStone,-1));
-                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL + 3));
+                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL +1));
                 break;
             case MIDDLE:
                 //actions.add(new AimAtPoint(robot, middleCapstone, false, true));
@@ -91,20 +92,24 @@ public class RedDuckAuto extends BaseAuto {
 
         // drive to carousel
         //actions.add(new AimAtPoint(robot,carousel,false,false));
-        actions.add(new Drive(robot,carousel,1,-14));
+        actions.add(new Drive(robot,carousel,1,+1));
         actions.add(new GoToInState(robot));
-        actions.add(new Turn(robot, startPosition.getAngleRadians()));
+        actions.add(new TurnOnIntake(robot));
+        actions.add(new Turn(robot,-165));
 
-        actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
+       //actions.add(new Turn(robot, startPosition.getAngleRadians()));
 
         // push wheel against carousel
+        actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
         actions.add(new TurnOnIntake(robot));
         actions.add(new Drive(robot, 3));
         actions.add(new Delay(1200));
         actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
-        actions.add(new Drive(robot,-6));
+        actions.add(new TurnOffIntake(robot));
 
+        //actions.add(new Drive(robot,-6));
 
+/*
         // deposit the duck
         actions.add(new GoToHighDeposit(robot));
         actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL));
@@ -118,6 +123,6 @@ public class RedDuckAuto extends BaseAuto {
         actions.add(new Drive(robot,park,-1));
 
         // make sure we are parked
-        actions.add(new Turn(robot,Math.toRadians(-90)));
+        actions.add(new Turn(robot,Math.toRadians(-90)));*/
     }
 }
