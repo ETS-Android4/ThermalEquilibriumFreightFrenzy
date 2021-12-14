@@ -29,7 +29,7 @@ public class ToggleDuckWheel implements teleopAction {
 	@Override
 	public void periodic() {
 		if (gamepad1.dpad_down) robot.duckwheel.setState(ON);
-		else if (gamepad1.dpad_up) robot.duckwheel.setState(OTHER_ON);
+		else if (gamepad1.dpad_left) robot.duckwheel.setState(OTHER_ON);
 		else robot.duckwheel.setState(OFF);
 	}
 
