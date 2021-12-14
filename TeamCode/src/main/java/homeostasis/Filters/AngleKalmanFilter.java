@@ -4,6 +4,8 @@ package homeostasis.Filters;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import static org.firstinspires.ftc.teamcode.utils.utils.AngleWrap;
+
 @Config
 public class AngleKalmanFilter {
 
@@ -51,14 +53,22 @@ public class AngleKalmanFilter {
 		previousModel = model;
 		previousSensor2 = sensor2;
 		x = x_previous;
-		p = p_previous;
+		p = p_previous + Q;
 		kalmanGain = p / (p + R);
-		x = x + kalmanGain * (currentSensor2 - x);
-		p = (1 - kalmanGain) * p;
+		System.out.println("Kalman gain is: " + kalmanGain);
+		System.out.println("Kalman x previous is " + x_previous);
+		System.out.println("Kalman current sensor 2 is " + currentSensor2);
+		x = x + kalmanGain * AngleWrap(currentSensor2 - x_previous);
+		System.out.println("Kalman filter estimate is: " + x);
+
+		x = AngleWrap(x);
+		p = 1 - kalmanGain * p;
 		x_previous = x;
 		p_previous = p;
 		return x;
 	}
 
-
+	public void setX(double x) {
+		this.x = x;
+	}
 }

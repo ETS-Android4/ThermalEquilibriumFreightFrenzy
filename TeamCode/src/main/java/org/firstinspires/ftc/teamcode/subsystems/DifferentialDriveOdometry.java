@@ -11,7 +11,10 @@ import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.AxesSigns;
 import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.BNO055IMUUtil;
 
+import homeostasis.Filters.AngleKalmanFilter;
+
 import static org.firstinspires.ftc.teamcode.subsystems.Robot.isCompBot;
+import static org.firstinspires.ftc.teamcode.utils.utils.AngleWrap;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobot;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngleRR;
 
@@ -36,7 +39,7 @@ public class DifferentialDriveOdometry implements subsystem {
 	double encoderAngle = 0;
 	double xDot = 0;
 	protected long counter = 0;
-
+	protected AngleKalmanFilter kalmanFilter;
 
 
 	double angularVelocity = 0;
@@ -52,6 +55,7 @@ public class DifferentialDriveOdometry implements subsystem {
 			trackWidth = testBotTrackWidth;
 			gearRatio = 1;
 		}
+		kalmanFilter = new AngleKalmanFilter(0);
 
 	}
 
@@ -79,7 +83,7 @@ public class DifferentialDriveOdometry implements subsystem {
 	@Override
 	public void update() {
 
-
+		updateIMU();
 		double left = encoderTicksToInches(FrontLeft.getCurrentPosition());
 		double right = encoderTicksToInches(FrontRight.getCurrentPosition());
 
@@ -105,13 +109,15 @@ public class DifferentialDriveOdometry implements subsystem {
 
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
-		if (true){// (counter % 2 == 0) {
-			updateIMU();
-			positionEstimate.setAngleRad(IMU_angle);
-		}
+
+		double estimate = kalmanFilter.updateKalmanEstimate(encoderAngle, IMU_angle);
+
+		positionEstimate.setAngleRad(estimate);
+
 		drawRobot(positionEstimate, Dashboard.packet);
-		Dashboard.packet.put("imu angle ", IMU_angle);
-		++counter;
+		Dashboard.packet.put("imu angle ", AngleWrap(IMU_angle));
+		Dashboard.packet.put("estimated angle",estimate);
+		Dashboard.packet.put("drive wheel angle", AngleWrap(encoderAngle));
 
 	}
 
@@ -131,6 +137,7 @@ public class DifferentialDriveOdometry implements subsystem {
 	public void setPositionEstimate(Vector3D positionEstimate) {
 		this.initialPosition = positionEstimate;
 		this.positionEstimate = positionEstimate;
+		kalmanFilter.setX(positionEstimate.getAngleRadians());
 	}
 
 	/**
