@@ -21,7 +21,7 @@ public class DriveTest extends BaseAuto {
 
 	@Override
 	public void addActions() {
-		actions.add(new Drive(robot, new Vector3D(40,10,0),1,0));
+		actions.add(new Drive(robot, new Vector3D(50,0,0),1,0));
 		actions.add(new Drive(robot, new Vector3D(0,0,0),-1,0));
 		actions.add(new Turn(robot,0));
 

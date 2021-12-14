@@ -115,8 +115,8 @@ public class DifferentialDriveOdometry implements subsystem {
 		positionEstimate.setAngleRad(estimate);
 
 		drawRobot(positionEstimate, Dashboard.packet);
-		Dashboard.packet.put("imu angle ", AngleWrap(IMU_angle));
 		Dashboard.packet.put("estimated angle",estimate);
+		Dashboard.packet.put("imu angle ", AngleWrap(IMU_angle));
 		Dashboard.packet.put("drive wheel angle", AngleWrap(encoderAngle));
 
 	}

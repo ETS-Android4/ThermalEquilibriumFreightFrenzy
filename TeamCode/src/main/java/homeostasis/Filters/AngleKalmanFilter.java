@@ -14,7 +14,7 @@ public class AngleKalmanFilter {
 	protected double x_previous;
 	protected double p_previous;
 	public static double Q = 9.504936835155863;
-	public static double R = 7.815049368351558;
+	public static double R = 5.815049368351558;
 	protected double currentModel;
 	protected double previousModel;
 	protected double currentSensor2;
