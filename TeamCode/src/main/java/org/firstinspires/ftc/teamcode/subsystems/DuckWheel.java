@@ -32,6 +32,7 @@ public class DuckWheel implements subsystem{
 				break;
 			case OTHER_ON:
 				setServoPower(-TURN_POWER);
+				break;
 			case OFF:
 				setServoPower(0);
 				break;
