@@ -171,7 +171,7 @@ public class BlueDuckAuto extends BaseAuto {
 				actions.add(new Turn(robot, startPosition.getAngleRadians()));
 
 				// push wheel against carousel
-				actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
+				actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
 				actions.add(new TurnOnIntake(robot, true));
 				actions.add(new Drive(robot, 4));
 				actions.add(new Delay(2500));
@@ -188,10 +188,10 @@ public class BlueDuckAuto extends BaseAuto {
 				actions.add(new DepositFreight(robot));
 
 				// go to park
-				actions.add(new Drive(robot, 6.5));
+				actions.add(new Drive(robot, 12.5));
 				actions.add(new Turn(robot, Math.toRadians(-180)));
 				actions.add(new GoToInState(robot));
-				actions.add(new Drive(robot, park, -1));
+				actions.add(new Drive(robot, park, 1));  // the one here is positive so it drives the intake side forward
 
 				// make sure we are parked
 				//actions.add(new Turn(robot, startPosition.getAngleRadians()));

@@ -49,7 +49,7 @@ public class DuckWheel implements subsystem{
 
 	public void setServoPower(double power) {
 		if (power != previousPower) {
-			leftServo.setPower(power);
+			leftServo.setPower(-power);
 			rightServo.setPower(power);
 		}
 		previousPower = power;
