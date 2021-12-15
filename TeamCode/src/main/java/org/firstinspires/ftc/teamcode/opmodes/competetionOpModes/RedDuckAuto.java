@@ -27,6 +27,7 @@ public class RedDuckAuto extends BaseAuto {
     public Vector3D leftCapStone;
     public Vector3D middleCapstone;
     public Vector3D rightCapstone;
+    public double exitCarouselAngle;
     public double DISTANCE_BACK_FROM_GOAL = -13;
 
     @Override
@@ -38,13 +39,14 @@ public class RedDuckAuto extends BaseAuto {
         leftCapStone = new Vector3D(-48 - 2, -36,0);
         middleCapstone = new Vector3D(-48 - 12, -36,0);
         rightCapstone = new Vector3D(-48 - 20, -36,0 );
+        exitCarouselAngle = Math.toRadians(-105);
         robot.setRobotPose(startPosition);
 
     }
 
     @Override
     public void setVisionSettings() {
-        setVisionForLeftVisible();
+        setVisionForRightVisible();
     }
 
     @Override
@@ -81,7 +83,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Drive(robot,carousel,1,-2));
                 actions.add(new GoToInState(robot));
                 actions.add(new TurnOnIntake(robot,false));
-                actions.add(new Turn(robot,Math.toRadians(-90)));
+                actions.add(new Turn(robot,startPosition.getAngleRadians()));
 
                 // push wheel against carousel
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
@@ -89,7 +91,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Drive(robot, 7.5));
                 actions.add(new Delay(2500));
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
-                actions.add(new Turn(robot,Math.toRadians(-105)));
+                actions.add(new Turn(robot,exitCarouselAngle));
                 actions.add(new Drive(robot, 3));
                 actions.add(new TurnOffIntake(robot));
 
@@ -107,7 +109,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Drive(robot,park,-1));
 
                 // make sure we are parked
-                actions.add(new Turn(robot,Math.toRadians(-90)));
+                actions.add(new Turn(robot,startPosition.getAngleRadians()));
                 actions.add(new Drive(robot,-3));
 
 
@@ -122,7 +124,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Drive(robot,carousel,1,-2));
                 actions.add(new GoToInState(robot));
                 actions.add(new TurnOnIntake(robot,false));
-                actions.add(new Turn(robot,Math.toRadians(-90)));
+                actions.add(new Turn(robot,startPosition.getAngleRadians()));
 
                 // push wheel against carousel
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
@@ -130,7 +132,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Drive(robot, 8));
                 actions.add(new Delay(2500));
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
-                actions.add(new Turn(robot,Math.toRadians(-105)));
+                actions.add(new Turn(robot,exitCarouselAngle));
                 actions.add(new Drive(robot, 3));
                 actions.add(new TurnOffIntake(robot));
 
@@ -148,7 +150,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Drive(robot,park,-1));
 
                 // make sure we are parked
-                actions.add(new Turn(robot,Math.toRadians(-90)));
+                actions.add(new Turn(robot,startPosition.getAngleRadians()));
                 actions.add(new Drive(robot,-3));
                 break;
             case RIGHT:
@@ -162,7 +164,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Drive(robot,carousel,1,-2));
                 actions.add(new GoToInState(robot));
                 actions.add(new TurnOnIntake(robot,false));
-                actions.add(new Turn(robot,Math.toRadians(-90)));
+                actions.add(new Turn(robot,startPosition.getAngleRadians()));
 
                 // push wheel against carousel
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
@@ -170,7 +172,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Drive(robot, 7.5));
                 actions.add(new Delay(2500));
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
-                actions.add(new Turn(robot,Math.toRadians(-105)));
+                actions.add(new Turn(robot,exitCarouselAngle));
                 actions.add(new Drive(robot, 3));
                 actions.add(new TurnOffIntake(robot));
 
@@ -188,7 +190,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Drive(robot,park,-1));
 
                 // make sure we are parked
-                actions.add(new Turn(robot,Math.toRadians(-90)));
+                actions.add(new Turn(robot,startPosition.getAngleRadians()));
                 actions.add(new Drive(robot,-4.5));
                 break;
         }
