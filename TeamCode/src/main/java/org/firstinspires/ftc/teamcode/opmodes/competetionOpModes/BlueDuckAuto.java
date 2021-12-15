@@ -171,7 +171,7 @@ public class BlueDuckAuto extends BaseAuto {
 				actions.add(new Turn(robot, startPosition.getAngleRadians()));
 
 				// push wheel against carousel
-				actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
+				actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
 				actions.add(new TurnOnIntake(robot, true));
 				actions.add(new Drive(robot, 4));
 				actions.add(new Delay(2500));
