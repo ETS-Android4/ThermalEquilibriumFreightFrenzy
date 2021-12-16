@@ -86,7 +86,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Turn(robot,startPosition.getAngleRadians()));
 
                 // push wheel against carousel
-                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
+                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
                 actions.add(new Drive(robot, 7.5));
                 actions.add(new Delay(2500));
@@ -127,7 +127,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Turn(robot,startPosition.getAngleRadians()));
 
                 // push wheel against carousel
-                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
+                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
                 actions.add(new Drive(robot, 8));
                 actions.add(new Delay(2500));
@@ -167,7 +167,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Turn(robot,startPosition.getAngleRadians()));
 
                 // push wheel against carousel
-                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.ON));
+                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
                 actions.add(new Drive(robot, 7.5));
                 actions.add(new Delay(2500));
