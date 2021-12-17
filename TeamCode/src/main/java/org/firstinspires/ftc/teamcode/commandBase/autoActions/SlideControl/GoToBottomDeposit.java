@@ -14,7 +14,7 @@ import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposi
 public class GoToBottomDeposit implements action {
 	protected boolean isComplete = false;
 	protected Deposit.depositStates state = Deposit.depositStates.GOING_TO_LOW;
-	protected double TIME_FOR_COMPLETION = 150;
+	protected double TIME_FOR_COMPLETION = 300;
 	Robot robot;
 	ElapsedTime timer = new ElapsedTime();
 
