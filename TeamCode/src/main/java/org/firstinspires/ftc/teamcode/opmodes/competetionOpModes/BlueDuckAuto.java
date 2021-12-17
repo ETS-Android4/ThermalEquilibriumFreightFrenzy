@@ -50,7 +50,7 @@ public class BlueDuckAuto extends BaseAuto {
 
 	@Override
 	public void setVisionSettings() {
-		setVisionForLeftVisible();
+		setVisionForRightVisible();
 	}
 
 	@Override

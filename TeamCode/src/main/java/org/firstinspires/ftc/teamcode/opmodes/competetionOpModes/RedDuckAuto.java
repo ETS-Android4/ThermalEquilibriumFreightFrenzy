@@ -29,13 +29,14 @@ public class RedDuckAuto extends BaseAuto {
     public Vector3D rightCapstone;
     public double exitCarouselAngle;
     public double DISTANCE_BACK_FROM_GOAL = -13;
+    public double DUCK_SPIN_TIME = 2700;
 
     @Override
     public void setStartingPosition() {
         startPosition = new Vector3D(-39, -56, Math.toRadians(-90));
         goalPosition = new Vector3D(-12, -20, 0);
         carousel = new Vector3D(-60,-50,0);
-        park = new Vector3D(-60,-35,0);
+        park = new Vector3D(-60,-30,0);
         leftCapStone = new Vector3D(-48 - 2, -36,0);
         middleCapstone = new Vector3D(-48 - 12, -36,0);
         rightCapstone = new Vector3D(-48 - 20, -36,0 );
@@ -46,7 +47,7 @@ public class RedDuckAuto extends BaseAuto {
 
     @Override
     public void setVisionSettings() {
-        setVisionForRightVisible();
+        setVisionForLeftVisible();
     }
 
     @Override
@@ -88,8 +89,8 @@ public class RedDuckAuto extends BaseAuto {
                 // push wheel against carousel
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
-                actions.add(new Drive(robot, 7.5));
-                actions.add(new Delay(2500));
+                actions.add(new Drive(robot, 10.5));
+                actions.add(new Delay(DUCK_SPIN_TIME));
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Turn(robot,exitCarouselAngle));
                 actions.add(new Drive(robot, 3));
@@ -129,8 +130,8 @@ public class RedDuckAuto extends BaseAuto {
                 // push wheel against carousel
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
-                actions.add(new Drive(robot, 8));
-                actions.add(new Delay(2500));
+                actions.add(new Drive(robot, 10.5));
+                actions.add(new Delay(DUCK_SPIN_TIME));
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Turn(robot,exitCarouselAngle));
                 actions.add(new Drive(robot, 3));
@@ -144,7 +145,7 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new DepositFreight(robot));
 
                 // go to park
-                actions.add(new Drive(robot, 7));
+                actions.add(new Drive(robot, 10));
                 actions.add(new AimAtPoint(robot, park, false, true));
                 actions.add(new GoToInState(robot));
                 actions.add(new Drive(robot,park,-1));
@@ -169,8 +170,8 @@ public class RedDuckAuto extends BaseAuto {
                 // push wheel against carousel
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
-                actions.add(new Drive(robot, 7.5));
-                actions.add(new Delay(2500));
+                actions.add(new Drive(robot, 10.5));
+                actions.add(new Delay(DUCK_SPIN_TIME));
                 actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Turn(robot,exitCarouselAngle));
                 actions.add(new Drive(robot, 3));

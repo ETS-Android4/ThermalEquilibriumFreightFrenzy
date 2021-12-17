@@ -52,7 +52,6 @@ public class Slides implements subsystem {
 		motors.add(right);
 		motors.add(left);
 		slides = new DcMotorPlant(motors);
-
 	}
 
 	/**

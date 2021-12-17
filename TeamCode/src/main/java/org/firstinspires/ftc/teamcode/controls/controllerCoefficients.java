@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 public class controllerCoefficients {
 
 	// controller coefficients for competition 10wd
-	public static final PIDFCoefficients compBotTurn = new PIDFCoefficients(0.8, 0.1, 0.01,0,0,0.2785000000000002);
+	public static final PIDFCoefficients compBotTurn = new PIDFCoefficients(1, 0.8, 0.09,0,0,0.1); // 0.2785000000000002
 	public static final PIDFCoefficients compBotDrive = new PIDFCoefficients(0.071, 0.001, 0.01,0,0,0.04350000000000015);
 	public static final PIDFCoefficients compBotDriveCorrect = compBotTurn.noFeedforward();
 

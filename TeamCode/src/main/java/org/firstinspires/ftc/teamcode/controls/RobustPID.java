@@ -81,6 +81,7 @@ public class RobustPID {
 		if (Math.abs(out1) < coefficients.H && Math.abs(error) > EPSILON) {
 			out1 = coefficients.H * Math.signum(out1);
 		}
+
 		output = out1 +
 				(reference * coefficients.Kf) +
 				(derivative * coefficients.Kd);
@@ -275,4 +276,6 @@ public class RobustPID {
 	public double adaptiveFeedforward() {
 		return previous_feedback * (0.25 * coefficients.Kp);
 	}
+
+
 }

@@ -22,12 +22,12 @@ public class EliminationPipeline extends OpenCvPipeline {
 	public static Scalar higher = new Scalar(255,255,82.3);
 	public static boolean tuning_mode = false;
 
-	public static double low1 = 40;
-	public static double low2 = 80;
-	public static double low3 = 40;
-	public static double high1 = 100;
-	public static double high2 = 190;
-	public static double high3 = 130;
+	public static double low1 = 140;
+	public static double low2 = 50;
+	public static double low3 = 50;
+	public static double high1 = 210;
+	public static double high2 = 230;
+	public static double high3 = 255;
 
 	public boolean hasStarted = false;
 
@@ -51,6 +51,7 @@ public class EliminationPipeline extends OpenCvPipeline {
 		int columns = input.cols();
 
 		int right = columns / 2;
+		double second_right = columns / 2.5;
 
 
 		Imgproc.cvtColor(input, alternateColorSpace, Imgproc.COLOR_RGB2HSV);
@@ -92,13 +93,12 @@ public class EliminationPipeline extends OpenCvPipeline {
 				} else {
 					TSEPosition = TSEContourPipeline.position.RIGHT;
 				}
-
 				if (largestContourSize < minimum_contour_size) {
 					TSEPosition = TSEContourPipeline.position.LEFT;
 				}
 
 			} else {
-				if (boundingBoxPosition < right) {
+				if (boundingBoxPosition < second_right) {
 					TSEPosition = TSEContourPipeline.position.LEFT;
 				} else {
 					TSEPosition = TSEContourPipeline.position.MIDDLE;

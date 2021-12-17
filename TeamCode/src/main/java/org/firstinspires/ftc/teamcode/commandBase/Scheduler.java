@@ -122,8 +122,6 @@ public class Scheduler {
                 currentPersistentAction = actionList.get(currentState);
             }
             hasStartedAction = false;
-
-
         } else if (actionList.get(currentState).isActionComplete() && currentState == actionList.size() - 1) {
             actionList.get(currentState).stopAction();
         } else {

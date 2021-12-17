@@ -41,6 +41,8 @@ public abstract class BaseAuto extends LinearOpMode {
 
 		while (!isStopRequested() && !isStarted() && isCompBot) {
 			TSEPosition = robot.duckDetection.subsystemState();
+			telemetry.addData("Current TSE Position is: ", TSEPosition);
+			telemetry.update();
 		}
 
 
