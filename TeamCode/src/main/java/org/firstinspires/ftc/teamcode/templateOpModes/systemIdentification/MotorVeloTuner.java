@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.templateOpModes.systemIdentification;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.classicalControl.velocityControl;
@@ -10,7 +11,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
 import java.util.ArrayList;
 
-@Autonomous
+@Disabled
 public class MotorVeloTuner extends LinearOpMode {
 
 
