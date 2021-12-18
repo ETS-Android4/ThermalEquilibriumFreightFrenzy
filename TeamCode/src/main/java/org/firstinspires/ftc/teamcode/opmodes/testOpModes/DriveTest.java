@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.opmodes.testOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.Drive;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.Turn;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
 
-@Autonomous
+@Disabled
 public class DriveTest extends BaseAuto {
 	@Override
 	public void setStartingPosition() {

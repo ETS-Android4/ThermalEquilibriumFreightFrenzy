@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.competetionOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToI
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Intake.TurnOffIntake;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Intake.TurnOnIntake;
 
-@Autonomous
+@Disabled
 public class RedWarehouseAuto extends BaseAuto {
 	public Vector3D startPosition = new Vector3D(9, -56, Math.toRadians(-90));
 	public Vector3D goalPosition = new Vector3D(-12, -24, 0);
