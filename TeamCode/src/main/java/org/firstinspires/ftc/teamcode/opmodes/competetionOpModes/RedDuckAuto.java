@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opmodes.competetionOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.commandBase.autoActions.Intake.TurnOffIntake;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Misc.Delay;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.DepositFreight;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToBottomDeposit;
@@ -10,7 +9,7 @@ import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToH
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToInState;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToMidDeposit;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Intake.TurnOnIntake;
-import org.firstinspires.ftc.teamcode.commandBase.autoActions.Ducks.setDuckWheel;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.Ducks.SetDuckWheel;
 import org.firstinspires.ftc.teamcode.subsystems.DuckWheel;
 import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
@@ -53,6 +52,8 @@ public class RedDuckAuto extends BaseAuto {
     @Override
     public void addActions() {
 
+        actions.add(new Delay(3000));
+
         switch (TSEPosition) {
 
             case LEFT:
@@ -87,24 +88,24 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Turn(robot,startPosition.getAngleRadians()));
 
                 // push wheel against carousel
-                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
+                actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
-                actions.add(new Drive(robot, 10.5));
+                actions.add(new Drive(robot, 12));
                 actions.add(new Delay(DUCK_SPIN_TIME));
-                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
+                actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Turn(robot,exitCarouselAngle));
-                actions.add(new Drive(robot, 3));
-                actions.add(new TurnOffIntake(robot));
-
-                // deposit the duck
-                actions.add(new GoToHighDeposit(robot));
-                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL ));
-
-                // actions.add(new AimAtPoint(robot,goalPosition,false, true));
-                actions.add(new DepositFreight(robot));
+//                actions.add(new Drive(robot, 3));
+//                actions.add(new TurnOffIntake(robot));
+//
+//                // deposit the duck
+//                actions.add(new GoToHighDeposit(robot));
+//                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL ));
+//
+//                // actions.add(new AimAtPoint(robot,goalPosition,false, true));
+//                actions.add(new DepositFreight(robot));
 
                 // go to park
-                actions.add(new Drive(robot, 10));
+                actions.add(new Drive(robot, 15));
                 actions.add(new AimAtPoint(robot, park, false, true));
                 actions.add(new GoToInState(robot));
                 actions.add(new Drive(robot,park,-1));
@@ -118,7 +119,7 @@ public class RedDuckAuto extends BaseAuto {
             case MIDDLE:
 
                 actions.add(new Drive(robot,-27));
-                actions.add(new Drive(robot,goalPosition,-1 , DISTANCE_BACK_FROM_GOAL -3));
+                actions.add(new Drive(robot,goalPosition,-1 , DISTANCE_BACK_FROM_GOAL - 3));
                 actions.add(new DepositFreight(robot));
 
                 // drive to carousel
@@ -128,24 +129,24 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Turn(robot,startPosition.getAngleRadians()));
 
                 // push wheel against carousel
-                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
+                actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
-                actions.add(new Drive(robot, 10.5));
+                actions.add(new Drive(robot, 12));
                 actions.add(new Delay(DUCK_SPIN_TIME));
-                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
+                actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Turn(robot,exitCarouselAngle));
-                actions.add(new Drive(robot, 3));
-                actions.add(new TurnOffIntake(robot));
+//                actions.add(new Drive(robot, 3));
+//                actions.add(new TurnOffIntake(robot));
 
                 // deposit the duck
-                actions.add(new GoToHighDeposit(robot));
-                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL ));
-
-                // actions.add(new AimAtPoint(robot,goalPosition,false, true));
-                actions.add(new DepositFreight(robot));
+//                actions.add(new GoToHighDeposit(robot));
+//                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL ));
+//
+//                // actions.add(new AimAtPoint(robot,goalPosition,false, true));
+//                actions.add(new DepositFreight(robot));
 
                 // go to park
-                actions.add(new Drive(robot, 10));
+                actions.add(new Drive(robot, 15));
                 actions.add(new AimAtPoint(robot, park, false, true));
                 actions.add(new GoToInState(robot));
                 actions.add(new Drive(robot,park,-1));
@@ -168,24 +169,24 @@ public class RedDuckAuto extends BaseAuto {
                 actions.add(new Turn(robot,startPosition.getAngleRadians()));
 
                 // push wheel against carousel
-                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
+                actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
-                actions.add(new Drive(robot, 10.5));
+                actions.add(new Drive(robot, 12));
                 actions.add(new Delay(DUCK_SPIN_TIME));
-                actions.add(new setDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
+                actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Turn(robot,exitCarouselAngle));
-                actions.add(new Drive(robot, 3));
-                actions.add(new TurnOffIntake(robot));
+//                actions.add(new Drive(robot, 3));
+//                actions.add(new TurnOffIntake(robot));
 
-                // deposit the duck
-                actions.add(new GoToHighDeposit(robot));
-                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL ));
-
-                // actions.add(new AimAtPoint(robot,goalPosition,false, true));
-                actions.add(new DepositFreight(robot));
+//                // deposit the duck
+//                actions.add(new GoToHighDeposit(robot));
+//                actions.add(new Drive(robot,goalPosition,-1, DISTANCE_BACK_FROM_GOAL ));
+//
+//                // actions.add(new AimAtPoint(robot,goalPosition,false, true));
+//                actions.add(new DepositFreight(robot));
 
                 // go to park
-                actions.add(new Drive(robot, 10));
+                actions.add(new Drive(robot, 15));
                 actions.add(new AimAtPoint(robot, park, false, true));
                 actions.add(new GoToInState(robot));
                 actions.add(new Drive(robot,park,-1));
