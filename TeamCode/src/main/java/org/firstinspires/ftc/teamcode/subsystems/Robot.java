@@ -33,7 +33,7 @@ public class Robot {
     public DuckDetection duckDetection = new DuckDetection(dashBoard);
 
     public DuckWheel duckwheel = new DuckWheel();
-    public DifferentialDriveOdometry odometry = new DifferentialDriveOdometry();
+    public ThreeWheelOdometry odometry = new ThreeWheelOdometry();
 
     public TapeTurret turret = new TapeTurret();
 

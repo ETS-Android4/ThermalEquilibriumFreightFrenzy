@@ -1,15 +1,11 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
-import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.AxesSigns;
-import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.BNO055IMUUtil;
 
 import homeostasis.Filters.AngleKalmanFilter;
 
@@ -18,21 +14,24 @@ import static org.firstinspires.ftc.teamcode.utils.utils.AngleWrap;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobot;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngleRR;
 
-public class DifferentialDriveOdometry implements subsystem {
+public class ThreeWheelOdometry implements subsystem {
 
 
-	public DcMotorEx FrontLeft;
-	public DcMotorEx FrontRight;
+	public DcMotorEx LeftEncoder;
+	public DcMotorEx RightEncoder;
+	public DcMotorEx MiddleEncoder;
 	protected Vector3D positionEstimate = new Vector3D();
 	protected Vector3D positionEstimateDeltaFieldRelative = new Vector3D();
 	protected Vector3D positionEstimateDeltaRobotRelative = new Vector3D();
 	private double pitchAngle = 0;
 	private double leftPrev = 0;
 	private double rightPrev = 0;
+	private double middlePrev = 0;
 	private final double gearRatio;
 	double trackWidth;
 	double testBotTrackWidth = 15.543307;
-	double compBotTrackWidth = 16;
+	double compBotTrackWidth = 16; // TODO: fix this for real robot
+	double middleWheelOffset = 5;  // TODO: fix this for real robot
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
@@ -47,7 +46,7 @@ public class DifferentialDriveOdometry implements subsystem {
 	/**
 	 * initialize a differential drive robot with odometry
 	 */
-	public DifferentialDriveOdometry() {
+	public ThreeWheelOdometry() {
 		if (isCompBot) {
 			trackWidth = compBotTrackWidth;
 			gearRatio = 20.0 / 24.0;
@@ -71,8 +70,9 @@ public class DifferentialDriveOdometry implements subsystem {
 		parameters.mode = BNO055IMU.SensorMode.NDOF;
 		parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
 		imu.initialize(parameters);
-		FrontLeft = hwmap.get(DcMotorEx.class, "FrontLeft");
-		FrontRight = hwmap.get(DcMotorEx.class, "FrontRight");
+		LeftEncoder = hwmap.get(DcMotorEx.class, "FrontLeft");
+		RightEncoder = hwmap.get(DcMotorEx.class, "FrontRight");
+		MiddleEncoder = hwmap.get(DcMotorEx.class, "BackLeft");
 	}
 
 	@Override
@@ -84,19 +84,23 @@ public class DifferentialDriveOdometry implements subsystem {
 	public void update() {
 
 		updateIMU();
-		double left = encoderTicksToInches(FrontLeft.getCurrentPosition());
-		double right = encoderTicksToInches(FrontRight.getCurrentPosition());
+		double left = encoderTicksToInches(LeftEncoder.getCurrentPosition());
+		double right = encoderTicksToInches(RightEncoder.getCurrentPosition());
+		double middle = encoderTicksToInches(MiddleEncoder.getCurrentPosition());
 
-		double leftVelo = encoderTicksToInches(FrontLeft.getVelocity());
-		double rightVelo = encoderTicksToInches(FrontRight.getVelocity());
+		double leftVelo = encoderTicksToInches(LeftEncoder.getVelocity()); // TODO This will break with the rev encoder
+		double rightVelo = encoderTicksToInches(RightEncoder.getVelocity());
 
 		double leftDelta = left - leftPrev;
 		double rightDelta = right - rightPrev;
+		double middleDelta = middle - middlePrev;
+
 		leftPrev = left;
 		rightPrev = right;
+		middlePrev = middle;
 
 		double xDelta = (leftDelta + rightDelta) / 2;
-		double yDelta = 0;
+		double yDelta = (middleWheelOffset / trackWidth) * (leftDelta - rightDelta) + middleDelta;
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
 
 		xDot = (leftVelo + rightVelo) / 2;
@@ -156,12 +160,13 @@ public class DifferentialDriveOdometry implements subsystem {
 	}
 
 	public Vector3D getVelocity() {
-		return new Vector3D(xDot, 0, angularVelocity);
+		return new Vector3D(xDot, 0, angularVelocity).rotateBy(positionEstimate.getAngleDegrees());
 	}
 
+
 	public double encoderTicksToInches(double ticks) {
-		double WHEEL_RADIUS = 3.77953 / 2;
-		double ticksPerRevolution = 28.0 * 13.7;
+		double WHEEL_RADIUS = 1.49606 / 2; // 38 mm wheel
+		double ticksPerRevolution = 8192;
 		return WHEEL_RADIUS * 2 * Math.PI * gearRatio * ticks / ticksPerRevolution;
 	}
 
