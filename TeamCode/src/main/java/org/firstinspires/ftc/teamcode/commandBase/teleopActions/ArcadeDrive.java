@@ -11,8 +11,6 @@ public class ArcadeDrive implements teleopAction {
 	protected Gamepad gamepad1;
 	protected Gamepad gamepad2;
 
-	protected double scalar = 1;
-
 	public ArcadeDrive(Robot robot, Gamepad gamepad1, Gamepad gamepad2) {
 		this.robot = robot;
 		this.gamepad1 = gamepad1;
@@ -26,13 +24,9 @@ public class ArcadeDrive implements teleopAction {
 
 	@Override
 	public void periodic() {
-		if (gamepad1.right_bumper) {
-			scalar = 0.5;
-		} else {
-			scalar = 1;
-		}
-		robot.driveTrain.robotRelativeRaw(-gamepad1.right_stick_y * scalar,
-				 					     gamepad1.left_stick_x * scalar);
+
+		robot.driveTrain.robotRelativeRaw(-gamepad1.right_stick_y,
+				 					       gamepad1.left_stick_x);
 	}
 
 	@Override

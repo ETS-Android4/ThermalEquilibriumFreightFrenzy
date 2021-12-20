@@ -95,7 +95,7 @@ public class CommandDeposit implements teleopAction {
 				poseAtRelease = robot.getRobotPose();
 				break;
 			case DEPOSITING:
-				if (robot.getRobotPose().distanceToPose(poseAtRelease) > DISTANCE_FOR_SLIDES_DOWN) {
+				if (robot.getRobotPose().distanceToPose(poseAtRelease) > DISTANCE_FOR_SLIDES_DOWN || gamepad1.right_bumper) {
 					state = GOING_IN;
 					timer.reset();
 				}
