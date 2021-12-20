@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.commandBase.teleopActions;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.gamepadEnhancements.ButtonPress;
 import org.firstinspires.ftc.teamcode.commandBase.teleopAction;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.geometry;
+package org.firstinspires.ftc.teamcode.Geometry;
 
 /**
  * Think of a vector as a ray with a starting point at the origin.

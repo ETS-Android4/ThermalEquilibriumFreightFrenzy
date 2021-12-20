@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.Controls.SISOControls.RobustPID;
 import org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients;
 import org.firstinspires.ftc.teamcode.Controls.Coefficients.PIDFCoefficients;
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.commandBase.action;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 

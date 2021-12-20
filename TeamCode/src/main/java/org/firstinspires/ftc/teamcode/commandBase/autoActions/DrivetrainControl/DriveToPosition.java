@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl
 
 import org.firstinspires.ftc.teamcode.Controls.MIMOControls.MecanumDriveController;
 import org.firstinspires.ftc.teamcode.commandBase.action;
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
 public class DriveToPosition implements action {

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
-public class Virtual4bar implements subsystem {
+public class Extension implements subsystem {
 
 	protected final double COLLECTION = 0.18;
 	protected final double IN = 0.08;

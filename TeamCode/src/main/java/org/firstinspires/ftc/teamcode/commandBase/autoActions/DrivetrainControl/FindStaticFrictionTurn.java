@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl;
 
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.commandBase.action;
 import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;

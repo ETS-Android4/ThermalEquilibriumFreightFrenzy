@@ -5,14 +5,14 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 
 import homeostasis.Filters.AngleKalmanFilter;
 
 import static org.firstinspires.ftc.teamcode.subsystems.Robot.isCompBot;
-import static org.firstinspires.ftc.teamcode.utils.utils.AngleWrap;
-import static org.firstinspires.ftc.teamcode.utils.utils.drawRobot;
-import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngleRR;
+import static org.firstinspires.ftc.teamcode.Utils.utils.AngleWrap;
+import static org.firstinspires.ftc.teamcode.Utils.utils.drawRobot;
+import static org.firstinspires.ftc.teamcode.Utils.utils.normalizeAngleRR;
 
 public class ThreeWheelOdometry implements subsystem {
 

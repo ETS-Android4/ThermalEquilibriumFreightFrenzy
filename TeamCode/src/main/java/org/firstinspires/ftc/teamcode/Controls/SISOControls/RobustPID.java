@@ -5,9 +5,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Controls.Coefficients.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.Controls.utils.PIDState;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
-import org.firstinspires.ftc.teamcode.utils.RingBuffer;
+import org.firstinspires.ftc.teamcode.Utils.RingBuffer;
 
-import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
+import static org.firstinspires.ftc.teamcode.Utils.utils.normalizedHeadingError;
 
 public class RobustPID {
 

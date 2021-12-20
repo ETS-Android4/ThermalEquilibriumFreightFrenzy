@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.utils;
+package org.firstinspires.ftc.teamcode.Utils;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

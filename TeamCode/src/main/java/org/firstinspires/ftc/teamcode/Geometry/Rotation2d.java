@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.geometry;
+package org.firstinspires.ftc.teamcode.Geometry;
 
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */

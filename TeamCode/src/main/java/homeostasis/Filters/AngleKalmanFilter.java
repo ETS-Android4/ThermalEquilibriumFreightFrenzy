@@ -4,7 +4,7 @@ package homeostasis.Filters;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import static org.firstinspires.ftc.teamcode.utils.utils.AngleWrap;
+import static org.firstinspires.ftc.teamcode.Utils.utils.AngleWrap;
 
 @Config
 public class AngleKalmanFilter {

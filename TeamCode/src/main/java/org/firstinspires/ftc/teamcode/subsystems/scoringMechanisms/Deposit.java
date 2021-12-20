@@ -14,7 +14,7 @@ public class Deposit implements subsystem {
 
 	public double slideErrorTolerance = 5;
 	protected Slides slideSystem = new Slides();
-	protected Virtual4bar v4b = new Virtual4bar();
+	protected Extension v4b = new Extension();
 	protected depositStates state = depositStates.IN;
 
 	@Override

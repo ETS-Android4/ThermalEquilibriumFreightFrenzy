@@ -7,9 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Controls.SISOControls.PVControl;
 import org.firstinspires.ftc.teamcode.Controls.SISOControls.RobustPID;
-import org.firstinspires.ftc.teamcode.geometry.Vector3D;
-
-import java.util.Vector;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 
 import homeostasis.utils.State;
 

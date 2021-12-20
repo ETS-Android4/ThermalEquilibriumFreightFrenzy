@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.filter;
+package org.firstinspires.ftc.teamcode.Filter;
 
 public class LowPassFilter {
 

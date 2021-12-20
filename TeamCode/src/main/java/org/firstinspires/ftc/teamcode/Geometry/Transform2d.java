@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.geometry;
+package org.firstinspires.ftc.teamcode.Geometry;
 
 /**
  * Represents a transformation for a Pose2d.

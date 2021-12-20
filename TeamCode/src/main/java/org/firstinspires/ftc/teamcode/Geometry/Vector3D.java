@@ -1,15 +1,15 @@
 
-package org.firstinspires.ftc.teamcode.geometry;
+package org.firstinspires.ftc.teamcode.Geometry;
 
 
 import org.ejml.data.DMatrixRMaj;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
-import static org.firstinspires.ftc.teamcode.utils.utils.AngleWrap;
-import static org.firstinspires.ftc.teamcode.utils.utils.approxFirstOrderIntegral;
-import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngle;
-import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
+import static org.firstinspires.ftc.teamcode.Utils.utils.AngleWrap;
+import static org.firstinspires.ftc.teamcode.Utils.utils.approxFirstOrderIntegral;
+import static org.firstinspires.ftc.teamcode.Utils.utils.normalizeAngle;
+import static org.firstinspires.ftc.teamcode.Utils.utils.normalizedHeadingError;
 
 public class Vector3D {
 

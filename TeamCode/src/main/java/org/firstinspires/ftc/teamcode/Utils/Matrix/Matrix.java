@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.utils.Matrix;
+package org.firstinspires.ftc.teamcode.Utils.Matrix;
 
 public class Matrix {
 
