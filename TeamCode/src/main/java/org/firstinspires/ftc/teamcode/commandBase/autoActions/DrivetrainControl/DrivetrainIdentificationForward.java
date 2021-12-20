@@ -31,7 +31,7 @@ public class DrivetrainIdentificationForward implements action {
 		if (time > step_time_seconds) {
 			power = max_power;
 		}
-		robot.driveTrain.robotRelative(power, 0);
+		robot.driveTrain.robotRelative(power, 0,0);
 		System.out.println("drivetrain forward: " + power + ", " + robot.getRobotPose().getX() + ", " + time);
 		if (time > total_step_time) {
 			isComplete = true;

@@ -1,13 +1,12 @@
-package org.firstinspires.ftc.teamcode.controls;
+package org.firstinspires.ftc.teamcode.Controls.SISOControls;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
+import org.firstinspires.ftc.teamcode.Controls.Coefficients.PIDFCoefficients;
+import org.firstinspires.ftc.teamcode.Controls.utils.PIDState;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.utils.RingBuffer;
 
-import static org.apache.commons.math3.util.Precision.EPSILON;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 
 public class RobustPID {
@@ -67,6 +66,19 @@ public class RobustPID {
 		lastTime = timer.time();
 		PIDState PIDFData = new PIDState(lastError, lastTime);
 		derivativeBuffer = new RingBuffer<>(bufferLength, PIDFData);
+	}
+
+	public RobustPID(PIDFCoefficients coefficients, int bufferLength, double stability_threshold, double exitTolerance) {
+		this.reference = 0;
+		this.bufferLength = bufferLength;
+		this.stability_threshold = stability_threshold;
+		this.coefficients = coefficients;
+		this.exitTolerance = exitTolerance;
+		timer = new ElapsedTime();
+		lastTime = timer.time();
+		PIDState PIDFData = new PIDState(lastError, lastTime);
+		derivativeBuffer = new RingBuffer<>(bufferLength, PIDFData);
+
 	}
 
 	/**

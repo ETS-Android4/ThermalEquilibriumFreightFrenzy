@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.controls
+package org.firstinspires.ftc.teamcode.Controls.SISOControls
 
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients
+import org.firstinspires.ftc.teamcode.Controls.Coefficients.PIDFCoefficients
 
 class KotlinPID(var coefficients: PIDFCoefficients, var reference: Double) {
     var timer = ElapsedTime()

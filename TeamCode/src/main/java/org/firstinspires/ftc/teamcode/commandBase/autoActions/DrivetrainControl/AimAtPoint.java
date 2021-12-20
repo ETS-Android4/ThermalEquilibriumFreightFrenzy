@@ -4,9 +4,9 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.controls.RobustPID;
-import org.firstinspires.ftc.teamcode.controls.controllerCoefficients;
-import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
+import org.firstinspires.ftc.teamcode.Controls.SISOControls.RobustPID;
+import org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients;
+import org.firstinspires.ftc.teamcode.Controls.Coefficients.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.commandBase.action;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
@@ -94,7 +94,7 @@ public class AimAtPoint implements action {
         this.controller.setReference(theta);
         double power = Range.clip(this.controller.calculateLinearAngle(robot.getRobotPose().getAngleRadians()), -max_power, max_power);
         error = this.controller.getError();
-        robot.driveTrain.robotRelative(0, power);
+        robot.driveTrain.robotRelative(0, 0, power);
 
         if (this.controller.isComplete() || timeout.seconds() > allowedTimeSeconds) {
             isWithinTolerance = true;

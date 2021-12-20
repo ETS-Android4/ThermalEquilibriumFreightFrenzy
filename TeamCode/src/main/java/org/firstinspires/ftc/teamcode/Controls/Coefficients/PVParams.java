@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.controls;
+package org.firstinspires.ftc.teamcode.Controls.Coefficients;
 
 public class PVParams {
 

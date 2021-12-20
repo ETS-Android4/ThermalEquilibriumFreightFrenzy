@@ -24,7 +24,7 @@ public class FindStaticFrictionTurn implements action {
 	@Override
 	public void runAction() {
 
-		robot.driveTrain.setMotorPowers(power, -power);
+		robot.driveTrain.robotRelative(0,0,power);
 		power += iteration;
 		if (robot.getRobotPose().angle.getRadians() > Math.abs(0.1)) {
 			isComplete = true;

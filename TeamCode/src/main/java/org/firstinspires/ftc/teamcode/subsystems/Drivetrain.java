@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.classicalControl.velocityControl;
+import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 
 import java.util.ArrayList;
 
@@ -17,8 +17,6 @@ import static org.firstinspires.ftc.teamcode.subsystems.Robot.isCompBot;
 
 public class Drivetrain implements subsystem {
 
-
-    public static final double MAX_DRIVE_MOTOR_TPS = 2 * (435 * (15.0 / 12) * 60.0) / 28;
 
     /**
      * the maximum translational acceleration of our robot
@@ -49,12 +47,12 @@ public class Drivetrain implements subsystem {
 
     public double last_FrontLeft_Power = 0;
     public double last_BackRight_Power = 0;
+    public double last_BackLeft_Power = 0;
+    public double last_FrontRight_Power = 0;
 
     public DcMotorPlant leftMotorSys;
     public DcMotorPlant rightMotorSys;
 
-    protected velocityControl leftMotorController;
-    protected velocityControl rightMotorController;
 
     protected VoltageSensor batterySensor;
 
@@ -88,6 +86,7 @@ public class Drivetrain implements subsystem {
         FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         if (isCompBot) {
             FrontLeft.setDirection(DcMotorEx.Direction.REVERSE);
             FrontRight.setDirection(DcMotorEx.Direction.FORWARD);
@@ -102,18 +101,6 @@ public class Drivetrain implements subsystem {
         }
 
 
-        ArrayList<DcMotorEx> leftMotors = new ArrayList<>();
-        ArrayList<DcMotorEx> rightMotors = new ArrayList<>();
-        leftMotors.add(FrontLeft);
-        leftMotors.add(BackLeft);
-        rightMotors.add(FrontRight);
-        rightMotors.add(BackRight);
-
-        leftMotorSys = new DcMotorPlant(leftMotors);
-        rightMotorSys = new DcMotorPlant(rightMotors);
-
-        leftMotorController = new velocityControl(leftMotorSys);
-        rightMotorController = new velocityControl(rightMotorSys);
 
     }
 
@@ -127,33 +114,35 @@ public class Drivetrain implements subsystem {
 
     }
 
+
     /**
-     * sets the motor powers using lynx optimizations
-     *
-     * We don't actually update the power unless it is different than how the drive train is already moving
-     * This is because we are sending unnecessary lynx writes to the rev hub, increasing loop times
-     *
-     *
-     * @param left front left power (-1 < x < 1)
-     * @param right front right power (-1 < x < 1)
+     * set individual drive motors
+     * @param fl front left power
+     * @param fr front right power
+     * @param bl back left power
+     * @param br back right power
      */
-    public void setMotorPowers(double left, double right) {
+    public void setMotorPowers(double fl, double fr, double bl, double br) {
 
-        left = Range.clip(left,-1,1) * MAX_DRIVE_MOTOR_TPS;
-        right = Range.clip(right,-1,1) * MAX_DRIVE_MOTOR_TPS;
-        batterySensor = hwmap.voltageSensor.iterator().next();
-        double voltage = batterySensor.getVoltage();
-        leftMotorController.voltageCorrectedControl(left,voltage);
-        rightMotorController.voltageCorrectedControl(right,voltage);
+        if (fl != last_FrontLeft_Power) {
+            this.FrontLeft.setPower(fl);
+        }
+        if (fr != last_FrontRight_Power) {
+            this.FrontRight.setPower(fr);
+        }
+        if (bl != last_BackLeft_Power) {
+            this.BackLeft.setPower(bl);
+        }
+        if (br != last_BackRight_Power) {
+            this.BackRight.setPower(br);
+        }
+        last_FrontLeft_Power = fl;
+        last_FrontRight_Power = fr;
+        last_BackLeft_Power = bl;
+        last_BackRight_Power = br;
 
     }
 
-    public void setMotorPowersRaw(double left, double right) {
-        left = Range.clip(left,-1,1);
-        right = Range.clip(right,-1,1);
-        leftMotorSys.input(left);
-        rightMotorSys.input(right);
-    }
 
     /**
      * set robot relative motor powers
@@ -161,27 +150,33 @@ public class Drivetrain implements subsystem {
      * @param xSpeed    speed in robot forward direction
      * @param turnSpeed turning speed
      */
-    public void robotRelative(double xSpeed, double turnSpeed) {
-        double leftPower = xSpeed + turnSpeed;
-        double rightPower = xSpeed - turnSpeed;
-        setMotorPowers(leftPower, rightPower);
+    public void robotRelative(double xSpeed, double ySpeed, double turnSpeed) {
+        double frontLeftPower = (xSpeed + ySpeed + turnSpeed);
+        double backLeftPower = (xSpeed - ySpeed + turnSpeed);
+        double frontRightPower = (xSpeed - ySpeed - turnSpeed);
+        double backRightPower = (xSpeed + ySpeed - turnSpeed);
+        setMotorPowers(frontLeftPower, frontRightPower, backLeftPower, backRightPower);
     }
 
-    public void robotRelativeRaw(double xSpeed, double turnSpeed) {
-        double leftPower = xSpeed + turnSpeed;
-        double rightPower = xSpeed - turnSpeed;
-        setMotorPowersRaw(leftPower, rightPower);
+    /**
+     * robot relative with Vector3D representation of motor powers
+     * @param powers motor power vector
+     */
+    public void robotRelative(Vector3D powers) {
+        robotRelative(powers.getX(), powers.getY(), powers.getAngleRadians());
     }
 
-    public void robotRelativeRawClipped(double xSpeed, double turnSpeed, double max) {
-        xSpeed = Range.clip(xSpeed,-max,max);
-        turnSpeed = Range.clip(turnSpeed,-max,max);
-        double leftPower = xSpeed + turnSpeed;
-        double rightPower = xSpeed - turnSpeed;
-        setMotorPowersRaw(leftPower, rightPower);
+    /**
+     * command the robot relative to the field
+     * @param powers ideal field relative powers
+     * @param robotPose current robot pose
+     */
+    public void fieldRelative(Vector3D powers, Vector3D robotPose) {
+        robotRelative(powers.rotateBy(robotPose.getAngleDegrees()));
     }
+
     public void STOP() {
-        setMotorPowers(0,0);
+        setMotorPowers(0,0,0,0);
     }
 
     @Override

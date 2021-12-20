@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.controls.RobustPID;
-import org.firstinspires.ftc.teamcode.controls.controllerCoefficients;
+import org.firstinspires.ftc.teamcode.Controls.SISOControls.RobustPID;
+import org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients;
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 import java.util.ArrayList;

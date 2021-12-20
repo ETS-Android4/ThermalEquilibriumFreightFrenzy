@@ -58,17 +58,14 @@ public class CommandDeposit implements teleopAction {
 
 		switch (state) {
 			case DISARMED:
+			case COLLECTION:
 				break;
-
 			case IN:
 				// cringe imo
 				if (timer.milliseconds() > DEPOSIT_DURATION) {
 					actionIsComplete = true;
 					reset();
 				}
-
-				break;
-			case COLLECTION:
 				break;
 			case GOING_TO_HIGH:
 				if (robot.Deposit.tolerantEnoughForDeploy()) {

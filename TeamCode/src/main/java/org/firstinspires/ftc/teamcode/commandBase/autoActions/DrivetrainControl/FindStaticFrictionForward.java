@@ -26,7 +26,7 @@ public class FindStaticFrictionForward implements action {
 	@Override
 	public void runAction() {
 
-		robot.driveTrain.setMotorPowers(power, power);
+		robot.driveTrain.robotRelative(power, 0,0 );
 		power += iteration;
 		if (robot.getRobotPose().distanceToPose(initialPosition) > validDistance) {
 			isComplete = true;

@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.controls.RobustPID;
-import org.firstinspires.ftc.teamcode.controls.controllerCoefficients;
-import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
+import org.firstinspires.ftc.teamcode.Controls.SISOControls.RobustPID;
+import org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients;
+import org.firstinspires.ftc.teamcode.Controls.Coefficients.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.commandBase.action;
 import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
@@ -41,7 +41,7 @@ public class Turn implements action {
 	@Override
 	public void runAction() {
 		double output = pid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
-		robot.driveTrain.robotRelative(0, output);
+		robot.driveTrain.robotRelative(0,0, output);
 		Dashboard.packet.put("power",output);
 		Dashboard.packet.put("error",pid.getError());
 		isComplete = ((pid.isComplete()) && pid.isStable()) || pid.isBasicallyStopped();

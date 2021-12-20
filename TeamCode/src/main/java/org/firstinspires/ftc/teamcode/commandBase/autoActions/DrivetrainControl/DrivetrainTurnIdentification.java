@@ -30,7 +30,7 @@ public class DrivetrainTurnIdentification implements action {
 		if (time > step_time_seconds) {
 			power = max_power;
 		}
-		robot.driveTrain.robotRelative(0, power);
+		robot.driveTrain.robotRelative(0,0, power);
 		System.out.println("drivetrain turn: " + power + ", " + robot.getRobotPose().getAngleRadians() + ", " + time);
 		if (time > total_step_time) {
 			isComplete = true;
