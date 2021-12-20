@@ -111,7 +111,7 @@ public class MecanumDriveController {
 		if (profileX != null &&
 			profileY != null &&
 			referencePose.equals(previousReferencePose)) return;
-		timer.reset();
+		resetTimer();
 		generateMotionProfile(referencePose,robotPose);
 	}
 
@@ -137,6 +137,12 @@ public class MecanumDriveController {
 		);
 	}
 
+	public Vector3D followTrajectoryToPose(Vector3D referencePose,
+									   Vector3D robotPose, Vector3D robotVelocity) {
+		Vector3D robotRelativePowers = calculateProfiled(referencePose,robotPose,robotVelocity);
+		return robotRelativePowers.rotateBy(robotPose.getAngleDegrees());
+	}
+
 	/**
 	 * check if our profile is complete
 	 * @return true if the profile is complete
@@ -156,6 +162,13 @@ public class MecanumDriveController {
 				&& controllerY.isProcessComplete()
 				&& thetaControl.isComplete()
 				&& isProfileComplete();
+	}
+
+	/**
+	 * reset instance of elapsed timer
+	 */
+	public void resetTimer() {
+		timer.reset();
 	}
 
 
