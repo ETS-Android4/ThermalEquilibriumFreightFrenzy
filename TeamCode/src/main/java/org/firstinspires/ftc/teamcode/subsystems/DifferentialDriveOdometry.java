@@ -35,6 +35,7 @@ public class DifferentialDriveOdometry implements subsystem {
 	double compBotTrackWidth = 16;
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
+	protected double initialPitchAngle = 0;
 	protected double IMU_angle = 0;
 	double encoderAngle = 0;
 	double xDot = 0;
@@ -150,6 +151,7 @@ public class DifferentialDriveOdometry implements subsystem {
 
 	public void updateIMU() {
 		Orientation angle = imu.getAngularOrientation();
+		pitchAngle = normalizeAngleRR(angle.thirdAngle);
 		IMU_angle = normalizeAngleRR(angle.firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
 		Dashboard.packet.put("pitch angle", pitchAngle);
 		angularVelocity = imu.getAngularVelocity().zRotationRate;
@@ -163,6 +165,10 @@ public class DifferentialDriveOdometry implements subsystem {
 		double WHEEL_RADIUS = 3.77953 / 2;
 		double ticksPerRevolution = 28.0 * 13.7;
 		return WHEEL_RADIUS * 2 * Math.PI * gearRatio * ticks / ticksPerRevolution;
+	}
+
+	public double getPitchAngle() {
+		return pitchAngle;
 	}
 
 

@@ -17,6 +17,8 @@ public class controllerCoefficients {
 	// controller coefficients for linear slide subsystem
 	public static final PIDFCoefficients slideCoefficients = new PIDFCoefficients(0.007, 0.08, 0);
 
+	public static final BangBangParameters protoBotAntiTip = new BangBangParameters(0.5, Math.toRadians(5),0.09,0);
+
 
 	public static final double compBotVelocity = 70;
 	public static final double compBotAcceleration = 90;
