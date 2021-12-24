@@ -12,11 +12,16 @@ import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.AxesSigns;
 import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.BNO055IMUUtil;
 
 import homeostasis.Filters.AngleKalmanFilter;
+import homeostasis.Filters.LeastSquaresKalmanFilter;
 
 import static org.firstinspires.ftc.teamcode.subsystems.Robot.isCompBot;
 import static org.firstinspires.ftc.teamcode.utils.utils.AngleWrap;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobot;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizeAngleRR;
+
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 public class DifferentialDriveOdometry implements subsystem {
 
@@ -41,6 +46,7 @@ public class DifferentialDriveOdometry implements subsystem {
 	double xDot = 0;
 	protected long counter = 0;
 	protected AngleKalmanFilter kalmanFilter;
+	protected LeastSquaresKalmanFilter forwardVelocityFilter;
 
 
 	double angularVelocity = 0;
@@ -57,7 +63,7 @@ public class DifferentialDriveOdometry implements subsystem {
 			gearRatio = 1;
 		}
 		kalmanFilter = new AngleKalmanFilter(0);
-
+		forwardVelocityFilter = new LeastSquaresKalmanFilter(0.4,3,3,false);
 	}
 
 	@Override
@@ -81,6 +87,7 @@ public class DifferentialDriveOdometry implements subsystem {
 		init(hwmap);
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	@Override
 	public void update() {
 
@@ -101,6 +108,7 @@ public class DifferentialDriveOdometry implements subsystem {
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
 
 		xDot = (leftVelo + rightVelo) / 2;
+		double xDotFiltered = forwardVelocityFilter.update(xDot);
 
 		encoderAngle += thetaDelta;
 		encoderAngle = normalizeAngleRR(encoderAngle);
@@ -119,6 +127,8 @@ public class DifferentialDriveOdometry implements subsystem {
 		Dashboard.packet.put("estimated angle",estimate);
 		Dashboard.packet.put("imu angle ", AngleWrap(IMU_angle));
 		Dashboard.packet.put("drive wheel angle", AngleWrap(encoderAngle));
+		Dashboard.packet.put("measured x velocity", xDot);
+		Dashboard.packet.put("estimated x velocity", xDotFiltered);
 
 	}
 
