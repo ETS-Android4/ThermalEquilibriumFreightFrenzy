@@ -42,15 +42,15 @@ DifferentialDriveOdometry implements subsystem {
 	double compBotTrackWidth = 16;
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
-	protected double initialPitchAngle = 0;
 	protected double IMU_angle = 0;
 	double encoderAngle = 0;
 	double xDot = 0;
-	protected long counter = 0;
+
 	protected AngleKalmanFilter kalmanFilter;
 	protected LeastSquaresKalmanFilter forwardVelocityFilter;
 	protected LeastSquaresKalmanFilter leftEncoderFilter;
 	protected LeastSquaresKalmanFilter rightEncoderFilter;
+
 	protected double previousDeltaX;
 	ElapsedTime timer = new ElapsedTime();
 
@@ -101,9 +101,7 @@ DifferentialDriveOdometry implements subsystem {
 		updateIMU();
 		double left = encoderTicksToInches(FrontLeft.getCurrentPosition());
 		double right = encoderTicksToInches(FrontRight.getCurrentPosition());
-		Dashboard.packet.put("Raw Left encoder", left);
 		left = leftEncoderFilter.update(left);
-		Dashboard.packet.put("filtered left encoder", left);
 		right = rightEncoderFilter.update(right);
 
 		double leftDelta = left - leftPrev;
@@ -133,6 +131,7 @@ DifferentialDriveOdometry implements subsystem {
 		positionEstimate.setAngleRad(estimate);
 
 		drawRobot(positionEstimate, Dashboard.packet);
+
 		Dashboard.packet.put("estimated angle",estimate);
 		Dashboard.packet.put("imu angle ", AngleWrap(IMU_angle));
 		Dashboard.packet.put("drive wheel angle", AngleWrap(encoderAngle));
