@@ -11,16 +11,23 @@ import org.firstinspires.ftc.teamcode.utils.SizedStack;
 
 public class LeastSquaresKalmanFilter {
 
-    public double Q;
-    public double R;
-    public int N;
-    public double P = 1;
-    public double K = 0;
-    public double x;
-    public boolean forAngles;
+    protected double Q;
+    protected double R;
+    protected int N;
+    protected double P = 1;
+    protected double K = 0;
+    protected double x;
+    protected boolean forAngles;
     protected SizedStack<Double> estimates;
     protected LinearRegression regression;
 
+    /**
+     * A kalman filter that uses a least squares regression as it's model.
+     * @param Q Sensor Covariance
+     * @param R Model Covariance
+     * @param N Number of elements we can hold in our stack.
+     * @param forAngles flag for if our measurements are angles.
+     */
     public LeastSquaresKalmanFilter(double Q, double R, int N, boolean forAngles) {
         this.Q = Q;
         this.R = R;
@@ -34,7 +41,12 @@ public class LeastSquaresKalmanFilter {
     }
 
 
-
+    /**
+     * public accessor for the update methods.  appropriately calls the correct one depending on
+     * the type of measurement being used.
+     * @param measurement the current measurement.
+     * @return optimal state estimate.
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public double update(double measurement) {
         if (forAngles) return updateAngle(measurement);
@@ -42,25 +54,38 @@ public class LeastSquaresKalmanFilter {
     }
 
 
+    /**
+     * set the state estimate.
+     * @param x state estimate
+     */
     public void setX(double x) {
         this.x = x;
     }
 
+    public double getX() {
+        return x;
+    }
+
+    /**
+     * update the kalman filter for traditional; continous values.
+     * @param measurement the current measurement
+     * @return the optimal state estimate.
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     protected double updateNormal(double measurement) {
-
-
         regression.runLeastSquares();
-       // System.out.println("x before advance is " + x + " next prediction is " + regression.predictNextValue() + " previous estimate is " + estimates.peek());
         x += regression.predictNextValue() - estimates.peek();
-        //System.out.println("x after advance is " + x);
         x += K * (measurement - x);
-
-        estimates.push(measurement);
+        estimates.push(x);
         regression = new LinearRegression(stackToDoubleArray());
         return x;
     }
 
+    /**
+     * updates the kalman filter for angular values
+     * @param measurement angle measurement
+     * @return optimal estimate.
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     protected double updateAngle(double measurement) {
         regression.runLeastSquares();
@@ -89,12 +114,19 @@ public class LeastSquaresKalmanFilter {
         P = (1-K) * P;
     }
 
+    /**
+     * initialize the stack to all 0's
+     */
     protected void initializeStackWith0() {
         for (int i = 0; i < N; ++i) {
             estimates.push(0.0);
         }
     }
 
+    /**
+     * convert the stack to an array of doubles
+     * @return an array of doubles.
+     */
     protected double[] stackToDoubleArray() {
         double[] newValues = new double[N];
         for (int i = 0; i < estimates.size(); ++i) {

@@ -4,6 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
@@ -47,7 +48,8 @@ public class DifferentialDriveOdometry implements subsystem {
 	protected long counter = 0;
 	protected AngleKalmanFilter kalmanFilter;
 	protected LeastSquaresKalmanFilter forwardVelocityFilter;
-
+	protected double previousDeltaX;
+	ElapsedTime timer = new ElapsedTime();
 
 	double angularVelocity = 0;
 
@@ -63,7 +65,7 @@ public class DifferentialDriveOdometry implements subsystem {
 			gearRatio = 1;
 		}
 		kalmanFilter = new AngleKalmanFilter(0);
-		forwardVelocityFilter = new LeastSquaresKalmanFilter(0.4,3,3,false);
+		forwardVelocityFilter = new LeastSquaresKalmanFilter(0.9,20,3,false);
 	}
 
 	@Override
@@ -95,9 +97,6 @@ public class DifferentialDriveOdometry implements subsystem {
 		double left = encoderTicksToInches(FrontLeft.getCurrentPosition());
 		double right = encoderTicksToInches(FrontRight.getCurrentPosition());
 
-		double leftVelo = encoderTicksToInches(FrontLeft.getVelocity());
-		double rightVelo = encoderTicksToInches(FrontRight.getVelocity());
-
 		double leftDelta = left - leftPrev;
 		double rightDelta = right - rightPrev;
 		leftPrev = left;
@@ -107,7 +106,8 @@ public class DifferentialDriveOdometry implements subsystem {
 		double yDelta = 0;
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
 
-		xDot = (leftVelo + rightVelo) / 2;
+		xDot = (xDelta - previousDeltaX) / timer.seconds();
+		timer.reset();
 		double xDotFiltered = forwardVelocityFilter.update(xDot);
 
 		encoderAngle += thetaDelta;

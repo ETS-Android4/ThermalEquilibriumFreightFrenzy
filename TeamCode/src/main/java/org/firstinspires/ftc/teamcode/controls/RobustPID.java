@@ -10,6 +10,12 @@ import org.firstinspires.ftc.teamcode.utils.RingBuffer;
 import static org.apache.commons.math3.util.Precision.EPSILON;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import homeostasis.Filters.LeastSquaresKalmanFilter;
+
 public class RobustPID {
 
 	// coefficients of the controller
@@ -48,6 +54,8 @@ public class RobustPID {
 	protected double stability_threshold;
 	// previous feedback output for adaptive feedforward control
 	protected double previous_feedback = 0;
+	protected LeastSquaresKalmanFilter derivativeFilter =
+			new LeastSquaresKalmanFilter(0.9,20,3,false);
 
 	/**
 	 * construct PID with buffer length and stability threshold
@@ -137,10 +145,12 @@ public class RobustPID {
 	/**
 	 * calculate derivative using the buffer to smooth the data
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	protected void calculateDerivative() {
 		PIDState bufferedPoint = derivativeBuffer.insert(new PIDState(error, time));
 
 		derivative = (error - bufferedPoint.error) / (time - bufferedPoint.timeStamp);
+		derivative = derivativeFilter.update(derivative);
 	}
 
 	/**
