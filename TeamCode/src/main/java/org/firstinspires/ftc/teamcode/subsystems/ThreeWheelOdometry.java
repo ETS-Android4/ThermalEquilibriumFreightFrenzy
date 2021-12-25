@@ -41,6 +41,8 @@ public class ThreeWheelOdometry implements subsystem {
 	protected AngleKalmanFilter kalmanFilter;
 
 
+	protected OdomState state = OdomState.DEPLOYED;
+
 	double angularVelocity = 0;
 
 	/**
@@ -82,47 +84,14 @@ public class ThreeWheelOdometry implements subsystem {
 
 	@Override
 	public void update() {
-
-		updateIMU();
-		double left = encoderTicksToInches(LeftEncoder.getCurrentPosition());
-		double right = encoderTicksToInches(RightEncoder.getCurrentPosition());
-		double middle = encoderTicksToInches(MiddleEncoder.getCurrentPosition());
-
-		double leftVelo = encoderTicksToInches(LeftEncoder.getVelocity()); // TODO This will break with the rev encoder
-		double rightVelo = encoderTicksToInches(RightEncoder.getVelocity());
-
-		double leftDelta = left - leftPrev;
-		double rightDelta = right - rightPrev;
-		double middleDelta = middle - middlePrev;
-
-		leftPrev = left;
-		rightPrev = right;
-		middlePrev = middle;
-
-		double xDelta = (leftDelta + rightDelta) / 2;
-		double yDelta = (middleWheelOffset / trackWidth) * (leftDelta - rightDelta) + middleDelta;
-		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
-
-		xDot = (leftVelo + rightVelo) / 2;
-
-		encoderAngle += thetaDelta;
-		encoderAngle = normalizeAngleRR(encoderAngle);
-
-		positionEstimateDeltaRobotRelative = new Vector3D(xDelta, yDelta, thetaDelta);
-		positionEstimate.setAngleRad(positionEstimate.getAngleRadians() + thetaDelta);
-
-		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
-		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
-
-		double estimate = kalmanFilter.updateKalmanEstimate(encoderAngle, IMU_angle);
-
-		positionEstimate.setAngleRad(estimate);
-
-		drawRobot(positionEstimate, Dashboard.packet);
-		Dashboard.packet.put("estimated angle",estimate);
-		Dashboard.packet.put("imu angle ", AngleWrap(IMU_angle));
-		Dashboard.packet.put("drive wheel angle", AngleWrap(encoderAngle));
-
+		switch (state) {
+			case DEPLOYED:
+				updateIMU();
+				break;
+			case RETRACTED:
+				deployedUpdate();
+				break;
+		}
 	}
 
 	/**
@@ -171,4 +140,47 @@ public class ThreeWheelOdometry implements subsystem {
 	}
 
 
+	public enum OdomState {
+		DEPLOYED,
+		RETRACTED
+	}
+
+	public void setRetractionState(OdomState state) {
+		this.state = state;
+	}
+
+	public void deployedUpdate() {
+		double left = encoderTicksToInches(LeftEncoder.getCurrentPosition());
+		double right = encoderTicksToInches(RightEncoder.getCurrentPosition());
+		double middle = encoderTicksToInches(MiddleEncoder.getCurrentPosition());
+
+		double leftVelo = encoderTicksToInches(LeftEncoder.getVelocity()); // TODO This will break with the rev encoder
+		double rightVelo = encoderTicksToInches(RightEncoder.getVelocity());
+
+		double leftDelta = left - leftPrev;
+		double rightDelta = right - rightPrev;
+		double middleDelta = middle - middlePrev;
+
+		leftPrev = left;
+		rightPrev = right;
+		middlePrev = middle;
+
+		double xDelta = (leftDelta + rightDelta) / 2;
+		double yDelta = (middleWheelOffset / trackWidth) * (leftDelta - rightDelta) + middleDelta;
+		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
+
+		xDot = (leftVelo + rightVelo) / 2;
+
+		encoderAngle += thetaDelta;
+		encoderAngle = normalizeAngleRR(encoderAngle);
+
+		positionEstimateDeltaRobotRelative = new Vector3D(xDelta, yDelta, thetaDelta);
+		positionEstimate.setAngleRad(positionEstimate.getAngleRadians() + thetaDelta);
+
+		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
+		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
+
+		drawRobot(positionEstimate, Dashboard.packet);
+
+	}
 }
