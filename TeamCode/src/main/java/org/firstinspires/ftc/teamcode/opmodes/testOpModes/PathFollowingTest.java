@@ -34,12 +34,22 @@ public class PathFollowingTest extends BaseAuto {
 			return;
 		}
 
-		actions.add(new Drive(robot, new Vector3D(30,30,0),1,0));
-		actions.add(new Drive(robot, new Vector3D(60,40,0),-1,0));
-		actions.add(new Drive(robot, new Vector3D(100,0,0),-1,0));
+//		actions.add(new Drive(robot, new Vector3D(30,30,0),1,0));
+//		actions.add(new Drive(robot, new Vector3D(60,40,0),-1,0));
+//		actions.add(new Drive(robot, new Vector3D(100,0,0),-1,0));
+//
+//		actions.add(new Drive(robot, new Vector3D(0,0,0),-1,0));
+//		actions.add(new Turn(robot,0));
 
+		for (int i = 0; i < 3; ++i) {
+			actions.add(new Drive(robot, new Vector3D(36 + (i * 24),30,0),1,0));
+			actions.add(new Drive(robot, new Vector3D(36 + (i * 24),-20,0),1,0));
+			actions.add(new Drive(robot, new Vector3D(36 + (i * 24),30,0),-1,0));
+		}
 		actions.add(new Drive(robot, new Vector3D(0,0,0),-1,0));
 		actions.add(new Turn(robot,0));
+
+
 
 	}
 }

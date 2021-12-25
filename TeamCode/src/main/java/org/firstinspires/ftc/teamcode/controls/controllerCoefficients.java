@@ -18,7 +18,7 @@ public class controllerCoefficients {
 	public static final PIDFCoefficients compBotDriveCorrect = compBotTurn.noFeedforward();
 	public static final PIDFCoefficients compBotDriveVelo = new PIDFCoefficients(0.02,0.03,0,0,1/compBotVelocity,0);
 	// controller coefficients for off season 6wd
-	public static final PIDFCoefficients protoBotTurn = PIDFCoefficients.JaRule(0.9);
+	public static final PIDFCoefficients protoBotTurn = PIDFCoefficients.JaRule(0.8);
 	public static final PIDFCoefficients protoBotDrive = new PIDFCoefficients(0,0,0);//new PIDFCoefficients(0.18238, 0, 0.00993, 0, 0,0.04770000000000017);
 	public static final PIDFCoefficients protoBotDriveCorrect = protoBotTurn.noFeedforward();
 	public static final PIDFCoefficients protoBotDriveVelo = new PIDFCoefficients(0.02,0.03,0,0,1/protoBotVelocity,0);
@@ -26,7 +26,7 @@ public class controllerCoefficients {
 	// controller coefficients for linear slide subsystem
 	public static final PIDFCoefficients slideCoefficients = new PIDFCoefficients(0.007, 0.08, 0);
 
-	public static final BangBangParameters protoBotAntiTip = new BangBangParameters(0.5, Math.toRadians(5),0.09,0);
+	public static final BangBangParameters protoBotAntiTip = new BangBangParameters(-1, Math.toRadians(5),0.09,0);
 
 
 

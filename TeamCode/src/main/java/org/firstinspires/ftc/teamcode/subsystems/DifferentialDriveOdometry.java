@@ -101,8 +101,8 @@ DifferentialDriveOdometry implements subsystem {
 		updateIMU();
 		double left = encoderTicksToInches(FrontLeft.getCurrentPosition());
 		double right = encoderTicksToInches(FrontRight.getCurrentPosition());
-		left = leftEncoderFilter.update(left);
-		right = rightEncoderFilter.update(right);
+//		left = leftEncoderFilter.update(left);
+//		right = rightEncoderFilter.update(right);
 
 		double leftDelta = left - leftPrev;
 		double rightDelta = right - rightPrev;
