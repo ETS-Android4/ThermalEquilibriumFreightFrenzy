@@ -10,6 +10,8 @@ import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
 
 @Autonomous
 public class PathFollowingTest extends BaseAuto {
+
+	boolean square = false;
 	@Override
 	public void setStartingPosition() {
 
@@ -22,9 +24,20 @@ public class PathFollowingTest extends BaseAuto {
 
 	@Override
 	public void addActions() {
-		actions.add(new Drive(robot, new Vector3D(30,0,0),1,0));
-		actions.add(new Drive(robot, new Vector3D(30,30,0),-1,0));
-		actions.add(new Drive(robot, new Vector3D(0,30,0),1,0));
+
+		if (square) {
+			actions.add(new Drive(robot, new Vector3D(30,0,0),1,0));
+			actions.add(new Drive(robot, new Vector3D(30,30,0),-1,0));
+			actions.add(new Drive(robot, new Vector3D(0,30,0),1,0));
+			actions.add(new Drive(robot, new Vector3D(0,0,0),-1,0));
+			actions.add(new Turn(robot,0));
+			return;
+		}
+
+		actions.add(new Drive(robot, new Vector3D(30,30,0),1,0));
+		actions.add(new Drive(robot, new Vector3D(60,40,0),-1,0));
+		actions.add(new Drive(robot, new Vector3D(100,0,0),-1,0));
+
 		actions.add(new Drive(robot, new Vector3D(0,0,0),-1,0));
 		actions.add(new Turn(robot,0));
 

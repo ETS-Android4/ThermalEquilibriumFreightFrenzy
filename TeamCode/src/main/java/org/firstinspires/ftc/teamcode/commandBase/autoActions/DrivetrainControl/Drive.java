@@ -35,8 +35,10 @@ public class Drive implements action {
 
 	protected RobustPID turnPid;
 	protected RobustPID drivePid;
+	protected RobustPID velocityPID;
 	protected PIDFCoefficients turnCoefficients;
 	protected PIDFCoefficients driveCoefficients;
+	protected PIDFCoefficients velocityCoefficients;
 	protected Vector3D targetPosition = null;
 	protected double additionalDistance = 0;
 
@@ -91,6 +93,7 @@ public class Drive implements action {
 		initialPosition = robot.odometry.subsystemState();
 		turnPid = new RobustPID(turnCoefficients, initialPosition.getAngleRadians(), 3, 0.004, Math.toRadians(1));
 		drivePid = new RobustPID(driveCoefficients, Math.abs(targetDistance), 3, 0.3, 2.5);
+		velocityPID = new RobustPID(velocityCoefficients, 0,3,0.04,3);
 		initializeTargetAngle();
 		this.targetDistance += additionalDistance;
 		generateMotionProfile();
@@ -103,13 +106,19 @@ public class Drive implements action {
 	public void runAction() {
 
 		distance = initialPosition.distanceToPose(robot.odometry.subsystemState());
+		double velocity = robot.odometry.getVelocity().getX();
+
 
 		double targetDistProfile = profile.get(timer.seconds()).getX();
+		double targetVelocityProfile = profile.get(timer.seconds()).getV() * this.targetDirection;
 		drivePid.setReference(targetDistProfile);
+		velocityPID.setReference(targetVelocityProfile);
 
 		periodicallySetAngle();
 		double turn = turnPid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
-		double drive = drivePid.calculate(distance) * Math.signum(targetDistance) * sin_c(turnPid.getError());
+		double drive = drivePid.calculate(distance) * Math.signum(targetDistance);
+		drive += velocityPID.calculate(velocity);
+		drive *= sin_c(turnPid.getError());
 
 		robot.driveTrain.robotRelative(drive, turn);
 		isComplete = ((drivePid.isComplete() || drivePid.isVeryStable()) || drivePid.isBasicallyStopped()) && profile.duration() < timer.seconds();
@@ -117,6 +126,7 @@ public class Drive implements action {
 
 		Dashboard.packet.put("distance traveled", distance);
 		Dashboard.packet.put("target distance", targetDistProfile);
+		Dashboard.packet.put("target velocity", targetVelocityProfile);
 
 	}
 
@@ -160,9 +170,11 @@ public class Drive implements action {
 		if (isCompBot) {
 			turnCoefficients = controllerCoefficients.compBotDriveCorrect;
 			driveCoefficients = controllerCoefficients.compBotDrive;
+			velocityCoefficients = controllerCoefficients.compBotDriveVelo;
 		} else {
 			turnCoefficients = controllerCoefficients.protoBotDriveCorrect;
 			driveCoefficients = controllerCoefficients.protoBotDrive;
+			velocityCoefficients = controllerCoefficients.protoBotDriveVelo;
 		}
 	}
 

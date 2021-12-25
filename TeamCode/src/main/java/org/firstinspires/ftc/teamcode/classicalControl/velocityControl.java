@@ -32,9 +32,6 @@ public class velocityControl {
 		double state = motor.getState().getVelocity();
 		double target = rateLimiter.updateEstimate(targetVelocity);
 		double output = pidController.calculateOutputPFOnly(target, state);
-		Dashboard.packet.put("measured velo", state);
-		Dashboard.packet.put("rate limited velo", target);
-		Dashboard.packet.put("target velo", targetVelocity);
 		motor.input(output * (13.8 / targetVoltage));
 	}
 

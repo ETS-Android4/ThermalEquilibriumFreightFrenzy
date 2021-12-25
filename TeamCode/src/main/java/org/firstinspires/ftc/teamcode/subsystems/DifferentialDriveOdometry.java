@@ -180,6 +180,7 @@ DifferentialDriveOdometry implements subsystem {
 		return new Vector3D(xDot, 0, angularVelocity);
 	}
 
+
 	public double encoderTicksToInches(double ticks) {
 		double WHEEL_RADIUS = 3.77953 / 2;
 		double ticksPerRevolution = 28.0 * 13.7;

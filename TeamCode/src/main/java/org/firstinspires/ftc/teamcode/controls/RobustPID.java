@@ -181,7 +181,7 @@ public class RobustPID {
 	 * @return true if stable, false if not
 	 */
 	public boolean isStable() {
-		return Math.abs(stability_threshold) > Math.abs(derivative);
+		return Math.abs(stability_threshold) * 2 > Math.abs(derivative);
 	}
 	public boolean isVeryStable() {
 		return Math.abs(stability_threshold / 4) > Math.abs(derivative);
