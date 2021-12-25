@@ -57,6 +57,8 @@ public class RobustPID {
 	protected LeastSquaresKalmanFilter derivativeFilter =
 			new LeastSquaresKalmanFilter(0.9,20,3,false);
 
+	protected boolean kalmanDerivative = false;
+
 	/**
 	 * construct PID with buffer length and stability threshold
 	 *
@@ -80,6 +82,7 @@ public class RobustPID {
 	/**
 	 * perform general PID calculations and operations
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	protected void baseCalculate() {
 		updateTime();
 		calculateDerivative();
@@ -105,12 +108,14 @@ public class RobustPID {
 	 * @param state current measurement of our system
 	 * @return input to the plant
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	public double calculate(double state) {
 		calculateErrorNormal(state);
 		baseCalculate();
 		return output;
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	public double stateReferenceCalculate(double reference, double state) {
 		this.reference = reference;
 		calculateErrorNormal(state);
@@ -125,6 +130,7 @@ public class RobustPID {
 	 * @param state current measurement of our system (radians)
 	 * @return input to the plant
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	public double calculateAngle(double state) {
 		calculateErrorAngle(state);
 		baseCalculate();
@@ -136,7 +142,9 @@ public class RobustPID {
 	 * @param state current measurement of our system (radians)
 	 * @return input to the plant
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	public double calculateLinearAngle(double state) {
+		derivativeFilter.setForAngles(true);
 		calculateErrorAngle(state);
 		baseCalculate();
 		return output;
@@ -150,7 +158,9 @@ public class RobustPID {
 		PIDState bufferedPoint = derivativeBuffer.insert(new PIDState(error, time));
 
 		derivative = (error - bufferedPoint.error) / (time - bufferedPoint.timeStamp);
-		derivative = derivativeFilter.update(derivative);
+
+		if (kalmanDerivative) derivative = derivativeFilter.update(derivative);
+
 	}
 
 	/**
@@ -287,5 +297,8 @@ public class RobustPID {
 		return previous_feedback * (0.25 * coefficients.Kp);
 	}
 
+	public void setKalmanDerivative(boolean kalmanDerivative) {
+		this.kalmanDerivative = kalmanDerivative;
+	}
 
 }

@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.Turn;
 
 
-@Disabled
+@Autonomous
 public class SquareTest extends BaseAuto {
 
     @Override

@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.acmerobotics.roadrunner.profile.MotionProfile;
 import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
@@ -22,6 +26,7 @@ import static org.firstinspires.ftc.teamcode.utils.utils.sin_c;
 public class Drive implements action {
 
 	protected double targetDistance;
+	protected double targetDirection;
 	protected double distance;
 	protected boolean isComplete = false;
 
@@ -41,6 +46,7 @@ public class Drive implements action {
 	public Drive(Robot robot, double targetDistance) {
 		this.robot = robot;
 		this.targetDistance = targetDistance;
+		this.targetDirection = Math.signum(targetDistance);
 		initializeCoefficients();
 	}
 
@@ -65,6 +71,7 @@ public class Drive implements action {
 		this.robot = robot;
 		initializeCoefficients();
 		this.targetDistance = scalar;
+		this.targetDistance = Math.signum(scalar);
 		this.targetPosition = targetPosition;
 	}
 	public Drive(Robot robot, Vector3D targetPosition, double scalar, double additionalDistance) {
@@ -72,6 +79,7 @@ public class Drive implements action {
 		initializeCoefficients();
 		this.targetDistance = scalar;
 		this.targetPosition = targetPosition;
+		this.targetDirection = Math.signum(scalar);
 		this.additionalDistance = additionalDistance * Math.signum(targetDistance);
 
 	}
@@ -90,6 +98,7 @@ public class Drive implements action {
 		timer.reset();
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	@Override
 	public void runAction() {
 
@@ -98,6 +107,7 @@ public class Drive implements action {
 		double targetDistProfile = profile.get(timer.seconds()).getX();
 		drivePid.setReference(targetDistProfile);
 
+		periodicallySetAngle();
 		double turn = turnPid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
 		double drive = drivePid.calculate(distance) * Math.signum(targetDistance) * sin_c(turnPid.getError());
 
@@ -173,4 +183,20 @@ public class Drive implements action {
 			}
 		}
 	}
+
+	public void periodicallySetAngle() {
+		if (targetPosition == null) return;
+		Vector3D positionError = targetPosition.getError(robot.getRobotPose());
+		if (positionError.distanceToPose(new Vector3D(0,0,0)) < 3) return;
+		double omega1 = Math.atan2(positionError.getY(),positionError.getX());
+		double omega2 = Math.atan2(positionError.getY(),positionError.getX()) - Math.toRadians(180);
+		if (this.targetDirection > 0) {
+			turnPid.setReference(omega1);
+		}
+		else {
+			turnPid.setReference(omega2);
+		}
+
+	}
+
 }

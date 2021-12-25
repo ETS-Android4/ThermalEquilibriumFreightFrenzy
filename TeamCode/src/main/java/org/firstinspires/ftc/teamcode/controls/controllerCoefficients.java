@@ -10,7 +10,7 @@ public class controllerCoefficients {
 	public static final PIDFCoefficients compBotDriveCorrect = compBotTurn.noFeedforward();
 
 	// controller coefficients for off season 6wd
-	public static final PIDFCoefficients protoBotTurn = new PIDFCoefficients(0.59, 0.16, 0.09, 0, 0, 0.0580);
+	public static final PIDFCoefficients protoBotTurn = PIDFCoefficients.JaRule(0.9);
 	public static final PIDFCoefficients protoBotDrive = new PIDFCoefficients(0.18238, 0, 0.00993, 0, 0,0.04770000000000017);
 	public static final PIDFCoefficients protoBotDriveCorrect = protoBotTurn.noFeedforward();
 
@@ -25,7 +25,7 @@ public class controllerCoefficients {
 	public static final double compBotJerk = 130;
 
 	public static final double protoBotVelocity = 100;
-	public static final double protoBotAcceleration = 100;
+	public static final double protoBotAcceleration = 200;
 	public static final double protoBotJerk = 250;
 
 

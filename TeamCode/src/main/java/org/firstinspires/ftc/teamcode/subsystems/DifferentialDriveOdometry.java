@@ -24,7 +24,8 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-public class DifferentialDriveOdometry implements subsystem {
+public class
+DifferentialDriveOdometry implements subsystem {
 
 
 	public DcMotorEx FrontLeft;
@@ -48,6 +49,8 @@ public class DifferentialDriveOdometry implements subsystem {
 	protected long counter = 0;
 	protected AngleKalmanFilter kalmanFilter;
 	protected LeastSquaresKalmanFilter forwardVelocityFilter;
+	protected LeastSquaresKalmanFilter leftEncoderFilter;
+	protected LeastSquaresKalmanFilter rightEncoderFilter;
 	protected double previousDeltaX;
 	ElapsedTime timer = new ElapsedTime();
 
@@ -66,6 +69,8 @@ public class DifferentialDriveOdometry implements subsystem {
 		}
 		kalmanFilter = new AngleKalmanFilter(0);
 		forwardVelocityFilter = new LeastSquaresKalmanFilter(0.9,20,3,false);
+		leftEncoderFilter = new LeastSquaresKalmanFilter(0.9,0.3,3,false);
+		rightEncoderFilter = new LeastSquaresKalmanFilter(0.9,0.3,3,false);
 	}
 
 	@Override
@@ -96,6 +101,10 @@ public class DifferentialDriveOdometry implements subsystem {
 		updateIMU();
 		double left = encoderTicksToInches(FrontLeft.getCurrentPosition());
 		double right = encoderTicksToInches(FrontRight.getCurrentPosition());
+		Dashboard.packet.put("Raw Left encoder", left);
+		left = leftEncoderFilter.update(left);
+		Dashboard.packet.put("filtered left encoder", left);
+		right = rightEncoderFilter.update(right);
 
 		double leftDelta = left - leftPrev;
 		double rightDelta = right - rightPrev;

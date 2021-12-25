@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.controls.RobustPID;
@@ -38,6 +42,7 @@ public class Turn implements action {
 		timer.reset();
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	@Override
 	public void runAction() {
 		double output = pid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());

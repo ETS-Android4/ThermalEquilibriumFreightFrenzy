@@ -135,4 +135,7 @@ public class LeastSquaresKalmanFilter {
         return  newValues;
     }
 
+    public void setForAngles(boolean forAngles) {
+        this.forAngles = forAngles;
+    }
 }
