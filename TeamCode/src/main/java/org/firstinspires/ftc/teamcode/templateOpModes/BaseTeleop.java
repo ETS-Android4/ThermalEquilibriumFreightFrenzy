@@ -22,7 +22,7 @@ public class BaseTeleop extends LinearOpMode {
 	@Override
 	public void runOpMode() {
 		robot = new Robot();
-		robot.init(hardwareMap);
+		robot.initMinimal(hardwareMap);
 
 		addActions();
 		scheduler = new Scheduler(robot.getSubsystems(), actions, hardwareMap);

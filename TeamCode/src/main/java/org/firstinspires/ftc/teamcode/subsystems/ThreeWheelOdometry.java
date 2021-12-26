@@ -64,7 +64,7 @@ public class ThreeWheelOdometry implements subsystem {
 	public void init(HardwareMap hwmap) {
 
 		if (isCompBot) {
-			imu = hwmap.get(BNO055IMU.class, "imu 1");
+			imu = hwmap.get(BNO055IMU.class, "imu");
 		} else {
 			imu = hwmap.get(BNO055IMU.class, "imu");
 		}
