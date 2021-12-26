@@ -155,6 +155,18 @@ public class Drivetrain implements subsystem {
         setMotorPowers(frontLeftPower, frontRightPower, backLeftPower, backRightPower);
     }
 
+    public void robotRelativeConstrained(double xSpeed, double ySpeed, double turnSpeed,
+                                         double yThreshold) {
+        if (Math.abs(ySpeed) < Math.abs(yThreshold)) {
+            ySpeed = 0;
+        }
+        robotRelative(xSpeed, ySpeed, turnSpeed);
+    }
+
+    public void robotRelativeConstrained(Vector3D powers, double yThreshold) {
+        robotRelativeConstrained(powers.getX(),powers.getY(),powers.getAngleRadians(),yThreshold);
+    }
+
     /**
      * robot relative with Vector3D representation of motor powers
      * @param powers motor power vector

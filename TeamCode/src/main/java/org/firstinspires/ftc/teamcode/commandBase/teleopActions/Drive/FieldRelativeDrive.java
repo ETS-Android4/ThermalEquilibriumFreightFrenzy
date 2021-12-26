@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commandBase.teleopActions;
+package org.firstinspires.ftc.teamcode.commandBase.teleopActions.Drive;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -27,13 +27,7 @@ public class FieldRelativeDrive implements teleopAction {
 
 	@Override
 	public void periodic() {
-
-		Vector3D gamepadCommand = new Vector3D(-gamepad1.right_stick_y,
-												gamepad1.left_stick_x,
-												gamepad1.right_stick_x);
-
-		robot.driveTrain.fieldRelative(gamepadCommand,robot.getRobotPose());
-
+		robot.driveTrain.fieldRelative(getMotorPowers(),robot.getRobotPose());
 	}
 
 	@Override
@@ -55,4 +49,11 @@ public class FieldRelativeDrive implements teleopAction {
 	public boolean hasPerformedInitialRun() {
 		return true;
 	}
+
+	public Vector3D getMotorPowers() {
+		return new Vector3D(-gamepad1.right_stick_y,
+							gamepad1.left_stick_x,
+							gamepad1.right_stick_x);
+	}
+
 }
