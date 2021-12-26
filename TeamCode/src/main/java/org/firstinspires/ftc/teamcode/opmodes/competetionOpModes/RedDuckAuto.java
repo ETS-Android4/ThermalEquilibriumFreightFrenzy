@@ -29,6 +29,8 @@ public class RedDuckAuto extends BaseAuto {
     public double exitCarouselAngle;
     public double DISTANCE_BACK_FROM_GOAL = -13;
     public double DUCK_SPIN_TIME = 2700;
+    public double DISTANCE_PUSHING_INTO_CAROUSEL = 12;
+    public double INITIAL_PARK_DISTANCE = 15;
 
     @Override
     public void setStartingPosition() {
@@ -90,7 +92,7 @@ public class RedDuckAuto extends BaseAuto {
                 // push wheel against carousel
                 actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
-                actions.add(new Drive(robot, 12));
+                actions.add(new Drive(robot, DISTANCE_PUSHING_INTO_CAROUSEL));
                 actions.add(new Delay(DUCK_SPIN_TIME));
                 actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Turn(robot,exitCarouselAngle));
@@ -105,7 +107,7 @@ public class RedDuckAuto extends BaseAuto {
 //                actions.add(new DepositFreight(robot));
 
                 // go to park
-                actions.add(new Drive(robot, 15));
+                actions.add(new Drive(robot, INITIAL_PARK_DISTANCE));
                 actions.add(new AimAtPoint(robot, park, false, true));
                 actions.add(new GoToInState(robot));
                 actions.add(new Drive(robot,park,-1));
@@ -131,7 +133,7 @@ public class RedDuckAuto extends BaseAuto {
                 // push wheel against carousel
                 actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
-                actions.add(new Drive(robot, 12));
+                actions.add(new Drive(robot, DISTANCE_PUSHING_INTO_CAROUSEL));
                 actions.add(new Delay(DUCK_SPIN_TIME));
                 actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Turn(robot,exitCarouselAngle));
@@ -146,7 +148,7 @@ public class RedDuckAuto extends BaseAuto {
 //                actions.add(new DepositFreight(robot));
 
                 // go to park
-                actions.add(new Drive(robot, 15));
+                actions.add(new Drive(robot, INITIAL_PARK_DISTANCE));
                 actions.add(new AimAtPoint(robot, park, false, true));
                 actions.add(new GoToInState(robot));
                 actions.add(new Drive(robot,park,-1));
@@ -171,7 +173,7 @@ public class RedDuckAuto extends BaseAuto {
                 // push wheel against carousel
                 actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
                 actions.add(new TurnOnIntake(robot, true));
-                actions.add(new Drive(robot, 12));
+                actions.add(new Drive(robot, DISTANCE_PUSHING_INTO_CAROUSEL));
                 actions.add(new Delay(DUCK_SPIN_TIME));
                 actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Turn(robot,exitCarouselAngle));
@@ -186,7 +188,7 @@ public class RedDuckAuto extends BaseAuto {
 //                actions.add(new DepositFreight(robot));
 
                 // go to park
-                actions.add(new Drive(robot, 15));
+                actions.add(new Drive(robot, INITIAL_PARK_DISTANCE));
                 actions.add(new AimAtPoint(robot, park, false, true));
                 actions.add(new GoToInState(robot));
                 actions.add(new Drive(robot,park,-1));

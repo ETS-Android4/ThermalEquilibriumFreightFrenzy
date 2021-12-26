@@ -32,6 +32,10 @@ public class BlueDuckAuto extends BaseAuto {
 	public Vector3D rightCapstone;
 	public double exitCarouselAngle;
 	public double DISTANCE_BACK_FROM_GOAL = -13;
+	public double PUSH_WHEEL_AGAINST_CAROUSEL = 7;
+	public double DISTANCE_TO_COLLECT_DUCK = 3;
+	public double DUCK_DURATION = 2500;
+	public double GO_TO_PARK_DISTANCE_FIRST_MOVE = 14;
 
 	@Override
 	public void setStartingPosition() {
@@ -92,11 +96,11 @@ public class BlueDuckAuto extends BaseAuto {
 				// push wheel against carousel
 				actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
 				actions.add(new TurnOnIntake(robot, true));
-				actions.add(new Drive(robot, 6));
-				actions.add(new Delay(2500));
+				actions.add(new Drive(robot, PUSH_WHEEL_AGAINST_CAROUSEL));
+				actions.add(new Delay(DUCK_DURATION));
 				actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
 				actions.add(new Turn(robot, exitCarouselAngle));
-				actions.add(new Drive(robot, 3));
+				actions.add(new Drive(robot, DISTANCE_TO_COLLECT_DUCK));
 				actions.add(new TurnOffIntake(robot));
 
 				// deposit the duck
@@ -107,7 +111,7 @@ public class BlueDuckAuto extends BaseAuto {
 //				actions.add(new DepositFreight(robot));
 
 				// go to park
-				actions.add(new Drive(robot, 14));
+				actions.add(new Drive(robot, GO_TO_PARK_DISTANCE_FIRST_MOVE));
 				actions.add(new Turn(robot, Math.toRadians(-180)));
 				actions.add(new GoToInState(robot));
 				actions.add(new Drive(robot, park, 1));  // the one here is positive so it drives the intake side forward
@@ -128,11 +132,11 @@ public class BlueDuckAuto extends BaseAuto {
 				// push wheel against carousel
 				actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
 				actions.add(new TurnOnIntake(robot, true));
-				actions.add(new Drive(robot, 6.5));
-				actions.add(new Delay(2500));
+				actions.add(new Drive(robot, PUSH_WHEEL_AGAINST_CAROUSEL));
+				actions.add(new Delay(DUCK_DURATION));
 				actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
 				actions.add(new Turn(robot, exitCarouselAngle));
-				actions.add(new Drive(robot, 3));
+				actions.add(new Drive(robot, DISTANCE_TO_COLLECT_DUCK));
 				actions.add(new TurnOffIntake(robot));
 
 				// deposit the duck
@@ -143,7 +147,7 @@ public class BlueDuckAuto extends BaseAuto {
 //				actions.add(new DepositFreight(robot));
 
 				// go to park
-				actions.add(new Drive(robot, 14));
+				actions.add(new Drive(robot, GO_TO_PARK_DISTANCE_FIRST_MOVE));
 				actions.add(new Turn(robot, Math.toRadians(-180)));
 				actions.add(new GoToInState(robot));
 				actions.add(new Drive(robot, park, 1));  // the one here is positive so it drives the intake side forward
@@ -164,11 +168,11 @@ public class BlueDuckAuto extends BaseAuto {
 				// push wheel against carousel
 				actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
 				actions.add(new TurnOnIntake(robot, true));
-				actions.add(new Drive(robot, 7));
-				actions.add(new Delay(2500));
+				actions.add(new Drive(robot, PUSH_WHEEL_AGAINST_CAROUSEL));
+				actions.add(new Delay(DUCK_DURATION + 1));
 				actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
 				actions.add(new Turn(robot, exitCarouselAngle));
-				actions.add(new Drive(robot, 3));
+				actions.add(new Drive(robot, DISTANCE_TO_COLLECT_DUCK));
 				actions.add(new TurnOffIntake(robot));
 
 //				// deposit the duck
@@ -179,7 +183,8 @@ public class BlueDuckAuto extends BaseAuto {
 //				actions.add(new DepositFreight(robot));
 
 				// go to park
-				actions.add(new Drive(robot, 14));
+
+				actions.add(new Drive(robot, GO_TO_PARK_DISTANCE_FIRST_MOVE));
 				actions.add(new Turn(robot, Math.toRadians(-180)));
 				actions.add(new GoToInState(robot));
 				actions.add(new Drive(robot, park, 1));  // the one here is positive so it drives the intake side forward
