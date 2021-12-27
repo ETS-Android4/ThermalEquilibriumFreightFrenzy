@@ -14,7 +14,7 @@ public class AntiTipController {
     DoubleSupplier robotAngle;
     BangBangController controller = new BangBangController(protoBotAntiTip);
 
-    protected double reference = 0;
+    protected double reference = Math.toRadians(-90);
 
     public AntiTipController(DoubleSupplier robotAngle) {
         this.robotAngle = robotAngle;

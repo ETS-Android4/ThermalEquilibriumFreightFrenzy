@@ -172,7 +172,7 @@ DifferentialDriveOdometry implements subsystem {
 
 	public void updateIMU() {
 		Orientation angle = imu.getAngularOrientation();
-		pitchAngle = normalizeAngleRR(angle.thirdAngle);
+		pitchAngle = AngleWrap(angle.secondAngle);
 		IMU_angle = normalizeAngleRR(angle.firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
 		Dashboard.packet.put("pitch angle", pitchAngle);
 		Dashboard.packet.put("pitch angle deg",Math.toDegrees(pitchAngle));
