@@ -8,21 +8,22 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.apache.commons.math3.geometry.spherical.oned.Arc;
 import org.firstinspires.ftc.teamcode.controls.AntiTipController;
+import org.firstinspires.ftc.teamcode.controls.BetterAntiTipController;
 import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
 import java.util.function.DoubleSupplier;
 
 public class SafeArcadeDrive extends ArcadeDrive {
-    public AntiTipController controller;
+    public BetterAntiTipController controller;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public SafeArcadeDrive(Robot robot, Gamepad gamepad1, Gamepad gamepad2) {
         super(robot, gamepad1, gamepad2);
-        this.controller = new AntiTipController(new DoubleSupplier() {
+        this.controller = new BetterAntiTipController(new DoubleSupplier() {
             @Override
             public double getAsDouble() {
-                return robot.odometry.getPitchAngle();
+                return robot.odometry.getPitchVelo();
             }
         });
     }

@@ -1,16 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
-import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.AxesSigns;
-import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.BNO055IMUUtil;
 
 import homeostasis.Filters.AngleKalmanFilter;
 import homeostasis.Filters.LeastSquaresKalmanFilter;
@@ -34,6 +31,7 @@ DifferentialDriveOdometry implements subsystem {
 	protected Vector3D positionEstimateDeltaFieldRelative = new Vector3D();
 	protected Vector3D positionEstimateDeltaRobotRelative = new Vector3D();
 	private double pitchAngle = 0;
+	private double pitchVelo = 0;
 	private double leftPrev = 0;
 	private double rightPrev = 0;
 	private final double gearRatio;
@@ -50,6 +48,7 @@ DifferentialDriveOdometry implements subsystem {
 	protected LeastSquaresKalmanFilter forwardVelocityFilter;
 	protected LeastSquaresKalmanFilter leftEncoderFilter;
 	protected LeastSquaresKalmanFilter rightEncoderFilter;
+	protected LeastSquaresKalmanFilter pitchVelocityFilter;
 
 	protected double previousDeltaX;
 	ElapsedTime timer = new ElapsedTime();
@@ -71,6 +70,7 @@ DifferentialDriveOdometry implements subsystem {
 		forwardVelocityFilter = new LeastSquaresKalmanFilter(0.9,20,3,false);
 		leftEncoderFilter = new LeastSquaresKalmanFilter(0.9,0.3,3,false);
 		rightEncoderFilter = new LeastSquaresKalmanFilter(0.9,0.3,3,false);
+		pitchVelocityFilter = new LeastSquaresKalmanFilter(0.9,10,3,false);
 	}
 
 	@Override
@@ -170,6 +170,7 @@ DifferentialDriveOdometry implements subsystem {
 		return positionEstimateDeltaFieldRelative;
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	public void updateIMU() {
 		Orientation angle = imu.getAngularOrientation();
 		pitchAngle = AngleWrap(angle.secondAngle);
@@ -178,6 +179,17 @@ DifferentialDriveOdometry implements subsystem {
 		Dashboard.packet.put("pitch angle deg",Math.toDegrees(pitchAngle));
 		System.out.println("pitch angle: " + pitchAngle + " pitch angle deg: " + Math.toDegrees(pitchAngle));
 		angularVelocity = imu.getAngularVelocity().zRotationRate;
+		AngularVelocity angularVelocity = imu.getAngularVelocity();
+		if (!isCompBot) {
+			pitchVelo = angularVelocity.zRotationRate;
+		} else {
+			pitchVelo = angularVelocity.zRotationRate;
+		}
+		pitchVelo = pitchVelocityFilter.update(pitchVelo);
+		Dashboard.packet.put("pitch velocity",pitchVelo);
+		Dashboard.packet.put("angle x velo",angularVelocity.xRotationRate);
+		Dashboard.packet.put("angle y velo",angularVelocity.yRotationRate);
+		Dashboard.packet.put("angle z velo",angularVelocity.zRotationRate);
 	}
 
 	public Vector3D getVelocity() {
@@ -193,6 +205,10 @@ DifferentialDriveOdometry implements subsystem {
 
 	public double getPitchAngle() {
 		return pitchAngle;
+	}
+
+	public double getPitchVelo() {
+		return pitchVelo;
 	}
 
 
