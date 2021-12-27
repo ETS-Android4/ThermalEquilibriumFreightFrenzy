@@ -101,8 +101,9 @@ DifferentialDriveOdometry implements subsystem {
 		updateIMU();
 		double left = encoderTicksToInches(FrontLeft.getCurrentPosition());
 		double right = encoderTicksToInches(FrontRight.getCurrentPosition());
-//		left = leftEncoderFilter.update(left);
-//		right = rightEncoderFilter.update(right);
+		double leftVelo = encoderTicksToInches(FrontLeft.getVelocity());
+		double rightVelo = encoderTicksToInches(FrontRight.getVelocity());
+		double inbuiltVelo = (leftVelo + rightVelo) / 2;
 
 		double leftDelta = left - leftPrev;
 		double rightDelta = right - rightPrev;
@@ -114,8 +115,9 @@ DifferentialDriveOdometry implements subsystem {
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
 
 		xDot = (xDelta - previousDeltaX) / timer.seconds();
+
 		timer.reset();
-		double xDotFiltered = forwardVelocityFilter.update(xDot);
+		double xDotFiltered = forwardVelocityFilter.update(inbuiltVelo);
 
 		encoderAngle += thetaDelta;
 		encoderAngle = normalizeAngleRR(encoderAngle);
@@ -137,6 +139,7 @@ DifferentialDriveOdometry implements subsystem {
 		Dashboard.packet.put("drive wheel angle", AngleWrap(encoderAngle));
 		Dashboard.packet.put("measured x velocity", xDot);
 		Dashboard.packet.put("estimated x velocity", xDotFiltered);
+		Dashboard.packet.put("inbuilt x velocity", inbuiltVelo);
 
 	}
 
@@ -172,6 +175,8 @@ DifferentialDriveOdometry implements subsystem {
 		pitchAngle = normalizeAngleRR(angle.thirdAngle);
 		IMU_angle = normalizeAngleRR(angle.firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
 		Dashboard.packet.put("pitch angle", pitchAngle);
+		Dashboard.packet.put("pitch angle deg",Math.toDegrees(pitchAngle));
+		System.out.println("pitch angle: " + pitchAngle + " pitch angle deg: " + Math.toDegrees(pitchAngle));
 		angularVelocity = imu.getAngularVelocity().zRotationRate;
 	}
 

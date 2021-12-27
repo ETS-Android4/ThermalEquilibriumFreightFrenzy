@@ -1,20 +1,15 @@
 package org.firstinspires.ftc.teamcode.controls;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.utils.RingBuffer;
 
-import static org.apache.commons.math3.util.Precision.EPSILON;
 import static org.firstinspires.ftc.teamcode.utils.utils.normalizedHeadingError;
 
 import android.os.Build;
 
-import androidx.annotation.RequiresApi;
-
-import homeostasis.Filters.LeastSquaresKalmanFilter;
 
 public class RobustPID {
 
@@ -54,10 +49,6 @@ public class RobustPID {
 	protected double stability_threshold;
 	// previous feedback output for adaptive feedforward control
 	protected double previous_feedback = 0;
-	protected LeastSquaresKalmanFilter derivativeFilter =
-			new LeastSquaresKalmanFilter(0.9,20,3,false);
-
-	protected boolean kalmanDerivative = false;
 
 	/**
 	 * construct PID with buffer length and stability threshold
@@ -82,7 +73,6 @@ public class RobustPID {
 	/**
 	 * perform general PID calculations and operations
 	 */
-	@RequiresApi(api = Build.VERSION_CODES.N)
 	protected void baseCalculate() {
 		updateTime();
 		calculateDerivative();
@@ -108,14 +98,11 @@ public class RobustPID {
 	 * @param state current measurement of our system
 	 * @return input to the plant
 	 */
-	@RequiresApi(api = Build.VERSION_CODES.N)
 	public double calculate(double state) {
 		calculateErrorNormal(state);
 		baseCalculate();
 		return output;
 	}
-
-	@RequiresApi(api = Build.VERSION_CODES.N)
 	public double stateReferenceCalculate(double reference, double state) {
 		this.reference = reference;
 		calculateErrorNormal(state);
@@ -130,7 +117,6 @@ public class RobustPID {
 	 * @param state current measurement of our system (radians)
 	 * @return input to the plant
 	 */
-	@RequiresApi(api = Build.VERSION_CODES.N)
 	public double calculateAngle(double state) {
 		calculateErrorAngle(state);
 		baseCalculate();
@@ -142,9 +128,7 @@ public class RobustPID {
 	 * @param state current measurement of our system (radians)
 	 * @return input to the plant
 	 */
-	@RequiresApi(api = Build.VERSION_CODES.N)
 	public double calculateLinearAngle(double state) {
-		derivativeFilter.setForAngles(true);
 		calculateErrorAngle(state);
 		baseCalculate();
 		return output;
@@ -153,13 +137,11 @@ public class RobustPID {
 	/**
 	 * calculate derivative using the buffer to smooth the data
 	 */
-	@RequiresApi(api = Build.VERSION_CODES.N)
 	protected void calculateDerivative() {
 		PIDState bufferedPoint = derivativeBuffer.insert(new PIDState(error, time));
 
 		derivative = (error - bufferedPoint.error) / (time - bufferedPoint.timeStamp);
 
-		if (kalmanDerivative) derivative = derivativeFilter.update(derivative);
 
 	}
 
@@ -297,8 +279,5 @@ public class RobustPID {
 		return previous_feedback * (0.25 * coefficients.Kp);
 	}
 
-	public void setKalmanDerivative(boolean kalmanDerivative) {
-		this.kalmanDerivative = kalmanDerivative;
-	}
 
 }

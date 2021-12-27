@@ -2,12 +2,12 @@ package org.firstinspires.ftc.teamcode.classicalControl;
 
 public class PIDFCoefficients {
 
-    public double Kp;
-    public double Ki;
-    public double Kd;
-    public double Kd2;
-    public double Kf;
-    public double H;
+    public double Kp; // proportional gain
+    public double Ki; // integral gain
+    public double Kd; // derivative gain
+    public double Kd2; // second order derivative
+    public double Kf; // feedforward (velocity control only)
+    public double H; // minimum output (hysteresis)
 
     public PIDFCoefficients(double Kp, double Ki, double Kd, double Kd2, double Kf) {
         this.Kp = Kp;
@@ -54,6 +54,12 @@ public class PIDFCoefficients {
     }
 
 
+    /**
+     * After increasing Kp to where the oscillations stop growing but do not decay, this is our critical gain.
+     * Use this function to generate decent PID gains from this 'critical gain'
+     * @param criticalGain Kp at which the system remains in a stable oscillation
+     * @return tuned coefficients.
+     */
     public static PIDFCoefficients JaRule(double criticalGain) {
         return new PIDFCoefficients(criticalGain / 1.5, criticalGain / 2, 0.95 / 10, 0, 0, criticalGain / 25);
     }
