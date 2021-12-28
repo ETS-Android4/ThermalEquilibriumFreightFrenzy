@@ -28,7 +28,7 @@ public class controllerCoefficients {
 
 	public static final BangBangParameters protoBotAntiTip = new BangBangParameters(-1, Math.toRadians(5),0.09,0);
 
-	public static final PIDFCoefficients antiTipCoefficients = new PIDFCoefficients(0.1, 0,0);
+	public static final PIDFCoefficients antiTipCoefficients = new PIDFCoefficients(0.03, 0,0.002);
 
 
 

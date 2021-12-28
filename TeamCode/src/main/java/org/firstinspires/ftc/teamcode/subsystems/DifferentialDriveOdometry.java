@@ -183,7 +183,7 @@ DifferentialDriveOdometry implements subsystem {
 		if (!isCompBot) {
 			pitchVelo = angularVelocity.zRotationRate;
 		} else {
-			pitchVelo = angularVelocity.zRotationRate;
+			pitchVelo = -angularVelocity.xRotationRate;
 		}
 		pitchVelo = pitchVelocityFilter.update(pitchVelo);
 		Dashboard.packet.put("pitch velocity",pitchVelo);

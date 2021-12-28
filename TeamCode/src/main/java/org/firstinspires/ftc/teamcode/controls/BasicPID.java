@@ -25,6 +25,7 @@ public class BasicPID {
 		double dt = getDt();
 		double derivative = (error - previousError) / dt;
 		integralSum += ( (error + previousError) / 2) * dt;
+		previousError = error;
 		return coefficients.Kp * error + coefficients.Ki * integralSum + coefficients.Kd * derivative;
 	}
 
