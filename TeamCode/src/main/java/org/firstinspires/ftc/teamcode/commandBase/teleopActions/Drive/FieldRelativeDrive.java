@@ -52,8 +52,8 @@ public class FieldRelativeDrive implements teleopAction {
 
 	public Vector3D getMotorPowers() {
 		return new Vector3D(-gamepad1.right_stick_y,
-							gamepad1.left_stick_x,
-							gamepad1.right_stick_x);
+							gamepad1.right_stick_x,
+							gamepad1.left_stick_x);
 	}
 
 }
