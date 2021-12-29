@@ -1,6 +1,5 @@
 package homeostasis2.Controllers;
 
-public abstract class Controller {
-
-
+public interface Controller {
+	double calculate(double reference, double state);
 }
