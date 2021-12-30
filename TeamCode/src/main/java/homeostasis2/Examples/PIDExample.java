@@ -16,7 +16,7 @@ import homeostasis2.Filters.Estimators.LowPassEstimator;
 import homeostasis2.Parameters.FeedforwardCoefficientsEx;
 import homeostasis2.Parameters.PIDCoefficients;
 import homeostasis2.Parameters.PIDCoefficientsEx;
-import homeostasis2.System.SISOsystem;
+import homeostasis2.Systems.BasicSystem;
 
 public class PIDExample extends LinearOpMode {
 	PIDCoefficients coefficients = new PIDCoefficients(1,0,0);
@@ -47,7 +47,7 @@ public class PIDExample extends LinearOpMode {
 			}
 		}, 0.9);
 
-		SISOsystem sys = new SISOsystem(lowPassFilter,PID,feedforward);
+		BasicSystem sys = new BasicSystem(lowPassFilter,PID,feedforward);
 
 		waitForStart();
 		while (opModeIsActive()) {

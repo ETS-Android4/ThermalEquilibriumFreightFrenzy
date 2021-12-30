@@ -8,6 +8,10 @@ import java.util.function.DoubleSupplier;
 
 import homeostasis2.Filters.FilterAlgorithms.KalmanFilter;
 
+/**
+ * Using a custom Least Squares Regression + Kalman Filter combination we can accurately reject noise
+ * from our signal while attempting to minimize phase lag.
+ */
 public class KalmanEstimator extends Estimator{
 
 	protected KalmanFilter kalmanFilter;

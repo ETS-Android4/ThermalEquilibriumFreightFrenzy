@@ -14,6 +14,10 @@ public abstract class Estimator {
 		this.measurement = measurement;
 	}
 
+	/**
+	 * Run estimation algorithm
+	 * @return system state as determined by estimation algorithm.
+	 */
 	public abstract double update();
 
 }

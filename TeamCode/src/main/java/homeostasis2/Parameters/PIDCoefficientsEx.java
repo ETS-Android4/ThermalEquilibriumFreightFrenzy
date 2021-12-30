@@ -3,7 +3,6 @@ package homeostasis2.Parameters;
 public class PIDCoefficientsEx extends PIDCoefficients{
 	public double maximumIntegralSum;
 	public double stabilityThreshold;
-	public int ringBufferLength;
 	public double lowPassGain;
 
 	/**
@@ -14,16 +13,14 @@ public class PIDCoefficientsEx extends PIDCoefficients{
 *                              (this * Kp should be less than the maximum output of your system)
 	 * @param stabilityThreshold the maximum our derivative can be before we integrate.
 *                           This ensures we have better stability
-	 * @param ringBufferLength The size of our ring buffer.  We use a ring buffer to smooth our derivative.
 	 */
 	public PIDCoefficientsEx(double Kp, double Ki, double Kd,
 							 double maximumIntegralSum,
 							 double stabilityThreshold,
-							 int ringBufferLength) {
+							 double lowPassGain) {
 		super(Kp, Ki, Kd);
 		this.maximumIntegralSum = maximumIntegralSum;
 		this.stabilityThreshold = stabilityThreshold;
-		this.ringBufferLength = ringBufferLength;
 		this.lowPassGain = lowPassGain;
 	}
 }

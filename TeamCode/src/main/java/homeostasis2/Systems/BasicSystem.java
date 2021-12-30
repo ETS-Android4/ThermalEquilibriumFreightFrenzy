@@ -1,29 +1,32 @@
-package homeostasis2.System;
+package homeostasis2.Systems;
 
 import homeostasis2.Controllers.Feedback.FeedbackController;
 import homeostasis2.Controllers.Feedforward.FeedforwardController;
 import homeostasis2.Filters.Estimators.Estimator;
 
-public class SISOsystem {
+/**
+ * A simple control system that consists of an estimator, a feedback, and a feedforward controller.
+ */
+public class BasicSystem {
 
 	public Estimator estimator;
 	public FeedbackController feedbackController;
 	public FeedforwardController feedforwardController;
 
-	public SISOsystem(Estimator estimator, FeedbackController feedbackController,
-					  					   FeedforwardController feedforwardController) {
+	public BasicSystem(Estimator estimator, FeedbackController feedbackController,
+					   FeedforwardController feedforwardController) {
 		this.estimator = estimator;
 		this.feedbackController = feedbackController;
 		this.feedforwardController = feedforwardController;
 	}
 
-	public SISOsystem(Estimator estimator, FeedbackController feedbackController) {
+	public BasicSystem(Estimator estimator, FeedbackController feedbackController) {
 		this.feedforwardController = null;
 		this.estimator = estimator;
 		this.feedbackController = feedbackController;
 	}
 
-	public SISOsystem(Estimator estimator, FeedforwardController feedforwardController) {
+	public BasicSystem(Estimator estimator, FeedforwardController feedforwardController) {
 		this.estimator = estimator;
 		this.feedforwardController = feedforwardController;
 	}

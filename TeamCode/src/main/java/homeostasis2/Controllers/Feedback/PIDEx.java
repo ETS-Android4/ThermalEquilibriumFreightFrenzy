@@ -3,6 +3,9 @@ package homeostasis2.Controllers.Feedback;
 import homeostasis2.Filters.FilterAlgorithms.LowPassFilter;
 import homeostasis2.Parameters.PIDCoefficientsEx;
 
+/**
+ * extended PID controller, implements anti wind up and derivative smoothing features.
+ */
 public class PIDEx extends BasicPID {
 	protected PIDCoefficientsEx basedCoefficients;
 	protected LowPassFilter filter;
