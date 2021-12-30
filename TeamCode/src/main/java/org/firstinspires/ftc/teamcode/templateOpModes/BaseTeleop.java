@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.commandBase.Scheduler;
 import org.firstinspires.ftc.teamcode.commandBase.teleopAction;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
+import org.firstinspires.ftc.teamcode.subsystems.ThreeWheelOdometry;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,7 @@ public class BaseTeleop extends LinearOpMode {
 	public void runOpMode() {
 		robot = new Robot();
 		robot.initMinimal(hardwareMap);
+		robot.odometry.setState(ThreeWheelOdometry.OdomState.RETRACTED);
 
 		addActions();
 		scheduler = new Scheduler(robot.getSubsystems(), actions, hardwareMap);

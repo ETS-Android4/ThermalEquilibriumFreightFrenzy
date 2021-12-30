@@ -183,4 +183,9 @@ public class ThreeWheelOdometry implements subsystem {
 		drawRobot(positionEstimate, Dashboard.packet);
 
 	}
+
+
+	public void setState(OdomState state) {
+		this.state = state;
+	}
 }
