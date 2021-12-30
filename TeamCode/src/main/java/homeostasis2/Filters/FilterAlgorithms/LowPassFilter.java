@@ -1,7 +1,5 @@
 package homeostasis2.Filters.FilterAlgorithms;
 
-import homeostasis2.Filters.FilterAlgorithms.Filter;
-
 public class LowPassFilter implements Filter {
 
 	protected double gain;

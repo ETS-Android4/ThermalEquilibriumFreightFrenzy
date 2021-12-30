@@ -1,9 +1,7 @@
 package homeostasis2;
 
-import java.util.ArrayList;
-
-import homeostasis2.Controllers.Controller;
-import homeostasis2.Controllers.FeedforwardController;
+import homeostasis2.Controllers.Feedback.Controller;
+import homeostasis2.Controllers.Feedforward.FeedforwardController;
 import homeostasis2.Filters.Estimators.Estimator;
 
 public class SISOsystem {
@@ -59,10 +57,6 @@ public class SISOsystem {
 			output += feedbackController.calculate(x,estimate);
 		}
 		return output;
-	}
-
-	public void setEstimator(Estimator estimator) {
-		this.estimator = estimator;
 	}
 
 }

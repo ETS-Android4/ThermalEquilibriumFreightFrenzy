@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.utils.Quadratic;
 import org.firstinspires.ftc.teamcode.utils.Regression;
-import org.firstinspires.ftc.teamcode.utils.SizedStack;
+import homeostasis2.Utils.SizedStack;
 
 
 @Deprecated

@@ -1,7 +1,8 @@
-package homeostasis2.Controllers;
+package homeostasis2.Controllers.Feedback;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import homeostasis2.Controllers.Feedback.Controller;
 import homeostasis2.Parameters.PIDCoefficients;
 
 public class BasicPID implements Controller {

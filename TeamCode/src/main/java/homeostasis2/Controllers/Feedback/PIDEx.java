@@ -1,12 +1,12 @@
-package homeostasis2.Controllers;
+package homeostasis2.Controllers.Feedback;
 
 import homeostasis2.Filters.FilterAlgorithms.LowPassFilter;
-import homeostasis2.Parameters.PIDCoefficientsBased;
+import homeostasis2.Parameters.PIDCoefficientsEx;
 
-public class BasedPID extends BasicPID {
-	protected PIDCoefficientsBased basedCoefficients;
+public class PIDEx extends BasicPID {
+	protected PIDCoefficientsEx basedCoefficients;
 	protected LowPassFilter filter;
-	public BasedPID(PIDCoefficientsBased coefficients) {
+	public PIDEx(PIDCoefficientsEx coefficients) {
 		super(coefficients);
 		this.basedCoefficients = coefficients;
 		this.filter = new LowPassFilter(coefficients.lowPassGain);
