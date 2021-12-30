@@ -1,12 +1,14 @@
 package homeostasis2.Filters.Estimators;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.util.function.DoubleSupplier;
 
 
 /**
- * Estimator that does no processing at all!
- *
- * I love oop.
+ * When you have good sensors.
  */
 public class NoEstimator extends Estimator{
 	/**
@@ -18,6 +20,7 @@ public class NoEstimator extends Estimator{
 		super(measurement);
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	@Override
 	public double update() {
 		return measurement.getAsDouble();

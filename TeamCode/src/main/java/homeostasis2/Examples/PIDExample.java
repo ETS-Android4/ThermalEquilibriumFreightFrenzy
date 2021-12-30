@@ -16,7 +16,7 @@ import homeostasis2.Filters.Estimators.LowPassEstimator;
 import homeostasis2.Parameters.FeedforwardCoefficientsEx;
 import homeostasis2.Parameters.PIDCoefficients;
 import homeostasis2.Parameters.PIDCoefficientsEx;
-import homeostasis2.SISOsystem;
+import homeostasis2.System.SISOsystem;
 
 public class PIDExample extends LinearOpMode {
 	PIDCoefficients coefficients = new PIDCoefficients(1,0,0);

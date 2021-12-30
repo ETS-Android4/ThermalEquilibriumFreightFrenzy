@@ -1,23 +1,23 @@
-package homeostasis2;
+package homeostasis2.System;
 
-import homeostasis2.Controllers.Feedback.Controller;
+import homeostasis2.Controllers.Feedback.FeedbackController;
 import homeostasis2.Controllers.Feedforward.FeedforwardController;
 import homeostasis2.Filters.Estimators.Estimator;
 
 public class SISOsystem {
 
 	public Estimator estimator;
-	public Controller feedbackController;
+	public FeedbackController feedbackController;
 	public FeedforwardController feedforwardController;
 
-	public SISOsystem(Estimator estimator, Controller feedbackController,
+	public SISOsystem(Estimator estimator, FeedbackController feedbackController,
 					  					   FeedforwardController feedforwardController) {
 		this.estimator = estimator;
 		this.feedbackController = feedbackController;
 		this.feedforwardController = feedforwardController;
 	}
 
-	public SISOsystem(Estimator estimator, Controller feedbackController) {
+	public SISOsystem(Estimator estimator, FeedbackController feedbackController) {
 		this.feedforwardController = null;
 		this.estimator = estimator;
 		this.feedbackController = feedbackController;
