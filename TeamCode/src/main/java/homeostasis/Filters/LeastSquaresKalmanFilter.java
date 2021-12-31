@@ -6,8 +6,8 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.homeostasis.Utils.LinearRegression;
-import com.example.homeostasis.Utils.SizedStack;
+import homeostasis2.Utils.LinearRegression;
+import homeostasis2.Utils.SizedStack;
 
 public class LeastSquaresKalmanFilter {
 
