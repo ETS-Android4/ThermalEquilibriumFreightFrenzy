@@ -21,10 +21,10 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-public class
-DifferentialDriveOdometry implements subsystem {
+public class DifferentialDriveOdometry implements subsystem {
 
 
+	private static double gearRatio = 1;
 	public DcMotorEx FrontLeft;
 	public DcMotorEx FrontRight;
 	protected Vector3D positionEstimate = new Vector3D();
@@ -34,7 +34,6 @@ DifferentialDriveOdometry implements subsystem {
 	private double pitchVelo = 0;
 	private double leftPrev = 0;
 	private double rightPrev = 0;
-	private final double gearRatio;
 	double trackWidth;
 	double testBotTrackWidth = 15.543307;
 	double compBotTrackWidth = 16;
@@ -178,7 +177,7 @@ DifferentialDriveOdometry implements subsystem {
 		Dashboard.packet.put("pitch angle", pitchAngle);
 		Dashboard.packet.put("pitch angle deg",Math.toDegrees(pitchAngle));
 		System.out.println("pitch angle: " + pitchAngle + " pitch angle deg: " + Math.toDegrees(pitchAngle));
-		angularVelocity = imu.getAngularVelocity().zRotationRate;
+		angularVelocity = imu.getAngularVelocity().xRotationRate;
 		AngularVelocity angularVelocity = imu.getAngularVelocity();
 		if (!isCompBot) {
 			pitchVelo = angularVelocity.zRotationRate;
@@ -197,7 +196,7 @@ DifferentialDriveOdometry implements subsystem {
 	}
 
 
-	public double encoderTicksToInches(double ticks) {
+	public static double encoderTicksToInches(double ticks) {
 		double WHEEL_RADIUS = 3.77953 / 2;
 		double ticksPerRevolution = 28.0 * 13.7;
 		return WHEEL_RADIUS * 2 * Math.PI * gearRatio * ticks / ticksPerRevolution;

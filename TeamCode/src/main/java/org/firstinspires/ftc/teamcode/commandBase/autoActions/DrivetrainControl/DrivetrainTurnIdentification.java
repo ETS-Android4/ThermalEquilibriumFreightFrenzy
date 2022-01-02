@@ -5,12 +5,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.commandBase.action;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
+
 public class DrivetrainTurnIdentification implements action {
 	protected Robot robot;
 	protected double power = 0;
 	protected double max_power = 0.75;
 	protected double step_time_seconds = 0.25;
-	protected double total_step_time = step_time_seconds * 2;
+	protected double total_step_time = 4;
 	protected boolean isComplete = false;
 	ElapsedTime timer = new ElapsedTime();
 
@@ -31,7 +32,7 @@ public class DrivetrainTurnIdentification implements action {
 			power = max_power;
 		}
 		robot.driveTrain.robotRelative(0, power);
-		System.out.println("drivetrain turn: " + power + ", " + robot.getRobotPose().getAngleRadians() + ", " + time);
+		System.out.println("drivetrain turn: " + power + ", " + robot.getVelocity().getAngleRadians() + ", " + time);
 		if (time > total_step_time) {
 			isComplete = true;
 		}

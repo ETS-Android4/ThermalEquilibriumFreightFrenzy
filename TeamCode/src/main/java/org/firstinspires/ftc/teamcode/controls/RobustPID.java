@@ -170,7 +170,7 @@ public class RobustPID {
 	}
 
 	public boolean isBasicallyStopped() {
-		return Math.abs(derivative) < 1e-4;
+		return Math.abs(derivative) < 0.5e-4;
 	}
 	/**
 	 * conditions for if we should integrate

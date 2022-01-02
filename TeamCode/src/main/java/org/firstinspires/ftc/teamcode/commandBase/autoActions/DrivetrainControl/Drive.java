@@ -93,7 +93,7 @@ public class Drive implements action {
 		initialPosition = robot.odometry.subsystemState();
 		turnPid = new RobustPID(turnCoefficients, initialPosition.getAngleRadians(), 3, 0.004, Math.toRadians(1));
 		drivePid = new RobustPID(driveCoefficients, Math.abs(targetDistance), 3, 0.3, 2.5);
-		velocityPID = new RobustPID(velocityCoefficients, 0,3,0.04,3);
+		velocityPID = new RobustPID(velocityCoefficients, 0,2,0.04,3);
 		initializeTargetAngle();
 		this.targetDistance += additionalDistance;
 		generateMotionProfile();
