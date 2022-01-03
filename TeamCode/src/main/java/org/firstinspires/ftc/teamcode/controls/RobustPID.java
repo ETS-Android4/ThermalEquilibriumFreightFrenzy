@@ -50,6 +50,9 @@ public class RobustPID {
 	// previous feedback output for adaptive feedforward control
 	protected double previous_feedback = 0;
 
+	protected double basicallyStoppedTolerance = 5 / 100.0;
+	protected double currentPosition = 1;
+
 	/**
 	 * construct PID with buffer length and stability threshold
 	 *
@@ -138,11 +141,11 @@ public class RobustPID {
 	 * calculate derivative using the buffer to smooth the data
 	 */
 	protected void calculateDerivative() {
-		PIDState bufferedPoint = derivativeBuffer.insert(new PIDState(error, time));
-
-		derivative = (error - bufferedPoint.error) / (time - bufferedPoint.timeStamp);
-
-
+//		PIDState bufferedPoint = derivativeBuffer.insert(new PIDState(error, time));
+//
+//		derivative = (error - bufferedPoint.error) / (time - bufferedPoint.timeStamp);
+//
+		derivative = (error - lastError) / dt;
 	}
 
 	/**
@@ -170,7 +173,7 @@ public class RobustPID {
 	}
 
 	public boolean isBasicallyStopped() {
-		return Math.abs(derivative) < 0.5e-4;
+		return Math.abs(derivative) < Math.abs(stability_threshold) / 10 && (basicallyStoppedTolerance > error / currentPosition);
 	}
 	/**
 	 * conditions for if we should integrate
@@ -194,6 +197,7 @@ public class RobustPID {
 	 * @param state systems state
 	 */
 	protected void calculateErrorNormal(double state) {
+		currentPosition = state;
 		error = reference - state;
 	}
 
@@ -202,6 +206,7 @@ public class RobustPID {
 	 * @param state systems state
 	 */
 	protected void calculateErrorAngle(double state) {
+		currentPosition = state;
 		error = normalizedHeadingError(reference, state);
 	}
 
