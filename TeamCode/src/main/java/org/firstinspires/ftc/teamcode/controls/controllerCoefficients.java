@@ -4,6 +4,10 @@ import org.firstinspires.ftc.teamcode.classicalControl.PIDFCoefficients;
 
 public class controllerCoefficients {
 
+
+	public static final double angularVelocity = Math.toRadians(720);
+	public static final double angularAcceleration = Math.toRadians(480);
+
 	public static final double compBotVelocity = 70;
 	public static final double compBotAcceleration = 90;
 	public static final double compBotJerk = 130;

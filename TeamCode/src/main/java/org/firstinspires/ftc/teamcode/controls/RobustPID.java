@@ -210,6 +210,10 @@ public class RobustPID {
 		error = normalizedHeadingError(reference, state);
 	}
 
+	public double angleErrorCalculation(double reference, double state) {
+		return normalizedHeadingError(reference, state);
+	}
+
 	/**
 	 * return the current plant error
 	 *

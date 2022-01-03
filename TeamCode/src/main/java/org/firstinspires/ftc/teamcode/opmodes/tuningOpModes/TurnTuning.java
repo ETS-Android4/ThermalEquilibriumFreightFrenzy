@@ -20,5 +20,9 @@ public class TurnTuning extends BaseAuto {
 	@Override
 	public void addActions() {
 		actions.add(new Turn(robot, Math.toRadians(90)));
+		actions.add(new Turn(robot, Math.toRadians(-90)));
+		actions.add(new Turn(robot, Math.toRadians(0)));
+		actions.add(new Turn(robot, Math.toRadians(180)));
+
 	}
 }
