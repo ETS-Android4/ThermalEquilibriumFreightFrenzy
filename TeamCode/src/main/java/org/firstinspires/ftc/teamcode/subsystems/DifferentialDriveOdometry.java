@@ -66,10 +66,10 @@ public class DifferentialDriveOdometry implements subsystem {
 			gearRatio = 1;
 		}
 		kalmanFilter = new AngleKalmanFilter(0);
-		forwardVelocityFilter = new LeastSquaresKalmanFilter(0.9,20,3,false);
+		forwardVelocityFilter = new LeastSquaresKalmanFilter(3.9,20,3,false);
 		leftEncoderFilter = new LeastSquaresKalmanFilter(0.9,0.3,3,false);
 		rightEncoderFilter = new LeastSquaresKalmanFilter(0.9,0.3,3,false);
-		pitchVelocityFilter = new LeastSquaresKalmanFilter(0.9,10,3,false);
+		pitchVelocityFilter = new LeastSquaresKalmanFilter(1.9,10,2,false);
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class DifferentialDriveOdometry implements subsystem {
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
 
-		double estimate = kalmanFilter.updateKalmanEstimate(encoderAngle, IMU_angle);
+		double estimate = IMU_angle;//kalmanFilter.updateKalmanEstimate(encoderAngle, IMU_angle);
 
 		positionEstimate.setAngleRad(estimate);
 

@@ -52,6 +52,7 @@ public class RobustPID {
 
 	protected double basicallyStoppedTolerance = 5 / 100.0;
 	protected double currentPosition = 1;
+	protected boolean isFirstRun = true;
 
 	/**
 	 * construct PID with buffer length and stability threshold
@@ -86,9 +87,14 @@ public class RobustPID {
 			out1 = coefficients.H * Math.signum(out1);
 		}
 
+
 		output = out1 +
-				(reference * coefficients.Kf) +
-				(derivative * coefficients.Kd);
+				(reference * coefficients.Kf);
+		if (!isFirstRun) {
+			output += (derivative * coefficients.Kd);
+		} else {
+			isFirstRun = false;
+		}
 		previous_feedback = output;
 		output += adaptiveFeedforward();
 		lastError = error;
@@ -285,7 +291,8 @@ public class RobustPID {
 
 
 	public double adaptiveFeedforward() {
-		return previous_feedback * (0.25 * coefficients.Kp);
+		return 0;
+		//return previous_feedback * (0.25 * coefficients.Kp);
 	}
 
 
