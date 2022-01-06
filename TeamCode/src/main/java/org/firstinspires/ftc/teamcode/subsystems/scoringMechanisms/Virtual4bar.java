@@ -52,6 +52,7 @@ public class Virtual4bar implements subsystem {
 			case GOING_TO_HIGH:
 			case GOING_IN:
 			case AT_CAPPING:
+			case AT_CAPPING_LOW:
 				setPosition(IN);
 				break;
 			case AT_HIGH:

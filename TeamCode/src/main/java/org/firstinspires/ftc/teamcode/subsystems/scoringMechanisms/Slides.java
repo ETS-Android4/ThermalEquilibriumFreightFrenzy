@@ -30,6 +30,7 @@ public class Slides implements subsystem {
 	protected double HIGH = 765; // tune this imo
 
 	protected double FOR_CAPPING = 650;
+	protected double FOR_CAPPING_TWO = 325;
 
 	protected double referencePosition = 0;
 
@@ -88,6 +89,9 @@ public class Slides implements subsystem {
 				break;
 			case AT_CAPPING:
 				referencePosition = FOR_CAPPING;
+				break;
+			case AT_CAPPING_LOW:
+				referencePosition = FOR_CAPPING_TWO;
 				break;
 			case DEPOSITING:
 			case GOING_IN:

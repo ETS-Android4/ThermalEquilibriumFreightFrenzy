@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.CapArm;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_CAPPING;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_CAPPING_LOW;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_HIGH;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_LOW;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_MID;
@@ -68,7 +69,7 @@ public class CommandDeposit implements teleopAction {
 					state = AT_CAPPING;
 					break;
 				case CAP_DOWN:
-					state = IN;
+					state = AT_CAPPING_LOW;
 					break;
 				case DOWN:
 					state = IN;
@@ -124,6 +125,7 @@ public class CommandDeposit implements teleopAction {
 				poseAtRelease = robot.getRobotPose();
 				break;
 			case AT_CAPPING:
+			case AT_CAPPING_LOW:
 				// immediately go to in state as soon as nominal control resumes?
 				state = IN;
 				break;
