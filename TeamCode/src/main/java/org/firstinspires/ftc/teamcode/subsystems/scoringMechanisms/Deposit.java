@@ -74,12 +74,14 @@ public class Deposit implements subsystem {
 		DISARMED, // motor power is cut
 		IN, // everything is in, ready for going over
 		COLLECTION,
+
 		GOING_TO_HIGH,
 		GOING_TO_MID,
 		GOING_TO_LOW,
 		AT_HIGH, // at high but not deposited
 		AT_MID, // at mid but not deposited
 		AT_LOW, // at low but not deposited
+		AT_CAPPING,
 		DEPOSITING, //depositing
 		GOING_IN
 	}
