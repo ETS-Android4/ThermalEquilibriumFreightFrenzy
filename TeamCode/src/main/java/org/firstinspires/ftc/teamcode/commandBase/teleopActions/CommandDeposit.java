@@ -57,6 +57,9 @@ public class CommandDeposit implements teleopAction {
 	public void periodic() {
 
 
+		System.out.println("Cap arm state is " + robot.capArm.subsystemState());
+
+
 		if (robot.capArm.subsystemState().equals(CapArm.ArmStates.IN)) {
 			nominalDepositLogic();
 		} else {
