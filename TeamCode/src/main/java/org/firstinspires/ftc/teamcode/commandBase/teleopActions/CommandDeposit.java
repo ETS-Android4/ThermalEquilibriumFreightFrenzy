@@ -65,8 +65,9 @@ public class CommandDeposit implements teleopAction {
 		} else {
 			switch (robot.capArm.subsystemState()) {
 				case CAPPING:
-				case CAP_DOWN:
 					state = AT_CAPPING;
+				case CAP_DOWN:
+					state = IN;
 					break;
 				case DOWN:
 					state = IN;
