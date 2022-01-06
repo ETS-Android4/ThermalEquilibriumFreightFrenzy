@@ -15,8 +15,8 @@ public class CapArm implements subsystem {
 
 	public final double inPosition = .1;
 	public final double capPosition = .5;
-	public final double actuallyPlaceCapOn = .75;
-	public final double groundPosition = .875;
+	public final double actuallyPlaceCapOn = .65;
+	public final double groundPosition = .865;
 
 	protected double previousPosition = 0;
 
