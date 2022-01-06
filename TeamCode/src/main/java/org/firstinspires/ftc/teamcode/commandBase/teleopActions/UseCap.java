@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.commandBase.teleopAction;
 import org.firstinspires.ftc.teamcode.gamepadEnhancements.ButtonPress;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
+import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 
 public class UseCap implements teleopAction {
 
@@ -39,7 +40,6 @@ public class UseCap implements teleopAction {
 		if (previousStatePress.press()) {
 			robot.capArm.previousState();
 		}
-
 	}
 
 	@Override

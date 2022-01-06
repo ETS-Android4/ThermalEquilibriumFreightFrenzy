@@ -7,8 +7,10 @@ import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.gamepadEnhancements.ButtonPress;
 import org.firstinspires.ftc.teamcode.commandBase.teleopAction;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
+import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.CapArm;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_CAPPING;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_HIGH;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_LOW;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_MID;
@@ -54,6 +56,28 @@ public class CommandDeposit implements teleopAction {
 	@Override
 	public void periodic() {
 
+
+		if (robot.capArm.subsystemState().equals(CapArm.ArmStates.IN)) {
+			nominalDepositLogic();
+		} else {
+			switch (robot.capArm.subsystemState()) {
+				case CAPPING:
+				case CAP_DOWN:
+					state = AT_CAPPING;
+					break;
+				case DOWN:
+					state = IN;
+					break;
+			}
+		}
+
+
+		System.out.println("current state is " + state);
+
+		robot.Deposit.setState(state);
+	}
+
+	public void nominalDepositLogic() {
 		depositButton.button(slidesDownButton());
 
 		switch (state) {
@@ -94,6 +118,8 @@ public class CommandDeposit implements teleopAction {
 				transitionToDeposit();
 				poseAtRelease = robot.getRobotPose();
 				break;
+			case AT_CAPPING:
+				break;
 			case DEPOSITING:
 				if (robot.getRobotPose().distanceToPose(poseAtRelease) > DISTANCE_FOR_SLIDES_DOWN || gamepad1.right_bumper) {
 					state = GOING_IN;
@@ -107,10 +133,6 @@ public class CommandDeposit implements teleopAction {
 				}
 				break;
 		}
-
-		System.out.println("current state is " + state);
-
-		robot.Deposit.setState(state);
 	}
 
 	protected void transitionToDeposit() {
