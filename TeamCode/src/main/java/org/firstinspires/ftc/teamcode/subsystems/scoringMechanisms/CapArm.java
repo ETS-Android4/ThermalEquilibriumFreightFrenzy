@@ -11,12 +11,12 @@ public class CapArm implements subsystem {
 
 	public Servo armServo;
 
-	public String servoName = "BenjiNameThisLol";  // TODO Benji fix this
+	public String servoName = "caparm";  // TODO Benji fix this
 
-	public final double inPosition = 0;
-	public final double capPosition = 0;
-	public final double actuallyPlaceCapOn = 0;
-	public final double groundPosition = 0;
+	public final double inPosition = .1;
+	public final double capPosition = .5;
+	public final double actuallyPlaceCapOn = .75;
+	public final double groundPosition = .9;
 
 	protected double previousPosition = 0;
 
