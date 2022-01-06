@@ -157,10 +157,7 @@ public class CommandDeposit implements teleopAction {
 		boolean intakeButtonState = gamepad1.right_trigger > 0.5 || gamepad1.left_trigger > 0.5;
 		intakeButton.button(intakeButtonState);
 
-		if (isRunning) {
-			System.out.println("is currently running!!");
-			return true;
-		} else if (intakeButtonState) {
+		if (intakeButtonState) {
 			state = COLLECTION;
 		} else if (intakeButton.release()) {
 			state = IN;
@@ -191,7 +188,7 @@ public class CommandDeposit implements teleopAction {
 
 		robot.Deposit.setState(state);
 
-		return isRunning;
+		return true;
 	}
 
 	@Override
