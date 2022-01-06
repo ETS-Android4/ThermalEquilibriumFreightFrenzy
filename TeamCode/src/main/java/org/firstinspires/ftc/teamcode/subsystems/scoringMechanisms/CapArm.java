@@ -15,9 +15,10 @@ public class CapArm implements subsystem {
 
 	public final double inPosition = 0;
 	public final double capPosition = 0;
+	public final double actuallyPlaceCapOn = 0;
 	public final double groundPosition = 0;
 
-	public double previousPosition = 0;
+	protected double previousPosition = 0;
 
 	protected ArmStates state = IN;
 
@@ -39,6 +40,9 @@ public class CapArm implements subsystem {
 				break;
 			case CAPPING:
 				setArmServoPosition(capPosition);
+				break;
+			case CAP_DOWN:
+				setArmServoPosition(actuallyPlaceCapOn);
 				break;
 			case DOWN:
 				setArmServoPosition(groundPosition);
@@ -65,7 +69,36 @@ public class CapArm implements subsystem {
 	public enum ArmStates {
 		IN,
 		CAPPING,
-		DOWN
+		CAP_DOWN,
+		DOWN;
+
+		public ArmStates nextState() {
+			switch (this) {
+				case IN:
+					return DOWN;
+				case CAPPING:
+					return CAP_DOWN;
+				case CAP_DOWN:
+					return IN;
+				case DOWN:
+					return CAPPING;
+			}
+			return IN;
+		}
+
+		public ArmStates previousState() {
+			switch (this) {
+				case IN:
+				case DOWN:
+					return IN;
+				case CAPPING:
+					return DOWN;
+				case CAP_DOWN:
+					return CAPPING;
+			}
+			return IN;
+		}
+
 	}
 
 	/**
@@ -74,5 +107,13 @@ public class CapArm implements subsystem {
 	 */
 	public void setState(ArmStates state) {
 		this.state = state;
+	}
+
+	public void nextState() {
+		this.state = state.nextState();
+	}
+
+	public void previousState() {
+		this.state = state.previousState();
 	}
 }
