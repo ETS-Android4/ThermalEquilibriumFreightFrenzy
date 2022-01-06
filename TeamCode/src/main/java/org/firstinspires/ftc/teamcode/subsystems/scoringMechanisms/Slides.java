@@ -29,7 +29,7 @@ public class Slides implements subsystem {
 	protected double MID = 765;
 	protected double HIGH = 765; // tune this imo
 
-	protected double FOR_CAPPING = 300;
+	protected double FOR_CAPPING = 450;
 
 	protected double referencePosition = 0;
 

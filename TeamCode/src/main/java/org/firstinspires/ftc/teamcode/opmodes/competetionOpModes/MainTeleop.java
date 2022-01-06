@@ -25,7 +25,7 @@ public class MainTeleop extends BaseTeleop {
 		actions.add(new SafeArcadeDrive(robot, gamepad1, gamepad2));
 		actions.add(new ToggleIntake(robot, gamepad1, gamepad2));
 		actions.add(new CommandDeposit(robot, gamepad1, gamepad2));
-		actions.add(new GoToCollectionState(robot, gamepad1, gamepad2));
+		//actions.add(new GoToCollectionState(robot, gamepad1, gamepad2));
 		actions.add(new ToggleBox(robot, gamepad1, gamepad2));
 		actions.add(new ToggleDuckWheel(robot,gamepad1,gamepad2));
 		actions.add(new UseCap(robot,gamepad1,gamepad2));
