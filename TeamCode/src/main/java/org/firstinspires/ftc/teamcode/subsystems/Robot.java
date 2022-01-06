@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Bucket;
+import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.CapArm;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.TapeTurret;
@@ -34,8 +35,9 @@ public class Robot {
 
     public DuckWheel duckwheel = new DuckWheel();
     public DifferentialDriveOdometry odometry = new DifferentialDriveOdometry();
+    public CapArm capArm = new CapArm();
 
-    public TapeTurret turret = new TapeTurret();
+
 
     public Robot() {
 
@@ -65,21 +67,19 @@ public class Robot {
      * @param hwmap HardwareMap instance
      */
     public void init(HardwareMap hwmap) {
-
         initMinimal(hwmap);
-
         Intake.init(hwmap);
         Deposit.init(hwmap);
         bucketSys.init(hwmap);
         duckDetection.init(hwmap);
         duckwheel.init(hwmap);
-        turret.init(hwmap);
+        capArm.init(hwmap);
         subsystems.add(bucketSys);
         subsystems.add(Intake);
         subsystems.add(Deposit);
         subsystems.add(duckDetection);
         subsystems.add(duckwheel);
-        subsystems.add(turret);
+        subsystems.add(capArm);
     }
 
     /**
@@ -93,11 +93,13 @@ public class Robot {
         odometry.initNoReset(hwmap);
         Intake.initNoReset(hwmap);
         Deposit.initNoReset(hwmap);
+        capArm.initNoReset(hwmap);
         subsystems.add(Intake);
         subsystems.add(Deposit);
         subsystems.add(driveTrain);
         subsystems.add(dashBoard);
         subsystems.add(odometry);
+        subsystems.add(capArm);
     }
 
     /**
