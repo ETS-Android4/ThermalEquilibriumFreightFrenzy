@@ -61,7 +61,7 @@ public class PIDFCoefficients {
      * @return tuned coefficients.
      */
     public static PIDFCoefficients JaRule(double criticalGain) {
-        return new PIDFCoefficients(criticalGain / 1.2, criticalGain / 3, criticalGain / 9, 0, 0, criticalGain/15);
+        return new PIDFCoefficients(criticalGain / 1.2, criticalGain / 3, criticalGain / 9, 0, 0, criticalGain/12);
     }
 
 }

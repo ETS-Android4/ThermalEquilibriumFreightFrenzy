@@ -17,6 +17,7 @@ public class CapArm implements subsystem {
 	public final double capPosition = .63;
 	public final double actuallyPlaceCapOn = capPosition;
 	public final double groundPosition = .85;
+	public final double antennaPosition = 0.4;
 
 	protected double previousPosition = 0;
 
@@ -44,6 +45,9 @@ public class CapArm implements subsystem {
 			case CAP_DOWN:
 				setArmServoPosition(actuallyPlaceCapOn);
 				break;
+			case ANTENNA:
+				setArmServoPosition(antennaPosition);
+				break;
 			case DOWN:
 				setArmServoPosition(groundPosition);
 				break;
@@ -70,6 +74,7 @@ public class CapArm implements subsystem {
 		IN,
 		CAPPING,
 		CAP_DOWN,
+		ANTENNA,
 		DOWN;
 
 		public ArmStates nextState() {
@@ -79,6 +84,7 @@ public class CapArm implements subsystem {
 				case CAPPING:
 					return CAP_DOWN;
 				case CAP_DOWN:
+				case ANTENNA:
 					return IN;
 				case DOWN:
 					return CAPPING;
@@ -88,6 +94,7 @@ public class CapArm implements subsystem {
 
 		public ArmStates previousState() {
 			switch (this) {
+				case ANTENNA:
 				case IN:
 				case DOWN:
 					return IN;

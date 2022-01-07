@@ -114,7 +114,7 @@ public class Drive implements action {
 		drivePid.setReference(targetDistProfile);
 		velocityPID.setReference(targetVelocityProfile);
 
-		periodicallySetAngle();
+		// periodicallySetAngle();
 		double turn = turnPid.calculateLinearAngle(robot.odometry.subsystemState().getAngleRadians());
 		double drive = drivePid.calculate(distance) * Math.signum(targetDistance);
 		drive += velocityPID.calculate(velocity);
