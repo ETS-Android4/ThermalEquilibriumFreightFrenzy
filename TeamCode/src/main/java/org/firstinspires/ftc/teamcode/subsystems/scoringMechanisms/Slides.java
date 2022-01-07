@@ -29,8 +29,13 @@ public class Slides implements subsystem {
 	protected double MID = 765;
 	protected double HIGH = 765; // tune this imo
 
-	protected double FOR_CAPPING = 650;
-	protected double FOR_CAPPING_TWO = 325;
+	protected double MAX_POWER = 1;
+	protected double MAX_POWER_AT_CAP = 0.5;
+	protected double CURRENT_MAX_POWER = 1;
+
+
+	protected double FOR_CAPPING = 660;
+	protected double FOR_CAPPING_TWO = 300;
 
 	protected double referencePosition = 0;
 
@@ -70,6 +75,7 @@ public class Slides implements subsystem {
 
 		switch (state) {
 			case IN:
+				CURRENT_MAX_POWER = MAX_POWER;
 				referencePosition = IN;
 				break;
 			case COLLECTION:
@@ -77,21 +83,26 @@ public class Slides implements subsystem {
 				break;
 			case GOING_TO_HIGH:
 			case AT_HIGH:
+				CURRENT_MAX_POWER = MAX_POWER;
 				referencePosition = HIGH;
 				break;
 			case GOING_TO_MID:
 			case AT_MID:
+				CURRENT_MAX_POWER = MAX_POWER;
 				referencePosition = MID;
 				break;
 			case GOING_TO_LOW:
 			case AT_LOW:
+				CURRENT_MAX_POWER = MAX_POWER;
 				referencePosition = LOW;
 				break;
 			case AT_CAPPING:
 				referencePosition = FOR_CAPPING;
+				CURRENT_MAX_POWER = MAX_POWER_AT_CAP;
 				break;
 			case AT_CAPPING_LOW:
 				referencePosition = FOR_CAPPING_TWO;
+				CURRENT_MAX_POWER = MAX_POWER;
 				break;
 			case DEPOSITING:
 			case GOING_IN:
@@ -99,7 +110,7 @@ public class Slides implements subsystem {
 		}
 		System.out.println("reference position is " + referencePosition);
 		double controllerCommand = slideController.stateReferenceCalculate(referencePosition, subsystemState().getPosition());
-		slides.input(controllerCommand);
+		slides.input(controllerCommand * CURRENT_MAX_POWER);
 		error = slideController.getError();
 		System.out.println("controller error is " + error + " controller setpoint is " + slideController.getReference());
 

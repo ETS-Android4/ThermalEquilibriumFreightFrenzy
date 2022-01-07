@@ -14,9 +14,9 @@ public class CapArm implements subsystem {
 	public String servoName = "caparm";  // TODO Benji fix this
 
 	public final double inPosition = .1;
-	public final double capPosition = .6;
+	public final double capPosition = .63;
 	public final double actuallyPlaceCapOn = capPosition;
-	public final double groundPosition = .865;
+	public final double groundPosition = .85;
 
 	protected double previousPosition = 0;
 
