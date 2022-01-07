@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 public class Virtual4bar implements subsystem {
 
-	protected final double COLLECTION = 0.18;
+	protected final double COLLECTION = 0.19;
 	protected final double IN = 0.08;
 	protected final double LOW = 0.5;
 	protected final double MID = 0.7;
