@@ -24,7 +24,7 @@ public class EliminationPipeline extends OpenCvPipeline {
 
 	public static double low1 = 0;
 	public static double low2 = 90;
-	public static double low3 = 130;
+	public static double low3 = 0;
 	public static double high1 = 180;
 	public static double high2 = 220;
 	public static double high3 = 220;
