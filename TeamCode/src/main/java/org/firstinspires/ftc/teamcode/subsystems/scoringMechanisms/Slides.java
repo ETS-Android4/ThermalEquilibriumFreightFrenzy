@@ -34,7 +34,7 @@ public class Slides implements subsystem {
 	protected double CURRENT_MAX_POWER = 1;
 
 
-	protected double FOR_CAPPING = 745;
+	protected double FOR_CAPPING = 775;
 	protected double FOR_CAPPING_TWO = 300;
 
 	protected double referencePosition = 0;
