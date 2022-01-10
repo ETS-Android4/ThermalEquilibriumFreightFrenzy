@@ -98,7 +98,7 @@ public class BlueDuckAuto extends BaseAuto {
 
 				// push wheel against carousel
 				actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
-				actions.add(new Drive(robot, PUSH_WHEEL_AGAINST_CAROUSEL - 1));
+				actions.add(new Drive(robot, PUSH_WHEEL_AGAINST_CAROUSEL));
 				actions.add(new Delay(DUCK_DURATION));
 				actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
 

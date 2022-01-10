@@ -17,7 +17,7 @@ public class controllerCoefficients {
 	public static final double protoBotJerk = 250;
 
 	// controller coefficients for competition 10wd
-	public static final PIDFCoefficients compBotTurn =   PIDFCoefficients.JaRule(1.5);//new PIDFCoefficients(1, 0.8, 0.09,0,0,0.1); // 0.2785000000000002
+	public static final PIDFCoefficients compBotTurn =   PIDFCoefficients.JaRule(1.3);//new PIDFCoefficients(1, 0.8, 0.09,0,0,0.1); // 0.2785000000000002
 	public static final PIDFCoefficients compBotDrive = new PIDFCoefficients(0.071, 0.001, 0.01,0,0,0.04350000000000015);
 	public static final PIDFCoefficients compBotDriveCorrect = compBotTurn.noFeedforward();
 	public static final PIDFCoefficients compBotDriveVelo = new PIDFCoefficients(0.02,0.03,0,0,1/compBotVelocity,0);

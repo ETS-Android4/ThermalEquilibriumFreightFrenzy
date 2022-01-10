@@ -92,7 +92,7 @@ public class RedDuckAuto extends BaseAuto {
 
                 // push wheel against carousel
                 actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
-                actions.add(new Drive(robot, DISTANCE_PUSHING_INTO_CAROUSEL));
+                actions.add(new Drive(robot, DISTANCE_PUSHING_INTO_CAROUSEL - 0.5));
                 actions.add(new Delay(DUCK_SPIN_TIME));
                 actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
                 actions.add(new Drive(robot,park,-1));
@@ -101,7 +101,7 @@ public class RedDuckAuto extends BaseAuto {
             case MIDDLE:
 
                 actions.add(new Drive(robot,-27));
-                actions.add(new Drive(robot,goalPosition,-1 , DISTANCE_BACK_FROM_GOAL - 3));
+                actions.add(new Drive(robot,goalPosition,-1 , DISTANCE_BACK_FROM_GOAL - 1.5));
                 actions.add(new DepositFreight(robot));
                 actions.add(new Delay(300));
 
@@ -112,7 +112,7 @@ public class RedDuckAuto extends BaseAuto {
 
                 // push wheel against carousel
                 actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OTHER_ON));
-                actions.add(new Drive(robot, DISTANCE_PUSHING_INTO_CAROUSEL));
+                actions.add(new Drive(robot, DISTANCE_PUSHING_INTO_CAROUSEL + 6.5));
                 actions.add(new Delay(DUCK_SPIN_TIME));
                 actions.add(new SetDuckWheel(robot, DuckWheel.DuckWheelState.OFF));
 
