@@ -23,7 +23,7 @@ public class BaseTeleop extends LinearOpMode {
 	@Override
 	public void runOpMode() {
 		robot = new Robot();
-		robot.initMinimal(hardwareMap);
+		robot.init(hardwareMap);
 		robot.odometry.setState(ThreeWheelOdometry.OdomState.RETRACTED);
 
 		addActions();
