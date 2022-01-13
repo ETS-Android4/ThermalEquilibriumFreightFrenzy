@@ -13,8 +13,7 @@ public class Extension implements subsystem {
 	protected final double LOW = 0.5;
 	protected final double MID = 0.7;
 	protected final double HIGH = 0.90;
-	protected Servo left;
-	protected Servo right;
+	protected Servo extension;
 	protected Deposit.depositStates state = Deposit.depositStates.IN;
 	protected double lastPosition = 1000;
 
@@ -22,9 +21,7 @@ public class Extension implements subsystem {
 
 	@Override
 	public void init(HardwareMap hwmap) {
-		left = hwmap.get(Servo.class, "leftV4B");
-		right = hwmap.get(Servo.class, "rightV4B");
-		right.setDirection(Servo.Direction.REVERSE); // TODO this might be wrong
+		extension = hwmap.get(Servo.class, "extension");
 
 		setPosition(IN);
 
@@ -88,8 +85,7 @@ public class Extension implements subsystem {
 	protected void setPosition(double position) {
 
 		if (position != lastPosition) {
-			left.setPosition(position);
-			right.setPosition(position);
+			extension.setPosition(position);
 		}
 
 		lastPosition = position;
