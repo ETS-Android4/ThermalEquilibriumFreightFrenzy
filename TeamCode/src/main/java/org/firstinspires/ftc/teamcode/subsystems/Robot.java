@@ -51,10 +51,10 @@ public class Robot {
      */
     public void initMinimal(HardwareMap hwmap) {
         batterVoltageSensor = hwmap.voltageSensor.iterator().next();
-        driveTrain.init(hwmap);
+        //driveTrain.init(hwmap);
         dashBoard.init(hwmap);
         odometry.init(hwmap);
-        subsystems.add(driveTrain);
+        //subsystems.add(driveTrain);
         subsystems.add(dashBoard);
         subsystems.add(odometry);
     }
