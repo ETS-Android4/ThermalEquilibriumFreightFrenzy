@@ -25,9 +25,9 @@ public class Slides implements subsystem {
 
 	protected double IN = 0;
 	protected double COLLECTION = 0;
-	protected double LOW = 765;
-	protected double MID = 765;
-	protected double HIGH = 765; // tune this imo
+	protected double LOW = 100;
+	protected double MID = 100;
+	protected double HIGH = 500; // tune this imo
 
 	protected double referencePosition = 0;
 
@@ -44,13 +44,14 @@ public class Slides implements subsystem {
 		left = hwmap.get(DcMotorEx.class, "slideLeft");
 		right = hwmap.get(DcMotorEx.class, "slideRight");
 
-		right.setDirection(DcMotorSimple.Direction.REVERSE);
+		right.setDirection(DcMotorSimple.Direction.FORWARD);
+		left.setDirection(DcMotorSimple.Direction.REVERSE);
 		left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 		right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 		ArrayList<DcMotorEx> motors = new ArrayList<>();
-		motors.add(right);
 		motors.add(left);
+		motors.add(right);
 		slides = new DcMotorPlant(motors);
 	}
 

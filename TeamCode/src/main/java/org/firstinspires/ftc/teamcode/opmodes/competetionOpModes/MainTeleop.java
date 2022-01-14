@@ -14,8 +14,6 @@ import org.firstinspires.ftc.teamcode.commandBase.teleopActions.GoToCollectionSt
 import org.firstinspires.ftc.teamcode.commandBase.teleopActions.ToggleBox;
 import org.firstinspires.ftc.teamcode.commandBase.teleopActions.ToggleIntake;
 
-import static org.firstinspires.ftc.teamcode.subsystems.Robot.isCompBot;
-
 
 @TeleOp
 public class MainTeleop extends BaseTeleop {

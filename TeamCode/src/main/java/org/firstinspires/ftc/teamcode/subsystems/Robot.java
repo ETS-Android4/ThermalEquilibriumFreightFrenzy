@@ -68,14 +68,14 @@ public class Robot {
 
         initMinimal(hwmap);
 
-        Intake.init(hwmap);
+        //Intake.init(hwmap);
         Deposit.init(hwmap);
-        bucketSys.init(hwmap);
+        //bucketSys.init(hwmap);
 //        duckDetection.init(hwmap);
 //        duckwheel.init(hwmap);
 //        turret.init(hwmap);
-        subsystems.add(bucketSys);
-        subsystems.add(Intake);
+        //subsystems.add(bucketSys);
+        //subsystems.add(Intake);
         subsystems.add(Deposit);
 //        subsystems.add(duckDetection);
 //        subsystems.add(duckwheel);
