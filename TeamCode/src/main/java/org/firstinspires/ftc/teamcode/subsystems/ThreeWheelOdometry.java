@@ -170,7 +170,7 @@ public class ThreeWheelOdometry implements subsystem {
 		middlePrev = middle;
 
 		double xDelta = (leftDelta + rightDelta) / 2;
-		double yDelta = (middleWheelOffset / trackWidth) * (leftDelta - rightDelta);
+		double yDelta = (middleWheelOffset / trackWidth) * (rightDelta - leftDelta);
 		yDelta = middleDelta - yDelta;
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
 
