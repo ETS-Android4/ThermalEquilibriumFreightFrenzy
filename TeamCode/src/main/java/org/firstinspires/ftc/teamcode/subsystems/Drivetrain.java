@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -181,7 +182,9 @@ public class Drivetrain implements subsystem {
      * @param robotPose current robot pose
      */
     public void fieldRelative(Vector3D powers, Vector3D robotPose) {
-        robotRelative(powers.rotateBy(robotPose.getAngleDegrees()));
+        Vector2d rotatedPowers = new Vector2d(powers.getX(),powers.getY());
+        rotatedPowers = rotatedPowers.rotated(robotPose.getAngleRadians());
+        robotRelative(new Vector3D(rotatedPowers.getX(),rotatedPowers.getY(),powers.getAngleRadians()));
     }
 
     public void STOP() {

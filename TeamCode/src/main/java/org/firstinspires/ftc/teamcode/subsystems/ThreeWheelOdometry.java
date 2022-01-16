@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.Geometry.Angle;
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 
 import homeostasis.Filters.AngleKalmanFilter;
@@ -30,8 +31,8 @@ public class ThreeWheelOdometry implements subsystem {
 	private final double gearRatio;
 	double trackWidth;
 	double testBotTrackWidth = 15.543307;
-	double compBotTrackWidth = 16; // TODO: fix this for real robot
-	double middleWheelOffset = 5;  // TODO: fix this for real robot
+	double compBotTrackWidth = 3.85 / 0.5; // TODO: fix this for real robot
+	double middleWheelOffset = -2;  // TODO: fix this for real robot
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
@@ -49,13 +50,8 @@ public class ThreeWheelOdometry implements subsystem {
 	 * initialize a differential drive robot with odometry
 	 */
 	public ThreeWheelOdometry() {
-		if (isCompBot) {
-			trackWidth = compBotTrackWidth;
-			gearRatio = 20.0 / 24.0;
-		} else {
-			trackWidth = testBotTrackWidth;
-			gearRatio = 1;
-		}
+		trackWidth = compBotTrackWidth;
+		gearRatio = 1;
 		kalmanFilter = new AngleKalmanFilter(0);
 
 	}
@@ -72,8 +68,8 @@ public class ThreeWheelOdometry implements subsystem {
 		parameters.mode = BNO055IMU.SensorMode.NDOF;
 		parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
 		imu.initialize(parameters);
-		LeftEncoder = hwmap.get(DcMotorEx.class, "FrontLeft");
-		RightEncoder = hwmap.get(DcMotorEx.class, "FrontRight");
+		LeftEncoder = hwmap.get(DcMotorEx.class, "BackRight");
+		RightEncoder = hwmap.get(DcMotorEx.class, "FrontLeft");
 		MiddleEncoder = hwmap.get(DcMotorEx.class, "BackLeft");
 	}
 
@@ -86,10 +82,10 @@ public class ThreeWheelOdometry implements subsystem {
 	public void update() {
 		switch (state) {
 			case DEPLOYED:
-				updateIMU();
+				deployedUpdate();
 				break;
 			case RETRACTED:
-				deployedUpdate();
+				updateIMU();
 				break;
 		}
 	}
@@ -124,8 +120,11 @@ public class ThreeWheelOdometry implements subsystem {
 	public void updateIMU() {
 		Orientation angle = imu.getAngularOrientation();
 		IMU_angle = normalizeAngleRR(angle.firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
+		Dashboard.packet.put("IMU Angle",IMU_angle);
+		Dashboard.packet.put("IMU Angle Deg", Math.toDegrees(IMU_angle));
 		Dashboard.packet.put("pitch angle", pitchAngle);
 		angularVelocity = imu.getAngularVelocity().zRotationRate;
+		this.positionEstimate = new Vector3D(0,0,IMU_angle);
 	}
 
 	public Vector3D getVelocity() {
@@ -150,9 +149,14 @@ public class ThreeWheelOdometry implements subsystem {
 	}
 
 	public void deployedUpdate() {
-		double left = encoderTicksToInches(LeftEncoder.getCurrentPosition());
+		double left = -encoderTicksToInches(LeftEncoder.getCurrentPosition());
 		double right = encoderTicksToInches(RightEncoder.getCurrentPosition());
-		double middle = encoderTicksToInches(MiddleEncoder.getCurrentPosition());
+		double middle = -encoderTicksToInches(MiddleEncoder.getCurrentPosition());
+
+
+		Dashboard.packet.put("Left Encoder", left);
+		Dashboard.packet.put("Right Encoder", right);
+		Dashboard.packet.put("Middle Encoder", middle);
 
 		double leftVelo = encoderTicksToInches(LeftEncoder.getVelocity()); // TODO This will break with the rev encoder
 		double rightVelo = encoderTicksToInches(RightEncoder.getVelocity());
@@ -175,12 +179,14 @@ public class ThreeWheelOdometry implements subsystem {
 		encoderAngle = normalizeAngleRR(encoderAngle);
 
 		positionEstimateDeltaRobotRelative = new Vector3D(xDelta, yDelta, thetaDelta);
-		positionEstimate.setAngleRad(positionEstimate.getAngleRadians() + thetaDelta);
+		positionEstimate.setAngleRad(AngleWrap(positionEstimate.getAngleRadians() + thetaDelta));
 
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
 
 		drawRobot(positionEstimate, Dashboard.packet);
+
+		System.out.println("Robot pose is " + positionEstimate);
 
 	}
 
