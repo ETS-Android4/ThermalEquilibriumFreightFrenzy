@@ -35,7 +35,7 @@ public class DifferentialDriveOdometry implements subsystem {
 	private double leftPrev = 0;
 	private double rightPrev = 0;
 	double trackWidth;
-	double testBotTrackWidth = 15.543307;
+	public static double testBotTrackWidth = 35.70453809697589;
 	double compBotTrackWidth = 16;
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
@@ -127,13 +127,13 @@ public class DifferentialDriveOdometry implements subsystem {
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
 
-		double estimate = IMU_angle;//kalmanFilter.updateKalmanEstimate(encoderAngle, IMU_angle);
-
-		positionEstimate.setAngleRad(estimate);
+//		double estimate = IMU_angle;//kalmanFilter.updateKalmanEstimate(encoderAngle, IMU_angle);
+//
+//		positionEstimate.setAngleRad(estimate);
 
 		drawRobot(positionEstimate, Dashboard.packet);
 
-		Dashboard.packet.put("estimated angle",estimate);
+//		Dashboard.packet.put("estimated angle",estimate);
 		Dashboard.packet.put("imu angle ", AngleWrap(IMU_angle));
 		Dashboard.packet.put("drive wheel angle", AngleWrap(encoderAngle));
 		Dashboard.packet.put("measured x velocity", xDot);
