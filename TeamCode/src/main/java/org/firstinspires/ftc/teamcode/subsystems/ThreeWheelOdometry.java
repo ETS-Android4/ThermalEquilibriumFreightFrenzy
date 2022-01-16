@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.Geometry.Angle;
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 
 import homeostasis.Filters.AngleKalmanFilter;
@@ -15,8 +15,8 @@ import static org.firstinspires.ftc.teamcode.Utils.utils.AngleWrap;
 import static org.firstinspires.ftc.teamcode.Utils.utils.drawRobot;
 import static org.firstinspires.ftc.teamcode.Utils.utils.normalizeAngleRR;
 
+@Config
 public class ThreeWheelOdometry implements subsystem {
-
 
 	public DcMotorEx LeftEncoder;
 	public DcMotorEx RightEncoder;
@@ -29,10 +29,8 @@ public class ThreeWheelOdometry implements subsystem {
 	private double rightPrev = 0;
 	private double middlePrev = 0;
 	private final double gearRatio;
-	double trackWidth;
-	double testBotTrackWidth = 15.543307;
-	double compBotTrackWidth = 3.85 / 0.5; // TODO: fix this for real robot
-	double middleWheelOffset = -2;  // TODO: fix this for real robot
+	public static double trackWidth = 7.7; // TODO: fix this for real robot
+	public static double middleWheelOffset = -2;  // TODO: fix this for real robot
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
@@ -50,10 +48,8 @@ public class ThreeWheelOdometry implements subsystem {
 	 * initialize a differential drive robot with odometry
 	 */
 	public ThreeWheelOdometry() {
-		trackWidth = compBotTrackWidth;
 		gearRatio = 1;
 		kalmanFilter = new AngleKalmanFilter(0);
-
 	}
 
 	@Override
