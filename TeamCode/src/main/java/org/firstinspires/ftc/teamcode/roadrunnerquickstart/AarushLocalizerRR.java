@@ -82,7 +82,7 @@ public class AarushLocalizerRR extends ThreeTrackingWheelLocalizer {
 		leftEncoder.setDirection(Encoder.Direction.REVERSE);
 		frontEncoder.setDirection(Encoder.Direction.REVERSE);
 
-		imu = hardwareMap.get(BNO055IMU.class, "imuaa");
+		imu = hardwareMap.get(BNO055IMU.class, "imu");
 		BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 		parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
 		imu.initialize(parameters);
