@@ -9,12 +9,14 @@ public class PVParams {
 	private double Aff; // adaptive feedforward
 	private double cutOffVelo; // minimum veloctiy before exit
 	private double cutOffPos; // minimum position before exit
-	public PVParams(double Kp, double KpV, double Kv, double Ks, double Aff, double cutoffvelo, double cutoffpos) {
+	private double Ki; // integral gain
+	public PVParams(double Kp, double KpV, double Ki, double Kv, double Ks, double Aff, double cutoffvelo, double cutoffpos) {
 		this.Kp = Kp;
 		this.KpV = KpV;
 		this.Kv = Kv;
 		this.Ks = Ks;
 		this.Aff = Aff;
+		this.Ki = Ki;
 		this.cutOffVelo = cutoffvelo;
 		this.cutOffPos = cutoffpos;
 	}
@@ -70,5 +72,10 @@ public class PVParams {
 
 	public void setCutOffPos(double cutOffPos) {
 		this.cutOffPos = cutOffPos;
+	}
+
+
+	public double getKi() {
+		return Ki;
 	}
 }

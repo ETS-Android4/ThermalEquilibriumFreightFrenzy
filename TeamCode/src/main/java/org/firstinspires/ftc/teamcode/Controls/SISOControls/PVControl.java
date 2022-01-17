@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Controls.SISOControls;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.Controls.Coefficients.PVParams;
 
 import homeostasis.utils.State;
@@ -9,6 +11,9 @@ public class PVControl {
 	protected PVParams coefficients;
 	protected double previousFeedbackOutput = 0;
 	protected boolean isProcessComplete = false;
+	protected ElapsedTime timer = new ElapsedTime();
+	boolean hasStarted = false;
+	private double integralSum = 0;
 
 	public PVControl(PVParams coefficients) {
 		this.coefficients = coefficients;
@@ -27,7 +32,18 @@ public class PVControl {
 		double feedback = calculateFeedback(error);
 		double feedforward = calculateFeedforward(reference.getVelocity(), feedback);
 		isProcessComplete = isCompleteCalc(error);
-		return feedback + feedforward;
+		double integralAction = calculateIntegral(error) * coefficients.getKi();
+		return feedback + feedforward + integralAction;
+	}
+
+	protected double calculateIntegral(State error) {
+		if (!hasStarted) {
+			timer.reset();
+			hasStarted = true;
+		}
+		integralSum += error.getPosition() * timer.seconds();
+		timer.reset();
+		return integralSum;
 	}
 
 	protected double calculateFeedback(State error) {

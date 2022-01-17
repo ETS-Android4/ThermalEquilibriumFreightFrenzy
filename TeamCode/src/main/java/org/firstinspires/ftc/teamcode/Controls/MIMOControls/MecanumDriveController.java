@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Controls.SISOControls.PVControl;
 import org.firstinspires.ftc.teamcode.Controls.SISOControls.RobustPID;
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 
 import homeostasis.utils.State;
 
@@ -153,6 +154,10 @@ public class MecanumDriveController {
 	 * @return true if we are complete
 	 */
 	public boolean followingIsComplete() {
+		Dashboard.packet.put("controller x complete",controllerX.isProcessComplete());
+		Dashboard.packet.put("controller y complete", controllerY.isProcessComplete());
+		Dashboard.packet.put("theta control is complete",thetaControl.isComplete());
+		Dashboard.packet.put("profile is complete", isProfileComplete());
 		return controllerX.isProcessComplete()
 				&& controllerY.isProcessComplete()
 				&& thetaControl.isComplete()
