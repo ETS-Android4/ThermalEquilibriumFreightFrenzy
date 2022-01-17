@@ -187,7 +187,7 @@ public class RobustPID {
 	 * @return true if we should integrate
 	 */
 	public boolean shouldIntegrate() {
-		return isStable();
+		return true;
 	}
 
 	/**

@@ -4,7 +4,7 @@ public class controllerCoefficients {
 	public static final double compBotVelocity = 70;
 	public static final double compBotAcceleration = 35;
 	// controller coefficients for competition 10wd
-	public static final PIDFCoefficients compBotTurn = new PIDFCoefficients(0.6, 0.5, 0,0,0,0.1); // 0.2785000000000002
+	public static final PIDFCoefficients compBotTurn = new PIDFCoefficients(0.6, 0.1, 0,0,0,0.15); // 0.2785000000000002
 	public static final PVParams translationCoefficients = new PVParams(0.25,0,0.05,1/compBotVelocity,0.05,0,1,1.5);
 	// controller coefficients for off season 6wd
 	public static final PIDFCoefficients protoBotTurn = new PIDFCoefficients(0.59, 0.16, 0.09, 0, 0, 0.0580);
