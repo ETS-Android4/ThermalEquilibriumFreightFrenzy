@@ -13,6 +13,9 @@ import org.firstinspires.ftc.teamcode.roadrunnerquickstart.util.Encoder;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.firstinspires.ftc.teamcode.subsystems.ThreeWheelOdometry.middleWheelOffset;
+import static org.firstinspires.ftc.teamcode.subsystems.ThreeWheelOdometry.trackWidth;
+
 /*
  * Sample tracking wheel localizer implementation assuming the standard configuration:
  *
@@ -43,8 +46,8 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
     public static double WHEEL_RADIUS = 0.74803; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
-    public static double LATERAL_DISTANCE = 13.540597428955047; // in; distance between the left and right wheels
-    public static double FORWARD_OFFSET = -1.73; // in; offset of the lateral wheel
+    public static double LATERAL_DISTANCE = trackWidth; // in; distance between the left and right wheels
+    public static double FORWARD_OFFSET = middleWheelOffset; // in; offset of the lateral wheel
 
     protected Encoder leftEncoder, rightEncoder, frontEncoder;
 
@@ -61,6 +64,7 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
         leftEncoder.setDirection(Encoder.Direction.REVERSE);
+        frontEncoder.setDirection(Encoder.Direction.REVERSE);
     }
 
     public static double encoderTicksToInches(double ticks) {

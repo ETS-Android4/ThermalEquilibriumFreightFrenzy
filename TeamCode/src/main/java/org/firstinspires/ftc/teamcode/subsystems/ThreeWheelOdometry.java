@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.roadrunnerquickstart.SampleMecanumDrive;
 
 import homeostasis.Filters.AngleKalmanFilter;
 
@@ -39,6 +41,8 @@ public class ThreeWheelOdometry implements subsystem {
 	protected long counter = 0;
 	protected AngleKalmanFilter kalmanFilter;
 
+	SampleMecanumDrive mecanumDriveRR;
+
 
 	protected OdomState state = OdomState.DEPLOYED;
 
@@ -67,6 +71,7 @@ public class ThreeWheelOdometry implements subsystem {
 		LeftEncoder = hwmap.get(DcMotorEx.class, "BackRight");
 		RightEncoder = hwmap.get(DcMotorEx.class, "FrontLeft");
 		MiddleEncoder = hwmap.get(DcMotorEx.class, "BackLeft");
+		mecanumDriveRR = new SampleMecanumDrive(hwmap);
 	}
 
 	@Override
@@ -78,7 +83,7 @@ public class ThreeWheelOdometry implements subsystem {
 	public void update() {
 		switch (state) {
 			case DEPLOYED:
-				deployedUpdate();
+				deployedUpdateRR();
 				break;
 			case RETRACTED:
 				updateIMU();
@@ -102,6 +107,7 @@ public class ThreeWheelOdometry implements subsystem {
 	public void setPositionEstimate(Vector3D positionEstimate) {
 		this.initialPosition = positionEstimate;
 		this.positionEstimate = positionEstimate;
+		this.mecanumDriveRR.setPoseEstimate(new Pose2d(positionEstimate.getX(),positionEstimate.getY(),positionEstimate.getAngleRadians()));
 		kalmanFilter.setX(positionEstimate.getAngleRadians());
 	}
 
@@ -142,6 +148,13 @@ public class ThreeWheelOdometry implements subsystem {
 
 	public void setRetractionState(OdomState state) {
 		this.state = state;
+	}
+
+
+	public void deployedUpdateRR() {
+		mecanumDriveRR.updatePoseEstimate();
+		Pose2d estimate = mecanumDriveRR.getPoseEstimate();
+		positionEstimate = new Vector3D(estimate.getX(),estimate.getY(),estimate.getHeading());
 	}
 
 	public void deployedUpdate() {
