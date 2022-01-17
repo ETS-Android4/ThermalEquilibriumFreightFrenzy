@@ -516,8 +516,6 @@ public class Vector3D {
 
         Vector3D integrated = new Vector3D(xTransform,yTransform,deltaTheta);
 
-        integrated = integrated.rotateBy(angle.degrees - 45);
-
         return this.plus(integrated);
     }
 

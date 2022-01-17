@@ -178,8 +178,8 @@ public class ThreeWheelOdometry implements subsystem {
 		positionEstimateDeltaRobotRelative = new Vector3D(xDelta, yDelta, thetaDelta);
 		positionEstimate.setAngleRad(AngleWrap(positionEstimate.getAngleRadians() + thetaDelta));
 
-		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
-		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
+		//positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
+		positionEstimate = positionEstimate.poseExponential(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
 
 		drawRobot(positionEstimate, Dashboard.packet);
 
