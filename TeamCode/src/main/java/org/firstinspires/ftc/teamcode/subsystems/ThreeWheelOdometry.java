@@ -31,7 +31,7 @@ public class ThreeWheelOdometry implements subsystem {
 	private double rightPrev = 0;
 	private double middlePrev = 0;
 	private final double gearRatio;
-	public static double trackWidth =  6.812697834960932; // TODO: fix this for real robot
+	public static double trackWidth =  3.4917806640625058; // TODO: fix this for real robot
 	public static double middleWheelOffset = -2;  // TODO: fix this for real robot
 	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
@@ -155,6 +155,8 @@ public class ThreeWheelOdometry implements subsystem {
 		mecanumDriveRR.updatePoseEstimate();
 		Pose2d estimate = mecanumDriveRR.getPoseEstimate();
 		positionEstimate = new Vector3D(estimate.getX(),estimate.getY(),estimate.getHeading());
+		System.out.println("Pose estimate from rr" + positionEstimate);
+		drawRobot(positionEstimate,Dashboard.packet);
 	}
 
 	public void deployedUpdate() {
