@@ -17,7 +17,7 @@ public class Robot {
     private final ArrayList<subsystem> subsystems = new ArrayList<>();
 
 
-    public final static boolean isCompBot = true;
+    public final static boolean isCompBot = false;
 
     public VoltageSensor batterVoltageSensor;
 
@@ -36,6 +36,8 @@ public class Robot {
     public DuckWheel duckwheel = new DuckWheel();
     public DifferentialDriveOdometry odometry = new DifferentialDriveOdometry();
     public CapArm capArm = new CapArm();
+
+    public DistanceSensorSystem distanceSensorSystem = new DistanceSensorSystem(odometry);
 
 
 
@@ -59,6 +61,11 @@ public class Robot {
         subsystems.add(driveTrain);
         subsystems.add(dashBoard);
         subsystems.add(odometry);
+
+        if (!isCompBot) {
+            distanceSensorSystem.init(hwmap);
+            subsystems.add(distanceSensorSystem);
+        }
     }
 
     /**

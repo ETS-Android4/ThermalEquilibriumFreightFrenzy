@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 
+import java.util.Vector;
+
 import static org.firstinspires.ftc.teamcode.subsystems.Drivetrain.ROBOT_RADIUS;
 
 public class utils {
@@ -183,6 +185,19 @@ public class utils {
         packet.put(label + " y" , vector.getY());
         packet.put(label + " z" , vector.getZ());
         packet.put(label + " theta" , vector.getAngleRadians());
+    }
+
+    public static void visualizeVector(Vector3D vector, TelemetryPacket packet) {
+        packet.fieldOverlay()
+                .setStroke("blue")
+                .fillCircle(vector.getX(), vector.getY(), 5);
+
+    }
+
+    public static void connectVectors(Vector3D vector1, Vector3D vector2, TelemetryPacket packet) {
+        packet.fieldOverlay()
+                .setStroke("red")
+                .strokeLine(vector1.getX(),vector1.getY(), vector2.getX(), vector2.getY());
     }
 
     /**
