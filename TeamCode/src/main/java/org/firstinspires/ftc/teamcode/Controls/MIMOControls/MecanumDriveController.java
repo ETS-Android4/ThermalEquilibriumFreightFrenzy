@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 import homeostasis.utils.State;
 
 import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.compBotAcceleration;
-import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.compBotJerk;
 import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.compBotTurn;
 import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.compBotVelocity;
 import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.translationCoefficients;
@@ -63,9 +62,9 @@ public class MecanumDriveController {
 
 		double X_u = controllerX.calculate(referenceX, robotX);
 		double Y_u = controllerY.calculate(referenceY, robotY);
-		double Theta_u = thetaControl.calculate(robotTheta);
+		double Theta_u = thetaControl.calculateLinearAngle(robotTheta); // TODO: fix this
 
-		return new Vector3D(X_u, Y_u, Theta_u);
+		return new Vector3D(X_u, -Y_u, Theta_u);
 
 	}
 
@@ -123,15 +122,13 @@ public class MecanumDriveController {
 			new MotionState(robotPose.getX(),0,0),
 			new MotionState(referencePose.getX(),0,0),
 			compBotVelocity,
-			compBotAcceleration,
-			compBotJerk
+			compBotAcceleration
 		);
 		profileY = MotionProfileGenerator.generateSimpleMotionProfile(
 				new MotionState(robotPose.getY(),0,0),
 				new MotionState(referencePose.getY(),0,0),
 				compBotVelocity,
-				compBotAcceleration,
-				compBotJerk
+				compBotAcceleration
 		);
 	}
 

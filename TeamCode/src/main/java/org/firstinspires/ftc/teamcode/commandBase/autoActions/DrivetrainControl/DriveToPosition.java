@@ -27,6 +27,7 @@ public class DriveToPosition implements action {
 		Vector3D robotRelativePower = controller.followTrajectoryToPose(referencePose,
 																		robot.getRobotPose(),
 																		robot.getVelocity());
+
 		robot.driveTrain.robotRelative(robotRelativePower);
 	}
 
