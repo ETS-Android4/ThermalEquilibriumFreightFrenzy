@@ -16,6 +16,8 @@ public abstract class BaseAuto extends LinearOpMode {
 
 	protected Robot robot;
 
+	public final static double TILE = 24;
+
 	protected ArrayList<action> actions = new ArrayList<>();
 	protected Vector3D startingPosition = new Vector3D();
 
