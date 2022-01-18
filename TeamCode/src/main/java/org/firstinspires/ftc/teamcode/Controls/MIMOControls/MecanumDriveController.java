@@ -192,9 +192,8 @@ public class MecanumDriveController {
 		}
 
 
-		Vector3D output = calculate(referencePose, new Vector3D(), robotPose, new Vector3D())
-				.conformToMinAndMax(new Vector3D(-1,-1,-1),
-						new Vector3D(-1,-1,-1));
+		Vector3D output = calculate(referencePose, new Vector3D(), robotPose, new Vector3D());
+
 
 		return new Vector3D(output.getX() * powerScalar, output.getY() * powerScalar,
 				output.getAngleRadians() * powerScalar).rotateBy(robotPose.getAngleDegrees());
