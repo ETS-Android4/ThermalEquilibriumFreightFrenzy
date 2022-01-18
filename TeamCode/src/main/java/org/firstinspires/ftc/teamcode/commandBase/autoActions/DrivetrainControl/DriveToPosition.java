@@ -24,11 +24,8 @@ public class DriveToPosition implements action {
 
 	@Override
 	public void runAction() {
-		Vector3D robotRelativePower = controller.followTrajectoryToPose(referencePose,
-																		robot.getRobotPose(),
-																		robot.getVelocity());
-
-		robot.driveTrain.robotRelative(robotRelativePower);
+		Vector3D fieldRelative = controller.calculateSpeedRamped(referencePose, robot.getRobotPose());
+		robot.driveTrain.robotRelative(fieldRelative);
 	}
 
 	@Override

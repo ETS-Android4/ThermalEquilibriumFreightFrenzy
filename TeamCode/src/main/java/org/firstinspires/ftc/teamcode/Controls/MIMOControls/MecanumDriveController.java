@@ -30,6 +30,10 @@ public class MecanumDriveController {
 	MotionProfile profileX;
 	MotionProfile profileY;
 
+
+	protected double powerScalar = 0;
+	protected final double rateOfAcceleration = 0.1; // TODO: tune this
+
 	/**
 	 * construct Mecanum Drive Controller
 	 *
@@ -100,6 +104,9 @@ public class MecanumDriveController {
 	}
 
 
+
+
+
 	/**
 	 * checks and resets the motion profile and timer if necessary.
 	 * @param referencePose the current reference pose
@@ -112,6 +119,8 @@ public class MecanumDriveController {
 		resetTimer();
 		generateMotionProfile(referencePose,robotPose);
 	}
+
+
 
 	/**
 	 * generate motion profile
@@ -170,6 +179,28 @@ public class MecanumDriveController {
 	public void resetTimer() {
 		timer.reset();
 	}
+
+
+	public Vector3D calculateSpeedRamped(Vector3D referencePose, Vector3D robotPose) {
+
+		if (!referencePose.equals(previousReferencePose)) powerScalar = 0;
+		previousReferencePose = referencePose;
+
+		powerScalar += rateOfAcceleration;
+		if (powerScalar > 1) {
+			powerScalar = 1;
+		}
+
+
+		Vector3D output = calculate(referencePose, new Vector3D(), robotPose, new Vector3D())
+				.conformToMinAndMax(new Vector3D(-1,-1,-1),
+						new Vector3D(-1,-1,-1));
+
+		return new Vector3D(output.getX() * powerScalar, output.getY() * powerScalar,
+				output.getAngleRadians() * powerScalar).rotateBy(robotPose.getAngleDegrees());
+
+	}
+
 
 
 }
