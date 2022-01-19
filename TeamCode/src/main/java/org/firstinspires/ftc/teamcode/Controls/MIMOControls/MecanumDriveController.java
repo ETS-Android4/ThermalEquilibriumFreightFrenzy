@@ -184,7 +184,7 @@ public class MecanumDriveController {
 	}
 
 
-	public Vector3D calculateSpeedRamped(Vector3D referencePose, Vector3D robotPose) {
+	public Vector3D calculateSpeedRamped(Vector3D referencePose, Vector3D robotPose, Vector3D robotVelocity) {
 
 		if (!referencePose.equals(previousReferencePose)) {
 			powerScalar = 0;

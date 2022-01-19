@@ -72,7 +72,7 @@ public class PVControl {
 
 	public boolean isCompleteCalc(State error) {
 		return Math.abs(error.getVelocity()) < coefficients.getCutOffVelo()
-				&& Math.abs(error.getPosition()) < coefficients.getCutOffPos();
+				|| Math.abs(error.getPosition()) < coefficients.getCutOffPos();
 	}
 
 	public boolean isProcessComplete() {

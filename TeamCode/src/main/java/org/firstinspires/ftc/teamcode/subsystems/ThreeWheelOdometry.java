@@ -37,9 +37,11 @@ public class ThreeWheelOdometry implements subsystem {
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
 	double encoderAngle = 0;
-	double xDot = 0;
+
 	protected long counter = 0;
 	protected AngleKalmanFilter kalmanFilter;
+
+	Vector3D robotVelocity = new Vector3D();
 
 	SampleMecanumDrive mecanumDriveRR;
 
@@ -130,7 +132,7 @@ public class ThreeWheelOdometry implements subsystem {
 	}
 
 	public Vector3D getVelocity() {
-		return new Vector3D(xDot, 0, angularVelocity).rotateBy(positionEstimate.getAngleDegrees());
+		return robotVelocity;
 	}
 
 
@@ -156,6 +158,12 @@ public class ThreeWheelOdometry implements subsystem {
 		Pose2d estimate = mecanumDriveRR.getPoseEstimate();
 		positionEstimate = new Vector3D(estimate.getX(),estimate.getY(),estimate.getHeading());
 		System.out.println("Pose estimate from rr" + positionEstimate);
+		Pose2d velocity = mecanumDriveRR.getPoseVelocity();
+		try {
+			robotVelocity = new Vector3D(velocity.getX(),velocity.getY(),velocity.getHeading());
+		} catch (NullPointerException e) {
+			System.out.println("a null pointer exception has occurred due to velocity not being measured");
+		}
 		drawRobot(positionEstimate,Dashboard.packet);
 	}
 
@@ -185,7 +193,6 @@ public class ThreeWheelOdometry implements subsystem {
 		yDelta = middleDelta - yDelta;
 		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
 
-		xDot = (leftVelo + rightVelo) / 2;
 
 		encoderAngle += thetaDelta;
 		encoderAngle = normalizeAngleRR(encoderAngle);
