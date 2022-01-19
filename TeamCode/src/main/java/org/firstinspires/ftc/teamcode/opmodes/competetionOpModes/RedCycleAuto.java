@@ -42,9 +42,7 @@ public class RedCycleAuto extends BaseAuto {
         for (int i = 0; i < 3; ++i) {
             actions.add(new DriveToPosition(robot,depositPosition));
             actions.add(new DriveToPosition(robot,readyForCollection1,1.5,false));
-            if (i > 1) {
-                actions.add(new OffsetOdom(robot,new Vector3D(0,1,0)));
-            }
+
             actions.add(new DriveToPosition(robot,gapPose,1.5,true));
             actions.add(new DriveToPosition(robot,collect));
             actions.add(new DriveToPosition(robot,gapPose,1.5,true));

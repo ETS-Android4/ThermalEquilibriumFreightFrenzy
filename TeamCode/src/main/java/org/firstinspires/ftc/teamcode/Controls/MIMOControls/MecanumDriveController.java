@@ -35,7 +35,7 @@ public class MecanumDriveController {
 
 	protected double powerScalar = 0;
 	protected double anglePowerScalar = 0;
-	protected final double rateOfAcceleration = 0.03; // TODO: tune this
+	protected final double rateOfAcceleration = 0.02; // TODO: tune this
 	protected final double angleRateOfAcceleration = rateOfAcceleration * 4;
 
 	/**
