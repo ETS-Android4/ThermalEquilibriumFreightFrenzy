@@ -11,6 +11,7 @@ public class PVControl {
 	protected PVParams coefficients;
 	protected double previousFeedbackOutput = 0;
 	protected boolean isProcessComplete = false;
+	protected boolean processCompleteStrict = false;
 	protected ElapsedTime timer = new ElapsedTime();
 	boolean hasStarted = false;
 	private double integralSum = 0;
@@ -34,6 +35,7 @@ public class PVControl {
 		double feedback = calculateFeedback(error);
 		double feedforward = calculateFeedforward(reference.getVelocity(), feedback);
 		isProcessComplete = isCompleteCalc(error);
+		processCompleteStrict = isCompleteCalcStrict(error);
 		double integralAction = calculateIntegral(error) * coefficients.getKi();
 		return feedback + feedforward + integralAction;
 	}
@@ -77,6 +79,15 @@ public class PVControl {
 
 	public boolean isProcessComplete() {
 		return isProcessComplete;
+	}
+
+	public boolean isProcessCompleteStrict() {
+		return processCompleteStrict;
+	}
+
+	public boolean isCompleteCalcStrict(State error) {
+		return Math.abs(error.getVelocity()) < coefficients.getCutOffVelo()
+				&& Math.abs(error.getPosition()) < coefficients.getCutOffPos();
 	}
 
 	public State getError() {
