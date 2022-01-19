@@ -13,6 +13,7 @@ public class DriveToPosition implements action {
 	Vector3D referencePose;
 	MecanumDriveController controller;
 	protected double cutOffTime = 5;
+	protected boolean MAX_ACCEL_LETS_GO = false;
 
 	public DriveToPosition(Robot robot, Vector3D referencePose) {
 		this.robot = robot;
@@ -20,12 +21,14 @@ public class DriveToPosition implements action {
 		controller = new MecanumDriveController();
 	}
 
-	public DriveToPosition(Robot robot, Vector3D referencePose, double cutOffTime) {
+	public DriveToPosition(Robot robot, Vector3D referencePose, double cutOffTime, boolean useMaxAccel) {
 		this.robot = robot;
 		this.referencePose = referencePose;
 		controller = new MecanumDriveController();
 		this.cutOffTime = cutOffTime;
+		this.MAX_ACCEL_LETS_GO = useMaxAccel;
 	}
+
 
 	@Override
 	public void startAction() {
@@ -34,7 +37,12 @@ public class DriveToPosition implements action {
 
 	@Override
 	public void runAction() {
-		Vector3D fieldRelative = controller.calculateSpeedRamped(referencePose, robot.getRobotPose(), robot.getVelocity());
+		Vector3D fieldRelative;
+		if (MAX_ACCEL_LETS_GO) {
+			fieldRelative = controller.calculate(referencePose,new Vector3D(),robot.getRobotPose(),robot.getVelocity()).rotateBy(robot.getRobotPose().getAngleDegrees());
+		} else {
+			fieldRelative = controller.calculateSpeedRamped(referencePose, robot.getRobotPose(), robot.getVelocity());
+		}
 		robot.driveTrain.robotRelative(fieldRelative);
 	}
 

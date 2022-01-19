@@ -61,6 +61,12 @@ public class MecanumDriveController {
 	public Vector3D calculate(Vector3D referencePose, Vector3D referenceVelocity,
 							  Vector3D robotPose, Vector3D robotVelocity) {
 
+
+		if (!hasBegun) {
+			timer.reset();
+			hasBegun = true;
+		}
+
 		State robotX = new State(robotPose.getX(), robotVelocity.getX());
 		State robotY = new State(robotPose.getY(), robotVelocity.getY());
 		State referenceX = new State(referencePose.getX(), referenceVelocity.getX());
@@ -172,7 +178,7 @@ public class MecanumDriveController {
 		Dashboard.packet.put("theta control is complete",thetaControl.isComplete());
 		Dashboard.packet.put("profile is complete", isProfileComplete());
 		return controllerX.isProcessCompleteStrict()
-				&& controllerY.isProcessComplete()
+				&& controllerY.isProcessCompleteStrict()
 				&& (thetaControl.isComplete() || thetaControl.isBasicallyStopped());
 	}
 
@@ -201,10 +207,7 @@ public class MecanumDriveController {
 			anglePowerScalar = 1;
 		}
 
-		if (!hasBegun) {
-			timer.reset();
-			hasBegun = true;
-		}
+
 
 		Vector3D output = calculate(referencePose, new Vector3D(), robotPose, new Vector3D());
 
