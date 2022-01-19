@@ -172,7 +172,7 @@ public class MecanumDriveController {
 		Dashboard.packet.put("profile is complete", isProfileComplete());
 		return controllerX.isProcessComplete()
 				&& controllerY.isProcessComplete()
-				&& thetaControl.isComplete();
+				&& (thetaControl.isComplete() || thetaControl.isBasicallyStopped());
 	}
 
 	/**

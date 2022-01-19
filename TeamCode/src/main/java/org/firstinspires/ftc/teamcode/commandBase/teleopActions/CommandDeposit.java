@@ -35,6 +35,7 @@ public class CommandDeposit implements teleopAction {
 	protected ButtonPress depositButton = new ButtonPress();
 	protected ButtonPress intakeButton = new ButtonPress();
 
+
 	protected Vector3D poseAtRelease = new Vector3D();
 
 	protected final double DISTANCE_FOR_SLIDES_DOWN = 15;

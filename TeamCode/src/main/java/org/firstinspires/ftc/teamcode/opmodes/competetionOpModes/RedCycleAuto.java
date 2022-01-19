@@ -23,6 +23,7 @@ public class RedCycleAuto extends BaseAuto {
     Vector3D collect = new Vector3D(TILE * 2 - 12, readyForCollection1.getY(), Math.toRadians(0));
     Vector3D gapPose = new Vector3D(TILE, readyForCollection1.getY() - 1.5, Math.toRadians(0));
 
+
     @Override
     public void setStartingPosition() {
         robot.setRobotPose(start);
