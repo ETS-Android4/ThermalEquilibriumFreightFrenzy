@@ -31,10 +31,11 @@ public class MecanumDriveController {
 	MotionProfile profileX;
 	MotionProfile profileY;
 
+	boolean hasBegun = false;
 
 	protected double powerScalar = 0;
 	protected double anglePowerScalar = 0;
-	protected final double rateOfAcceleration = 0.01; // TODO: tune this
+	protected final double rateOfAcceleration = 0.03; // TODO: tune this
 	protected final double angleRateOfAcceleration = rateOfAcceleration * 4;
 
 	/**
@@ -200,6 +201,10 @@ public class MecanumDriveController {
 			anglePowerScalar = 1;
 		}
 
+		if (!hasBegun) {
+			timer.reset();
+			hasBegun = true;
+		}
 
 		Vector3D output = calculate(referencePose, new Vector3D(), robotPose, new Vector3D());
 
@@ -213,6 +218,10 @@ public class MecanumDriveController {
 		return new Vector3D(x * powerScalar, y* powerScalar,
 				theta * anglePowerScalar).rotateBy(robotPose.getAngleDegrees());
 
+	}
+
+	public double getTime() {
+		return timer.seconds();
 	}
 
 

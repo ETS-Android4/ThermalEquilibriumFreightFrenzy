@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl;
 
+import com.sun.tools.javac.tree.DCTree;
+
 import org.firstinspires.ftc.teamcode.Controls.MIMOControls.MecanumDriveController;
 import org.firstinspires.ftc.teamcode.commandBase.action;
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
@@ -10,11 +12,19 @@ public class DriveToPosition implements action {
 	Robot robot;
 	Vector3D referencePose;
 	MecanumDriveController controller;
+	protected double cutOffTime = 5;
 
 	public DriveToPosition(Robot robot, Vector3D referencePose) {
 		this.robot = robot;
 		this.referencePose = referencePose;
 		controller = new MecanumDriveController();
+	}
+
+	public DriveToPosition(Robot robot, Vector3D referencePose, double cutOffTime) {
+		this.robot = robot;
+		this.referencePose = referencePose;
+		controller = new MecanumDriveController();
+		this.cutOffTime = cutOffTime;
 	}
 
 	@Override
@@ -35,7 +45,7 @@ public class DriveToPosition implements action {
 
 	@Override
 	public boolean isActionComplete() {
-		return controller.followingIsComplete();
+		return controller.followingIsComplete() || controller.getTime() > cutOffTime;
 	}
 
 	@Override
