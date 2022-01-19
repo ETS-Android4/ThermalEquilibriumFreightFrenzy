@@ -127,9 +127,9 @@ public class DifferentialDriveOdometry implements subsystem {
 		positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
 		positionEstimate = positionEstimate.add(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
 
-//		double estimate = IMU_angle;//kalmanFilter.updateKalmanEstimate(encoderAngle, IMU_angle);
-//
-//		positionEstimate.setAngleRad(estimate);
+		double estimate = IMU_angle;//kalmanFilter.updateKalmanEstimate(encoderAngle, IMU_angle);
+
+		positionEstimate.setAngleRad(estimate);
 
 		drawRobot(positionEstimate, Dashboard.packet);
 

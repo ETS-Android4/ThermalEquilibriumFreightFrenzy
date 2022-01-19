@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Bucket;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.CapArm;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
-import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.TapeTurret;
 
 import java.util.ArrayList;
 
@@ -37,7 +36,7 @@ public class Robot {
     public DifferentialDriveOdometry odometry = new DifferentialDriveOdometry();
     public CapArm capArm = new CapArm();
 
-    public DistanceSensorSystem distanceSensorSystem = new DistanceSensorSystem(odometry);
+    public DistanceSensorLocalization distanceSensorSystem = new DistanceSensorLocalization(odometry);
 
 
 
