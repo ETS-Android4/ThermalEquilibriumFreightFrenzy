@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
 public class RedCycleAuto extends BaseAuto {
 
 
-    Vector3D depositPosition = new Vector3D(0,-TILE * 2.55 + 6,Math.toRadians(-70));
+    Vector3D depositPosition = new Vector3D(-2,-TILE * 2.55 + 8,Math.toRadians(-70));
     Vector3D start = new Vector3D(TILE / 2.0, -TILE * 3 + 8.375, Math.toRadians(-90));
-    Vector3D readyForCollection1 = new Vector3D(TILE / 3, -TILE * 3 + 6, Math.toRadians(-2.5));
-    Vector3D collect = new Vector3D(TILE * 2 , -TILE * 3 + 3, Math.toRadians(0));
+    Vector3D readyForCollection1 = new Vector3D(TILE / 3, -TILE * 3 + 6, Math.toRadians(0));
+    Vector3D collect = new Vector3D(TILE * 2 - 12, readyForCollection1.getY(), Math.toRadians(0));
 
     @Override
     public void setStartingPosition() {
@@ -35,9 +35,8 @@ public class RedCycleAuto extends BaseAuto {
         actions.add(new DriveToPosition(robot,readyForCollection1));
         actions.add(new DriveToPosition(robot,collect));
         actions.add(new DriveToPosition(robot,readyForCollection1));
-
-        actions.add(new Delay(1000));
         actions.add(new DriveToPosition(robot,depositPosition));
+
 
 
 

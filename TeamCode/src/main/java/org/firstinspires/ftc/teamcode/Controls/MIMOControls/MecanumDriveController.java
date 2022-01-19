@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.profile.MotionProfile;
 import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Controls.SISOControls.PVControl;
 import org.firstinspires.ftc.teamcode.Controls.SISOControls.RobustPID;
@@ -32,7 +33,9 @@ public class MecanumDriveController {
 
 
 	protected double powerScalar = 0;
-	protected final double rateOfAcceleration = 0.1; // TODO: tune this
+	protected double anglePowerScalar = 0;
+	protected final double rateOfAcceleration = 0.01; // TODO: tune this
+	protected final double angleRateOfAcceleration = rateOfAcceleration * 4;
 
 	/**
 	 * construct Mecanum Drive Controller
@@ -42,7 +45,7 @@ public class MecanumDriveController {
 	public MecanumDriveController() {
 		this.controllerX = new PVControl(translationCoefficients);
 		this.controllerY = new PVControl(translationCoefficients);
-		this.thetaControl = new RobustPID(compBotTurn, 3,0.4,Math.toRadians(1));
+		this.thetaControl = new RobustPID(compBotTurn, 3,0.4,Math.toRadians(2));
 		this.timer = new ElapsedTime();
 	}
 
@@ -169,8 +172,7 @@ public class MecanumDriveController {
 		Dashboard.packet.put("profile is complete", isProfileComplete());
 		return controllerX.isProcessComplete()
 				&& controllerY.isProcessComplete()
-				&& thetaControl.isComplete()
-				&& isProfileComplete();
+				&& thetaControl.isComplete();
 	}
 
 	/**
@@ -183,20 +185,33 @@ public class MecanumDriveController {
 
 	public Vector3D calculateSpeedRamped(Vector3D referencePose, Vector3D robotPose) {
 
-		if (!referencePose.equals(previousReferencePose)) powerScalar = 0;
+		if (!referencePose.equals(previousReferencePose)) {
+			powerScalar = 0;
+			anglePowerScalar = 0;
+		}
 		previousReferencePose = referencePose;
 
 		powerScalar += rateOfAcceleration;
+		anglePowerScalar += angleRateOfAcceleration;
 		if (powerScalar > 1) {
 			powerScalar = 1;
+		}
+		if (anglePowerScalar > 1) {
+			anglePowerScalar = 1;
 		}
 
 
 		Vector3D output = calculate(referencePose, new Vector3D(), robotPose, new Vector3D());
 
+		Dashboard.packet.put("x error", controllerX.getError().getPosition());
+		Dashboard.packet.put("y error", controllerY.getError().getPosition());
 
-		return new Vector3D(output.getX() * powerScalar, output.getY() * powerScalar,
-				output.getAngleRadians() * powerScalar).rotateBy(robotPose.getAngleDegrees());
+		double x = Range.clip(output.getX(),-1,1);
+		double y = Range.clip(output.getY(),-1,1);
+		double theta = Range.clip(output.getAngleRadians(),-1,1);
+
+		return new Vector3D(x * powerScalar, y* powerScalar,
+				theta * anglePowerScalar).rotateBy(robotPose.getAngleDegrees());
 
 	}
 

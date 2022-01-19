@@ -44,7 +44,7 @@ public class Turn implements action {
 		robot.driveTrain.robotRelative(0,0, output);
 		Dashboard.packet.put("power",output);
 		Dashboard.packet.put("error",pid.getError());
-		isComplete = ((pid.isComplete()) && pid.isStable()) || pid.isBasicallyStopped();
+		isComplete = ((pid.isComplete()) && pid.isStable());
 	}
 
 	@Override

@@ -14,6 +14,8 @@ public class PVControl {
 	protected ElapsedTime timer = new ElapsedTime();
 	boolean hasStarted = false;
 	private double integralSum = 0;
+	private State previousStateError = new State();
+	protected State error = new State();
 
 	public PVControl(PVParams coefficients) {
 		this.coefficients = coefficients;
@@ -28,7 +30,7 @@ public class PVControl {
 	}
 
 	public double calculate(State reference,State state) {
-		State error = reference.stateError(state);
+		error = reference.stateError(state);
 		double feedback = calculateFeedback(error);
 		double feedforward = calculateFeedforward(reference.getVelocity(), feedback);
 		isProcessComplete = isCompleteCalc(error);
@@ -41,8 +43,17 @@ public class PVControl {
 			timer.reset();
 			hasStarted = true;
 		}
+		if (error.getPosition() > 0 && previousStateError.getPosition() < 0 || error.getPosition() < 0 || previousStateError.getPosition() > 0) {
+			integralSum = 0;
+		}
+
+		if (Math.abs(integralSum) * coefficients.getKi() > 1) {
+			integralSum = Math.signum(integralSum) * 1 / coefficients.getKi();
+		}
+
 		integralSum += error.getPosition() * timer.seconds();
 		timer.reset();
+		previousStateError = error;
 		return integralSum;
 	}
 
@@ -61,11 +72,15 @@ public class PVControl {
 
 	public boolean isCompleteCalc(State error) {
 		return Math.abs(error.getVelocity()) < coefficients.getCutOffVelo()
-				|| Math.abs(error.getPosition()) < coefficients.getCutOffPos();
+				&& Math.abs(error.getPosition()) < coefficients.getCutOffPos();
 	}
 
 	public boolean isProcessComplete() {
 		return isProcessComplete;
+	}
+
+	public State getError() {
+		return error;
 	}
 }
 
