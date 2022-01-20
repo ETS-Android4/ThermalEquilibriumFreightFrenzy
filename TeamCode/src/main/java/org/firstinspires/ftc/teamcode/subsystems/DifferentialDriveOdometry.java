@@ -210,5 +210,13 @@ public class DifferentialDriveOdometry implements subsystem {
 		return pitchVelo;
 	}
 
+	public void setXPose(double x) {
+		this.positionEstimate.setX(x);
+	}
+
+	public void setYPose(double y) {
+		this.positionEstimate.setY(y);
+	}
+
 
 }

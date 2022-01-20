@@ -99,7 +99,7 @@ public class SISOKalmanFilter {
 		z = sensor2;
 		x = x + K * (z - x);
 
-		p = 1-K * p;
+		p = (1-K) * p;
 
 		x_previous = x;
 		p_previous = p;
