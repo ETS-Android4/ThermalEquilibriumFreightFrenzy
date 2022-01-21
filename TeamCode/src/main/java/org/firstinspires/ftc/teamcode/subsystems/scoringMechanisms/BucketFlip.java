@@ -43,13 +43,13 @@ public class BucketFlip implements subsystem {
 
 		switch (state) {
 			case DISARMED:
-			case GOING_IN:
 			case IN:
 				setServoPosition(REST);
 				break;
 			case COLLECTION:
 				setServoPosition(COLLECTION);
 				break;
+			case GOING_IN:
 			case GOING_TO_HIGH:
 			case DEPOSITING:
 			case AT_LOW:
