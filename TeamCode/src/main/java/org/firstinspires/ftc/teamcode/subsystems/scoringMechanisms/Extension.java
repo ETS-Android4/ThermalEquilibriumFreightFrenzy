@@ -8,11 +8,11 @@ import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 public class Extension implements subsystem {
 
-	protected final double COLLECTION = 0.18;
-	protected final double IN = 0.08;
-	protected final double LOW = 0.5;
-	protected final double MID = 0.7;
-	protected final double HIGH = 0.90;
+	protected final double COLLECTION = 0;
+	protected final double IN = 0;
+	protected final double LOW = 0.25;
+	protected final double MID = 0.5;
+	protected final double HIGH = .7;
 	protected Servo extension;
 	protected Deposit.depositStates state = Deposit.depositStates.IN;
 	protected double lastPosition = 1000;
