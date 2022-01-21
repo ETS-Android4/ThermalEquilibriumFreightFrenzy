@@ -29,6 +29,7 @@ public class DistanceSensorLocalization implements subsystem{
 	public Rev2mDistanceSensor rightSensor;
 	public Rev2mDistanceSensor rearSensor;
 	public final double TILE_SIZE = 24;
+	public final double maximumAngle = Math.toRadians(15);
 
 	public Vector3D leftDistanceSensorRobotRelative = new Vector3D(0,0,Math.toRadians(-34));
 	public Vector3D rearDistanceSensorRobotRelative = new Vector3D(0,0,Math.toRadians(0));
@@ -109,6 +110,8 @@ public class DistanceSensorLocalization implements subsystem{
 
 		Vector3D robotPose = odom.subsystemState();
 
+		if (Math.abs(robotPose.getAngleRadians()) > maximumAngle) return;
+
 
 		if (leftDistance >= cutoffDistance || minDistance >= leftDistance) return;
 		if (rearDistance >= cutoffDistance || minDistance >= rearDistance) return;
@@ -121,8 +124,6 @@ public class DistanceSensorLocalization implements subsystem{
 		double x_field = (TILE_SIZE * 3) - x;
 		double y_field = -(TILE_SIZE * 3) + y;
 
-		Vector3D distancesFromWall = new Vector3D(x,y,0);
-		plotVector(distancesFromWall,"distances from wall", Dashboard.packet);
 
 		Vector3D estimatedPose = new Vector3D(x_field, y_field, robotPose.getAngleRadians());
 		plotVector(estimatedPose,"distance sensor pose estimate", Dashboard.packet);
