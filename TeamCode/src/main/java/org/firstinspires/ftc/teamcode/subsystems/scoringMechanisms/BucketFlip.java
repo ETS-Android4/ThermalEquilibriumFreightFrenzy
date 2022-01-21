@@ -7,15 +7,15 @@ import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 public class BucketFlip implements subsystem {
 
-	String servoLName = "BuckLeft";
+	String servoLName = "BucketLeft";
 	String servoRName = "BucketRight";
 
 	Servo leftServo;
 	Servo rightServo;
 
-	public final double COLLECTION = 0;
-	public final double OUT = 0.6666666667;
-	public final double REST = 0.1;
+	public final double COLLECTION = 0.24;
+	public final double OUT = 1;
+	public final double REST = 0.24;
 
 	protected double previousPosition = 100;
 
