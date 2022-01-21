@@ -16,17 +16,20 @@ public class Deposit implements subsystem {
 	protected Slides slideSystem = new Slides();
 	protected Extension v4b = new Extension();
 	protected depositStates state = depositStates.IN;
+	protected BucketFlip bucketFlip = new BucketFlip();
 
 	@Override
 	public void init(HardwareMap hwmap) {
 		slideSystem.init(hwmap);
 		v4b.init(hwmap);
+		bucketFlip.init(hwmap);
 	}
 
 	@Override
 	public void initNoReset(HardwareMap hwmap) {
 		slideSystem.initNoReset(hwmap);
 		v4b.initNoReset(hwmap);
+		bucketFlip.initNoReset(hwmap);
 	}
 
 	@Override
@@ -34,9 +37,11 @@ public class Deposit implements subsystem {
 
 		slideSystem.setState(state);
 		v4b.setState(state);
+		bucketFlip.setState(state);
 
 		slideSystem.update();
 		v4b.update();
+		bucketFlip.update();
 	}
 
 	public depositStates getState() {
