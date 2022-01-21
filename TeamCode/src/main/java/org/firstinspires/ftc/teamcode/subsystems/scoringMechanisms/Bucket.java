@@ -16,8 +16,8 @@ public class Bucket implements subsystem {
 
 	double lastPosition = 1000;
 
-	double IN = 1;
-	double OUT = 0.666;
+	double IN = 0.666;
+	double OUT = 1;
 
 	@Override
 	public void init(HardwareMap hwmap) {

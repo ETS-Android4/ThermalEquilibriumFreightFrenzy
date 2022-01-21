@@ -5,8 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DuckWheel implements subsystem{
 
-	protected CRServo leftServo;
-	protected CRServo rightServo;
+	protected CRServo Duck;
 
 	protected DuckWheelState state = DuckWheelState.OFF;
 
@@ -15,8 +14,7 @@ public class DuckWheel implements subsystem{
 
 	@Override
 	public void init(HardwareMap hwmap) {
-		this.leftServo = hwmap.get(CRServo.class, "DuckWheelL");
-		this.rightServo = hwmap.get(CRServo.class, "DuckWheelR");
+		this.Duck = hwmap.get(CRServo.class, "Duck");
 	}
 
 	@Override
@@ -50,8 +48,7 @@ public class DuckWheel implements subsystem{
 
 	public void setServoPower(double power) {
 		if (power != previousPower) {
-			leftServo.setPower(-power);
-			rightServo.setPower(power);
+			Duck.setPower(-power);
 		}
 		previousPower = power;
 	}
