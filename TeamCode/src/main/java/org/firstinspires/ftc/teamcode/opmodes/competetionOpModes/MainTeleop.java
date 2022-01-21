@@ -20,12 +20,12 @@ public class MainTeleop extends BaseTeleop {
 	@Override
 	public void addActions() {
 		actions.add(new NormalRobotRelative(robot,gamepad1,gamepad2));
-		//actions.add(new NormalRobotRelative(robot,gamepad1,gamepad2));
+		actions.add(new NormalRobotRelative(robot,gamepad1,gamepad2));
 		actions.add(new ToggleIntake(robot, gamepad1, gamepad2));
-//		actions.add(new CommandDeposit(robot, gamepad1, gamepad2));
-		//actions.add(new GoToCollectionState(robot, gamepad1, gamepad2));
-		//actions.add(new ToggleBox(robot, gamepad1, gamepad2));
-		//actions.add(new ToggleDuckWheel(robot,gamepad1,gamepad2));
+		actions.add(new CommandDeposit(robot, gamepad1, gamepad2));
+		actions.add(new GoToCollectionState(robot, gamepad1, gamepad2));
+		actions.add(new ToggleBox(robot, gamepad1, gamepad2));
+		actions.add(new ToggleDuckWheel(robot,gamepad1,gamepad2));
 	}
 }
 
