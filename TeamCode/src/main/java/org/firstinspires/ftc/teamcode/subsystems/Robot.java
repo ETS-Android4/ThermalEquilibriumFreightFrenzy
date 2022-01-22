@@ -37,6 +37,9 @@ public class Robot {
 
     public TapeTurret turret = new TapeTurret();
 
+    public DistanceSensorLocalization distanceSensorLocalization
+            = new DistanceSensorLocalization(odometry);
+
     public Robot() {
 
 
@@ -67,6 +70,7 @@ public class Robot {
     public void init(HardwareMap hwmap) {
 
         initMinimal(hwmap);
+        distanceSensorLocalization.init(hwmap);
         Intake.init(hwmap);
         Deposit.init(hwmap);
         bucketSys.init(hwmap);
@@ -77,6 +81,7 @@ public class Robot {
         subsystems.add(Deposit);
         subsystems.add(duckDetection);
         subsystems.add(duckwheel);
+        subsystems.add(distanceSensorLocalization);
 
     }
 
