@@ -37,7 +37,7 @@ public class Bucket implements subsystem {
 	@Override
 	public void update() {
 
-		if (state.equals(Deposit.depositStates.DEPOSITING)) {
+		if (state.equals(Deposit.depositStates.DEPOSITING) || state.equals(Deposit.depositStates.COLLECTION)) {
 			setPosition(OUT);
 		} else {
 			setPosition(IN);
