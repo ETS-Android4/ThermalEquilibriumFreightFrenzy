@@ -27,11 +27,11 @@ public class ToggleBox implements teleopAction {
 
 	@Override
 	public void periodic() {
-		if (gamepad1.left_bumper) {
-			robot.bucketSys.setState(Deposit.depositStates.DEPOSITING);
-		} else {
-			robot.bucketSys.setState(Deposit.depositStates.IN);
-		}
+//		if (gamepad1.left_bumper) {
+//			robot.bucketSys.setState(Deposit.depositStates.DEPOSITING);
+//		} else {
+//			robot.bucketSys.setState(Deposit.depositStates.IN);
+//		}
 	}
 
 	@Override
