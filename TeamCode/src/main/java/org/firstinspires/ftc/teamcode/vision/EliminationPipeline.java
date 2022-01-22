@@ -31,6 +31,7 @@ public class EliminationPipeline extends OpenCvPipeline {
 
 	public boolean hasStarted = false;
 
+
 	public static double minimum_contour_size = 40000;
 
 	public boolean right_is_visible = false;

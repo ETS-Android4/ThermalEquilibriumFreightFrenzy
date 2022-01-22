@@ -24,12 +24,17 @@ public class TSEContourPipeline extends OpenCvPipeline {
 	public static Scalar lower = new Scalar(123.4,145.0,0);
 	public static Scalar higher = new Scalar(255,255,82.3);
 
+	public static boolean tuning_mode = false;
+
+
 	public static double low1 = 30;
 	public static double low2 = 80;
 	public static double low3 = 100;
 	public static double high1 = 200;
 	public static double high2 = 110;
 	public static double high3 = 140;
+
+	public boolean hasStarted = false;
 
 	public static double minimum_contour_size = 4;
 
@@ -44,6 +49,10 @@ public class TSEContourPipeline extends OpenCvPipeline {
 
 	@Override
 	public Mat processFrame(Mat input) {
+
+		if (!hasStarted) {
+			hasStarted = true;
+		}
 
 		lower = new Scalar(low1,low2,low3);
 		higher = new Scalar(high1, high2, high3);
@@ -100,6 +109,7 @@ public class TSEContourPipeline extends OpenCvPipeline {
 		}
 
 
+		if (tuning_mode) return binaryMat;
 
 		return input;
 	}
@@ -114,4 +124,7 @@ public class TSEContourPipeline extends OpenCvPipeline {
 		return TSEPosition;
 	}
 
+	public void setRight_is_visible(boolean right_is_visible) {
+		this.right_is_visible = right_is_visible;
+	}
 }

@@ -18,7 +18,7 @@ public class DuckDetection implements subsystem {
 	}
 
 	OpenCvWebcam webcam;
-	EliminationPipeline pipeline = new EliminationPipeline();
+	TSEContourPipeline pipeline = new TSEContourPipeline();
 
 	@Override
 	public void init(HardwareMap hwmap) {
