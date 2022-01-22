@@ -162,6 +162,7 @@ public class CommandDeposit implements teleopAction {
 		}
 
 		robot.Deposit.setState(state);
+		robot.bucketSys.setState(state);
 
 		return isRunning;
 	}
@@ -201,4 +202,6 @@ public class CommandDeposit implements teleopAction {
 	public boolean slidesDownButton() {
 		return gamepad1.right_bumper;
 	}
+
+
 }
