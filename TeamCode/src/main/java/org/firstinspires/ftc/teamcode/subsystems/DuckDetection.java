@@ -39,7 +39,7 @@ public class DuckDetection implements subsystem {
 			public void onOpened()
 			{
 
-				webcam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+				webcam.startStreaming(1280, 720, OpenCvCameraRotation.SIDEWAYS_RIGHT);
 			}
 
 			@Override
