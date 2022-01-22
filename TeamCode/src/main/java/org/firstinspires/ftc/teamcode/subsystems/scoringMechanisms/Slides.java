@@ -16,7 +16,7 @@ import homeostasis.utils.State;
 
 public class Slides implements subsystem {
 
-	protected RobustPID slideController = new RobustPID(controllerCoefficients.slideCoefficients, 0, 5, 0.1, 2);
+	protected RobustPID slideController = new RobustPID(controllerCoefficients.slideCoefficients, 0, 5, 3, 2);
 	protected DcMotorPlant slides;
 	protected DcMotorEx left;
 	protected DcMotorEx right;
@@ -94,6 +94,7 @@ public class Slides implements subsystem {
 		slides.input(controllerCommand);
 		error = slideController.getError();
 		System.out.println("controller error is " + error + " controller setpoint is " + slideController.getReference());
+		System.out.println("slide power " + controllerCommand);
 
 	}
 
