@@ -21,22 +21,19 @@ import java.util.ArrayList;
 public class TSEContourPipeline extends OpenCvPipeline {
 	private Mat alternateColorSpace = new Mat();
 
-	public static Scalar lower = new Scalar(123.4,145.0,0);
-	public static Scalar higher = new Scalar(255,255,82.3);
+	public static Scalar lower = new Scalar(0,0,0);
+	public static Scalar higher = new Scalar(0,0,0);
 
 	public static boolean tuning_mode = false;
 
-
-	public static double low1 = 30;
-	public static double low2 = 80;
+	public static double low1 = 60;
+	public static double low2 = 170;
 	public static double low3 = 100;
-	public static double high1 = 200;
-	public static double high2 = 110;
-	public static double high3 = 140;
+	public static double high1 = 190;
+	public static double high2 = 220;
+	public static double high3 = 255;
 
 	public boolean hasStarted = false;
-
-	public static double minimum_contour_size = 4;
 
 	public boolean right_is_visible = true;
 
@@ -57,7 +54,7 @@ public class TSEContourPipeline extends OpenCvPipeline {
 		lower = new Scalar(low1,low2,low3);
 		higher = new Scalar(high1, high2, high3);
 
-		int columns = input.cols();
+		int columns = input.rows();
 
 		double left = columns / 3.0;
 		double right = columns / 1.5;
@@ -95,15 +92,18 @@ public class TSEContourPipeline extends OpenCvPipeline {
 			Imgproc.rectangle(input,rectangle,new Scalar(0,255,255));
 			Imgproc.drawContours(binaryMat,contours,largestContourIndex,new Scalar(255,0,0));
 			Imgproc.rectangle(binaryMat,rectangle,new Scalar(0,255,255));
-			int boundingBoxPosition = rectangle.x;
+			int boundingBoxPosition = rectangle.y;
 			if (boundingBoxPosition < left) {
-				TSEPosition = position.LEFT;
+				TSEPosition = position.RIGHT;
 			} else if (boundingBoxPosition > left && boundingBoxPosition < right) {
 				TSEPosition = position.MIDDLE;
 			} else {
-				TSEPosition = position.RIGHT;
+				TSEPosition = position.LEFT;
 			}
-			Imgproc.putText(input,"" + TSEPosition,new Point(rectangle.x - 30,rectangle.y - 20),2,1,new Scalar(255,0,0));
+			Imgproc.putText(input,"" + TSEPosition,new Point(rectangle.x - 30,rectangle.y - 20),2,3,new Scalar(255,0,0));
+
+
+			System.out.println("TSE Position is " + boundingBoxPosition + " left bounding pos is " + left + " right bounding pos is " + right);
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("out of bounds exception was caught, try extending the detection tolerances");
 		}
