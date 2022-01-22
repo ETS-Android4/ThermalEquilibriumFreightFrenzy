@@ -46,7 +46,7 @@ public class MecanumDriveController {
 	public MecanumDriveController() {
 		this.controllerX = new PVControl(translationCoefficients);
 		this.controllerY = new PVControl(translationCoefficients);
-		this.thetaControl = new RobustPID(compBotTurn, 3,0.4,Math.toRadians(3));
+		this.thetaControl = new RobustPID(compBotTurn, 3,0.4,Math.toRadians(1));
 		this.timer = new ElapsedTime();
 	}
 
