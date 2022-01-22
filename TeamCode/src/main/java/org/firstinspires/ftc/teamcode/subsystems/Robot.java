@@ -70,12 +70,12 @@ public class Robot {
         Intake.init(hwmap);
         Deposit.init(hwmap);
         bucketSys.init(hwmap);
-//        duckDetection.init(hwmap);
+        duckDetection.init(hwmap);
         duckwheel.init(hwmap);
         subsystems.add(bucketSys);
         subsystems.add(Intake);
         subsystems.add(Deposit);
-//        subsystems.add(duckDetection);
+        subsystems.add(duckDetection);
         subsystems.add(duckwheel);
 
     }
