@@ -27,6 +27,7 @@ public class GoToCollectionState implements teleopAction {
 	public void periodic() {
 		if (collectionButton()) {
 			robot.Deposit.setState(Deposit.depositStates.COLLECTION);
+			robot.bucketSys.setState(Deposit.depositStates.COLLECTION);
 		}
 	}
 
