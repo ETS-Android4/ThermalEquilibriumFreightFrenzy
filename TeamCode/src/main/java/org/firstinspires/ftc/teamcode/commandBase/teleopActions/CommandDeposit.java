@@ -109,6 +109,7 @@ public class CommandDeposit implements teleopAction {
 		System.out.println("current state is " + state);
 
 		robot.Deposit.setState(state);
+		robot.bucketSys.setState(state);
 	}
 
 	protected void transitionToDeposit() {

@@ -27,7 +27,6 @@ public class GoToCollectionState implements teleopAction {
 	public void periodic() {
 		if (collectionButton()) {
 			robot.Deposit.setState(Deposit.depositStates.COLLECTION);
-			robot.bucketSys.setState(Deposit.depositStates.COLLECTION);
 		}
 	}
 
@@ -52,6 +51,6 @@ public class GoToCollectionState implements teleopAction {
 	}
 
 	public boolean collectionButton() {
-		return gamepad1.dpad_up;
+		return gamepad1.dpad_up || gamepad1.right_trigger > 0.5 || gamepad1.left_trigger > 0.5;
 	}
 }
