@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.commandBase.teleopAction;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.COLLECTION;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.IN;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake.intakeStates.OFF;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake.intakeStates.ON;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake.intakeStates.REVERSE;
@@ -35,10 +36,12 @@ public class ToggleIntake implements teleopAction {
 		if (robot.Deposit.getState().equals(COLLECTION) || gamepad1.right_trigger > 0.5) {
 			robot.Intake.setState(ON);
 			robot.bucketSys.setState(COLLECTION);
-		} else robot.Intake.setState(OFF);
-
-		if (gamepad1.left_trigger > 0.5) {
+		} else if (gamepad1.left_trigger > 0.5) {
 			robot.Intake.setState(REVERSE);
+			robot.bucketSys.setState(COLLECTION);
+		} else {
+			robot.Intake.setState(OFF);
+			robot.bucketSys.setState(IN);
 		}
 
 	}
