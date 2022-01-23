@@ -21,8 +21,8 @@ public class RedCycleAuto extends BaseAuto {
     Vector3D depositPosition = new Vector3D(-2,-TILE * 2.55 + 12,Math.toRadians(-70));
     Vector3D start = new Vector3D(TILE / 2.0, -TILE * 3 + 8.375, Math.toRadians(-90));
     Vector3D readyForCollection1 = new Vector3D(TILE / 3, -TILE * 3 + 6, Math.toRadians(0));
-    Vector3D readyForCollection2 = new Vector3D(TILE / 3, -TILE * 3 + 7, Math.toRadians(0));
-    Vector3D readyForCollection3 = new Vector3D(TILE / 3, -TILE * 3 + 9, Math.toRadians(0));
+    Vector3D readyForCollection2 = new Vector3D(TILE / 3, -TILE * 3 + 9, Math.toRadians(0));
+    Vector3D readyForCollection3 = new Vector3D(TILE / 3, -TILE * 3 + 11, Math.toRadians(0));
     Vector3D collect1 = new Vector3D(TILE * 2 - 12, readyForCollection1.getY(), Math.toRadians(0));
     Vector3D collect2 = new Vector3D(TILE * 2 - 12, readyForCollection2.getY(), Math.toRadians(0));
     Vector3D collect3 = new Vector3D(TILE * 2 - 12, readyForCollection3.getY(), Math.toRadians(0));
@@ -60,6 +60,10 @@ public class RedCycleAuto extends BaseAuto {
         actions.add(new DriveToPosition(robot,collect3));
         actions.add(new DriveToPosition(robot,readyForCollection3,1.5,false));
         actions.add(new DriveToPosition(robot,depositPosition));
+
+        actions.add(new DriveToPosition(robot,readyForCollection3));
+        actions.add(new DriveToPosition(robot,collect3));
+
 
 /*
         for (int i = 0; i < 3; ++i) {
