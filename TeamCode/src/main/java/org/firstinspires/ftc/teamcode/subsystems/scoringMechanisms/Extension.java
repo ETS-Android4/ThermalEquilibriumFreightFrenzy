@@ -6,13 +6,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
-public class Extension implements subsystem {
+public class
+Extension implements subsystem {
 
-	protected final double COLLECTION = 0;
-	protected final double IN = 0;
-	protected final double LOW = 0.25;
+	protected final double COLLECTION = 1;
+	protected final double IN = 1;
+	protected final double LOW = 0.75;
 	protected final double MID = 0.5;
-	protected final double HIGH = .7;
+	protected final double HIGH = .25;
 	protected Servo extension;
 	protected Deposit.depositStates state = Deposit.depositStates.IN;
 	protected double lastPosition = 1000;

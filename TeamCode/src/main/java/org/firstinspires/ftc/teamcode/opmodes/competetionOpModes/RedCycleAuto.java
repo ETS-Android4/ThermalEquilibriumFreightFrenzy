@@ -43,45 +43,30 @@ public class RedCycleAuto extends BaseAuto {
     @Override
     public void addActions() {
 
-
+        //deposits pre load
         actions.add(new DriveToPosition(robot,depositPosition));
 
+        //agaisnt wall drives into warehouse intakes and deposit one block
         actions.add(new DriveToPosition(robot,readyForCollection1));
         actions.add(new DriveToPosition(robot,collect1));
         actions.add(new DriveToPosition(robot,readyForCollection1, 1.5, false));
         actions.add(new DriveToPosition(robot,depositPosition));
 
+        //agaisnt wall drives into warehouse intakes and deposit second block
         actions.add(new DriveToPosition(robot,readyForCollection2));
         actions.add(new DriveToPosition(robot,collect2));
         actions.add(new DriveToPosition(robot,readyForCollection2, 1.5,false));
         actions.add(new DriveToPosition(robot,depositPosition));
 
+        //agaisnt wall drives into warehouse intakes and deposit third block
         actions.add(new DriveToPosition(robot,readyForCollection3));
         actions.add(new DriveToPosition(robot,collect3));
         actions.add(new DriveToPosition(robot,readyForCollection3,1.5,false));
         actions.add(new DriveToPosition(robot,depositPosition));
 
+        //parks in warehouse
         actions.add(new DriveToPosition(robot,readyForCollection3));
         actions.add(new DriveToPosition(robot,collect3));
-
-
-/*
-        for (int i = 0; i < 3; ++i) {
-            actions.add(new DriveToPosition(robot,depositPosition));
-            actions.add(new DriveToPosition(robot,readyForCollection1,1.5,false));
-
-            actions.add(new DriveToPosition(robot,gapPose,1.5,true));
-            actions.add(new DriveToPosition(robot,collect1));
-            actions.add(new DriveToPosition(robot,gapPose,1.5,true));
-            actions.add(new DriveToPosition(robot,readyForCollection1,1.5,false));
-        }
-        actions.add(new DriveToPosition(robot,collect3));*/
-
-
-
-
-
-
 
     }
 }
