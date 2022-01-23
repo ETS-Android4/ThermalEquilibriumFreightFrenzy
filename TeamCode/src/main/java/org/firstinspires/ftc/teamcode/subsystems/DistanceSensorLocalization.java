@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.geometry.Vector3D;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import static org.firstinspires.ftc.teamcode.utils.utils.AngleWrap;
 import static org.firstinspires.ftc.teamcode.utils.utils.connectVectors;
 import static org.firstinspires.ftc.teamcode.utils.utils.drawRobotBlue;
 import static org.firstinspires.ftc.teamcode.utils.utils.plotVector;
@@ -29,7 +30,7 @@ public class DistanceSensorLocalization implements subsystem{
 	public Rev2mDistanceSensor rightSensor;
 	public Rev2mDistanceSensor rearSensor;
 	public final double TILE_SIZE = 24;
-	public final double maximumAngle = Math.toRadians(15);
+	public final double maximumAngle = Math.toRadians(30);
 
 	public Vector3D leftDistanceSensorRobotRelative = new Vector3D(0,0,Math.toRadians(-34));
 	public Vector3D rearDistanceSensorRobotRelative = new Vector3D(0,0,Math.toRadians(0));
@@ -42,7 +43,7 @@ public class DistanceSensorLocalization implements subsystem{
 	DifferentialDriveOdometry odom;
 
 	ArrayList<Vector3D> previousVectors = new ArrayList<>();
-	double Q = 0.5;
+	double Q = 4;
 	double R = 30;
 	int N = 3;
 
@@ -109,8 +110,8 @@ public class DistanceSensorLocalization implements subsystem{
 		timer.reset();
 
 		Vector3D robotPose = odom.subsystemState();
-
-		if (Math.abs(robotPose.getAngleRadians()) > maximumAngle) return;
+		System.out.println("abs angle: " + Math.abs(AngleWrap(robotPose.getAngleRadians())) + " cutoff is "  + maximumAngle);
+		if (Math.abs(AngleWrap(robotPose.getAngleRadians())) > maximumAngle) return;
 
 
 		if (leftDistance >= cutoffDistance || minDistance >= leftDistance) return;
