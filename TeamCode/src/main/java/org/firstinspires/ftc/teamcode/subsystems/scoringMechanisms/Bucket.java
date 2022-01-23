@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms;
 
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Filter.LowPassFilter;
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
@@ -11,6 +13,11 @@ public class Bucket implements subsystem {
 	protected double lowPassFilterGain = 0.999; // 0 < x < 1
 	protected LowPassFilter filter = new LowPassFilter(lowPassFilterGain);
 	protected Servo bucketServo;
+	DistanceSensor proximitySensor;
+	String proximitySensorName = "EyeOfTheBucket";
+	protected double minDistance = 0.5;
+
+
 
 	protected Deposit.depositStates state = Deposit.depositStates.IN;
 
@@ -19,9 +26,15 @@ public class Bucket implements subsystem {
 	double IN = 0.7;
 	double OUT = 1;
 
+	protected boolean checkSensor = true;
+
+	protected boolean isFreightInBox = false;
+
 	@Override
 	public void init(HardwareMap hwmap) {
 		bucketServo = hwmap.get(Servo.class, "bucket");
+		proximitySensor = hwmap.get(DistanceSensor.class, proximitySensorName);
+
 		setPosition(IN);
 	}
 
@@ -42,9 +55,13 @@ public class Bucket implements subsystem {
 		} else {
 			setPosition(IN);
 		}
-
+		if (checkSensor) {
+			this.isFreightInBox = proximitySensor.getDistance(DistanceUnit.INCH) < minDistance;
+		}
 
 	}
+
+
 
 	@Override
 	public Object subsystemState() {
@@ -73,5 +90,20 @@ public class Bucket implements subsystem {
 	 */
 	public void setState(Deposit.depositStates state) {
 		this.state = state;
+	}
+
+
+	public void setCheckSensor(boolean checkSensor) {
+		this.checkSensor = checkSensor;
+	}
+
+	public boolean willCheckSensor() {
+		return checkSensor;
+	}
+
+
+	public boolean isFreightInBox() {
+		if (!checkSensor) return false;
+		return isFreightInBox;
 	}
 }

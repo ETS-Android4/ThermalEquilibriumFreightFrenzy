@@ -39,6 +39,8 @@ public abstract class BaseAuto extends LinearOpMode {
 			robot.initMinimal(hardwareMap);
 		}
 
+		this.robot.bucketSys.setCheckSensor(false);
+
 		setStartingPosition();
 
 		while (!isStopRequested() && !isStarted() && isCompBot) {
