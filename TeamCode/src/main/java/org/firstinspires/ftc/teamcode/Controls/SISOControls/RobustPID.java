@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.Controls.utils.PIDState;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Utils.RingBuffer;
 
-import static org.firstinspires.ftc.teamcode.Utils.utils.AngleWrap;
 import static org.firstinspires.ftc.teamcode.Utils.utils.normalizedHeadingError;
 
 public class RobustPID {
@@ -213,7 +212,7 @@ public class RobustPID {
 	 * @param state systems state
 	 */
 	protected void calculateErrorAngle(double state) {
-		error = AngleWrap(reference - state); //normalizedHeadingError(reference, state);
+		error = normalizedHeadingError(reference, state);
 	}
 
 	/**
