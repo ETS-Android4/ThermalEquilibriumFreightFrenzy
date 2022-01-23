@@ -16,7 +16,7 @@ public class Bucket implements subsystem {
 
 	double lastPosition = 1000;
 
-	double IN = 0.666;
+	double IN = 0.7;
 	double OUT = 1;
 
 	@Override

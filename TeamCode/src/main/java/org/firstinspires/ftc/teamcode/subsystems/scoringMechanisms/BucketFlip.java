@@ -13,7 +13,7 @@ public class BucketFlip implements subsystem {
 	Servo leftServo;
 	Servo rightServo;
 
-	public final double COLLECTION = 0.24;
+	public final double COLLECTION = 0.26;
 	public final double OUT = 1;
 	public final double REST = 0.32;
 
