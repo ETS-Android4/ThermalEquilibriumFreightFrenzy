@@ -30,7 +30,7 @@ public class DistanceSensorLocalization implements subsystem{
 	public Rev2mDistanceSensor rightSensor;
 	public Rev2mDistanceSensor rearSensor;
 	public final double TILE_SIZE = 24;
-	public final double maximumAngle = Math.toRadians(30);
+	public final double maximumAngle = Math.toRadians(15);
 
 	public Vector3D leftDistanceSensorRobotRelative = new Vector3D(0,0,Math.toRadians(-34));
 	public Vector3D rearDistanceSensorRobotRelative = new Vector3D(0,0,Math.toRadians(0));
