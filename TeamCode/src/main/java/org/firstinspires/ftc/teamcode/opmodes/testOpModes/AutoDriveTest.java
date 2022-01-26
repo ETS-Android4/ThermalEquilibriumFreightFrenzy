@@ -20,6 +20,6 @@ public class AutoDriveTest extends BaseAuto {
 
 	@Override
 	public void addActions() {
-		actions.add(new DriveToPosition(robot, new Vector3D(30,0,Math.toRadians(180))));
+		actions.add(new DriveToPosition(robot, new Vector3D(30,0,Math.toRadians(0))));
 	}
 }

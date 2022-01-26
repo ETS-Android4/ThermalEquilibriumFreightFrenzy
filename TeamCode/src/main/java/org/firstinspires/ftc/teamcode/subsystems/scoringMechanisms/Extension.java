@@ -11,9 +11,9 @@ Extension implements subsystem {
 
 	protected final double COLLECTION = 1;
 	protected final double IN = 1;
-	protected final double LOW = 0.75;
-	protected final double MID = 0.5;
-	protected final double HIGH = .25;
+	protected final double LOW = 0.4;
+	protected final double MID = 0.4;
+	protected final double HIGH = 0.4;
 	protected Servo extension;
 	protected Deposit.depositStates state = Deposit.depositStates.IN;
 	protected double lastPosition = 1000;
