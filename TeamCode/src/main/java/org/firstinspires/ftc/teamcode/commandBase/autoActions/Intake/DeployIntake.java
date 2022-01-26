@@ -24,7 +24,7 @@ public class DeployIntake implements action {
 	@Override
 	public void startAction() {
 		timer.reset();
-		robot.Intake.setState(Intake.intakeStates.ON);
+		robot.Intake.setState(Intake.intakeStates.REVERSE);
 	}
 
 	@Override
