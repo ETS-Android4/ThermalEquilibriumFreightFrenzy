@@ -6,11 +6,13 @@ import com.acmerobotics.roadrunner.drive.Drive;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.commandBase.action;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.DriveToIntake;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.DriveToPosition;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Intake.TurnOffIntake;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Intake.TurnOnIntake;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Misc.Delay;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.Misc.MutlipleAction;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Misc.OffsetOdom;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.DepositFreight;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToHighDeposit;
@@ -24,14 +26,13 @@ import java.util.Vector;
 public class RedCycleAuto extends BaseAuto {
 
 
-    Vector3D depositPosition = new Vector3D(-2,-TILE * 2.55 + 12,Math.toRadians(-70));
+    Vector3D depositPosition = new Vector3D(-2,-TILE * 2.55 + 14,Math.toRadians(-89));
     Vector3D start = new Vector3D(TILE / 2.0, -TILE * 3 + 8.375, Math.toRadians(-90));
 
     Vector3D readyForCollection1 = new Vector3D(TILE / 3, -TILE * 3 + 6, Math.toRadians(0));
     Vector3D readyForCollection2 = new Vector3D(TILE / 3, -TILE * 3 + 8, Math.toRadians(0));
     Vector3D readyForCollection3 = new Vector3D(TILE / 3, -TILE * 3 + 10.5, Math.toRadians(0));
     Vector3D readyForPark = new Vector3D(TILE / 3, -TILE * 3 + 11, Math.toRadians(0));
-
 
     Vector3D InWarehouse1 = new Vector3D(TILE * 2 - 6, readyForCollection1.getY(), Math.toRadians(0));
     Vector3D InWarehouse2 = new Vector3D(TILE * 2 - 6, readyForCollection2.getY(), Math.toRadians(0));
@@ -60,14 +61,18 @@ public class RedCycleAuto extends BaseAuto {
     public void addActions() {
 
         //deposits pre load and drops intake
-        actions.add(new DriveToPosition(robot,depositPosition));
+        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition) , new GoToHighDeposit(robot)}));
+        actions.add(new DepositFreight(robot));
+        actions.add(new Delay(250));
 
         //agaisnt wall drives into warehouse
-        actions.add(new DriveToPosition(robot,readyForCollection1));
-        actions.add(new DriveToPosition(robot,InWarehouse1));
+       // actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1) , new GoToInState(robot),}));
+        actions.add(new TurnOnIntake(robot,false));
+        actions.add(new TurnOffIntake(robot));
+        //actions.add(new DriveToPosition(robot,InWarehouse1));
 
         //Intake first frieght
-
+/*
         //Deposits 2 cube
         actions.add(new DriveToPosition(robot,readyForCollection1, 1.5, false));
         actions.add(new DriveToPosition(robot,depositPosition));
@@ -94,6 +99,6 @@ public class RedCycleAuto extends BaseAuto {
 
         //agaisnt wall than parks
         actions.add(new DriveToPosition(robot,readyForPark, 1.5,false));
-        actions.add(new DriveToPosition(robot,parked));
+        actions.add(new DriveToPosition(robot,parked));*/
     }
 }
