@@ -16,7 +16,7 @@ public class Bucket implements subsystem {
 	protected Servo bucketServo;
 	DistanceSensor proximitySensor;
 	String proximitySensorName = "EyeOfTheBucket";
-	protected double minDistance = 0.2;
+	protected double minDistance = 0.5;
 
 
 
@@ -32,7 +32,7 @@ public class Bucket implements subsystem {
 
 	protected boolean isFreightInBox = false;
 
-	double TIME_FOR_INTAKE_TO_DO_ITS_THING = 0.5;
+	double TIME_FOR_INTAKE_TO_DO_ITS_THING = 0.2;
 
 	ElapsedTime timer = new ElapsedTime();
 
