@@ -16,7 +16,8 @@ public class Bucket implements subsystem {
 	protected Servo bucketServo;
 	DistanceSensor proximitySensor;
 	String proximitySensorName = "EyeOfTheBucket";
-	protected double minDistance = 0.2;
+	protected double minDistance = 0.5;
+	boolean holdDown = false;
 
 
 
@@ -32,9 +33,12 @@ public class Bucket implements subsystem {
 
 	protected boolean isFreightInBox = false;
 
-	double TIME_FOR_INTAKE_TO_DO_ITS_THING = 0.5;
+	double TIME_FOR_INTAKE_TO_DO_ITS_THING = 0.25;
+	double TIME_FOR_INTAKE_TO_GO_UP = 0.5;
+
 
 	ElapsedTime timer = new ElapsedTime();
+	ElapsedTime upTimer = new ElapsedTime();
 
 
 
@@ -61,12 +65,14 @@ public class Bucket implements subsystem {
 		if (state.equals(Deposit.depositStates.COLLECTION) && !previousState.equals(Deposit.depositStates.COLLECTION)) {
 			timer.reset();
 		}
-
-
+		if (!state.equals(Deposit.depositStates.COLLECTION) && previousState.equals(Deposit.depositStates.COLLECTION)) {
+			upTimer.reset();
+		}
 
 		if (state.equals(Deposit.depositStates.DEPOSITING)
 				|| (state.equals(Deposit.depositStates.COLLECTION)
-				&& timer.seconds() > TIME_FOR_INTAKE_TO_DO_ITS_THING)) {
+				&& timer.seconds() > TIME_FOR_INTAKE_TO_DO_ITS_THING)
+				|| upTimer.seconds() > TIME_FOR_INTAKE_TO_GO_UP) {
 			setPosition(OUT);
 		} else {
 			setPosition(IN);
