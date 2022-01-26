@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
@@ -20,6 +21,11 @@ public class BucketFlip implements subsystem {
 	protected double previousPosition = 100;
 
 	Deposit.depositStates state = Deposit.depositStates.IN;
+	Deposit.depositStates previousState = Deposit.depositStates.IN;
+
+	ElapsedTime timer = new ElapsedTime();
+
+	double FINISH_COLLECTING_GO_UP_TIME_Seconds = 0.3;
 
 	@Override
 	public void init(HardwareMap hwmap) {
@@ -41,6 +47,11 @@ public class BucketFlip implements subsystem {
 	@Override
 	public void update() {
 
+		if (state.equals(Deposit.depositStates.IN) &&
+				previousState.equals(Deposit.depositStates.COLLECTION)) {
+			timer.reset();
+		}
+
 		switch (state) {
 			case DISARMED:
 			case IN:
@@ -48,7 +59,9 @@ public class BucketFlip implements subsystem {
 			case GOING_TO_HIGH:
 			case GOING_TO_LOW:
 			case GOING_IN:
-				setServoPosition(REST);
+				if (timer.seconds() > FINISH_COLLECTING_GO_UP_TIME_Seconds) {
+					setServoPosition(REST);
+				}
 				break;
 			case COLLECTION:
 				setServoPosition(COLLECTION);
@@ -63,6 +76,8 @@ public class BucketFlip implements subsystem {
 				// do nothing
 				break;
 		}
+
+		previousState = state;
 
 
 	}
