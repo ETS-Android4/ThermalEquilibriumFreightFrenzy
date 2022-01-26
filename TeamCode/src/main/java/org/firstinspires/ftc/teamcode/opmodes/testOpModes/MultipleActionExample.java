@@ -26,7 +26,6 @@ public class MultipleActionExample extends BaseAuto {
     @Override
     public void addActions() {
 
-        actions.add(new MutlipleAction(new action[]{drive, putSlidesUp}));
 
     }
 }
