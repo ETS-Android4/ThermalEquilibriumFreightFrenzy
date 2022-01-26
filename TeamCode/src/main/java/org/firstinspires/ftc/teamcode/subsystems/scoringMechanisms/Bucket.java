@@ -16,7 +16,7 @@ public class Bucket implements subsystem {
 	protected Servo bucketServo;
 	DistanceSensor proximitySensor;
 	String proximitySensorName = "EyeOfTheBucket";
-	protected double minDistance = 0.5;
+	protected double minDistance = 0.2;
 
 
 
