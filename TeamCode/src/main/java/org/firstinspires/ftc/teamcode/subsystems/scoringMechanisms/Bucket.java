@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Filter.LowPassFilter;
@@ -20,6 +21,7 @@ public class Bucket implements subsystem {
 
 
 	protected Deposit.depositStates state = Deposit.depositStates.IN;
+	protected Deposit.depositStates previousState = Deposit.depositStates.IN;
 
 	double lastPosition = 1000;
 
@@ -29,6 +31,12 @@ public class Bucket implements subsystem {
 	protected boolean checkSensor = true;
 
 	protected boolean isFreightInBox = false;
+
+	double TIME_FOR_INTAKE_TO_DO_ITS_THING = 0.5;
+
+	ElapsedTime timer = new ElapsedTime();
+
+
 
 	@Override
 	public void init(HardwareMap hwmap) {
@@ -50,7 +58,15 @@ public class Bucket implements subsystem {
 	@Override
 	public void update() {
 
-		if (state.equals(Deposit.depositStates.DEPOSITING) || state.equals(Deposit.depositStates.COLLECTION)) {
+		if (state.equals(Deposit.depositStates.COLLECTION) && !previousState.equals(Deposit.depositStates.COLLECTION)) {
+			timer.reset();
+		}
+
+
+
+		if (state.equals(Deposit.depositStates.DEPOSITING)
+				|| (state.equals(Deposit.depositStates.COLLECTION)
+				&& timer.seconds() > TIME_FOR_INTAKE_TO_DO_ITS_THING)) {
 			setPosition(OUT);
 		} else {
 			setPosition(IN);
@@ -58,6 +74,8 @@ public class Bucket implements subsystem {
 		if (checkSensor) {
 			this.isFreightInBox = proximitySensor.getDistance(DistanceUnit.INCH) < minDistance;
 		}
+
+		previousState = state;
 
 	}
 
