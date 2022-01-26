@@ -25,7 +25,7 @@ public class BucketFlip implements subsystem {
 
 	ElapsedTime timer = new ElapsedTime();
 
-	double FINISH_COLLECTING_GO_UP_TIME_Seconds = 0.3;
+	double FINISH_COLLECTING_GO_UP_TIME_Seconds = 0.2;
 
 	@Override
 	public void init(HardwareMap hwmap) {
