@@ -39,7 +39,6 @@ public class ToggleIntake implements teleopAction {
 			robot.Intake.setState(REVERSE);
 		} else {
 			robot.Intake.setState(OFF);
-
 		}
 
 	}
