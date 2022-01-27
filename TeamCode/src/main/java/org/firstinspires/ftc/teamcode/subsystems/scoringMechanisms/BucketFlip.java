@@ -36,6 +36,8 @@ public class BucketFlip implements subsystem {
 		rightServo.setDirection(Servo.Direction.REVERSE);
 		leftServo.setDirection(Servo.Direction.FORWARD);
 
+		setServoPosition(OUT);
+
 
 	}
 
