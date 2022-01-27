@@ -27,15 +27,15 @@ import java.util.Vector;
 public class RedCycleAuto extends BaseAuto {
 
 
-    Vector3D depositPosition = new Vector3D(+ 8,-TILE * 2.55 + 14,Math.toRadians(-65));
+    Vector3D depositPosition = new Vector3D(+ 4,-TILE * 2 + 5 ,Math.toRadians(-55));
     Vector3D start = new Vector3D(TILE / 2.0, -TILE * 3 + 8.375, Math.toRadians(-90));
 
-    Vector3D readyForCollection1 = new Vector3D(TILE / 3, -TILE * 3 + 6, Math.toRadians(0));
+    Vector3D readyForCollection1 = new Vector3D(TILE - 11 , -TILE * 3 + 8, Math.toRadians(0));
     Vector3D readyForCollection2 = new Vector3D(TILE / 3, -TILE * 3 + 8, Math.toRadians(0));
     Vector3D readyForCollection3 = new Vector3D(TILE / 3, -TILE * 3 + 10.5, Math.toRadians(0));
     Vector3D readyForPark = new Vector3D(TILE / 3, -TILE * 3 + 11, Math.toRadians(0));
 
-    Vector3D InWarehouse1 = new Vector3D(TILE * 2 - 6, readyForCollection1.getY(), Math.toRadians(0));
+    Vector3D InWarehouse1 = new Vector3D(TILE * 2 - 10, readyForCollection1.getY(), Math.toRadians(0));
     Vector3D InWarehouse2 = new Vector3D(TILE * 2 - 6, readyForCollection2.getY(), Math.toRadians(0));
     Vector3D InWarehouse3 = new Vector3D(TILE * 2 - 6, readyForCollection3.getY(), Math.toRadians(0));
 
@@ -65,14 +65,14 @@ public class RedCycleAuto extends BaseAuto {
         //deposits pre load and drops intake Lift up
         actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition) , new GoToHighDeposit(robot), new DeployIntake(robot)}));
         actions.add(new DepositFreight(robot));
-        actions.add(new Delay(250));
+        actions.add(new Delay(200));
 
         //agaisnt wall drives into warehouse Lift down
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1) , new GoToInState(robot),}));
-        actions.add(new DriveToPosition(robot,InWarehouse1));
+        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1) , new DeployIntake(robot), new GoToInState(robot),}));
+        //actions.add(new DriveToPosition(robot,InWarehouse1));
 
         //Intake first frieght
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,collect1) , new TurnOnIntake(robot,true),}));
+        //actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,collect1) , new TurnOnIntake(robot,true),}));
                 //actions.add(new DriveToIntake(robot,collect1,5,false));
 /*
         //Deposits 2 cube Lift Up
