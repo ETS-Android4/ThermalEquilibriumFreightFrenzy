@@ -11,6 +11,7 @@ public class DuckWheel implements subsystem{
 
 	protected double previousPower = 0;
 	protected final double TURN_POWER = -.35;
+	protected final double FAST_TURN_POWER = -1;
 
 	@Override
 	public void init(HardwareMap hwmap) {
@@ -30,6 +31,12 @@ public class DuckWheel implements subsystem{
 				break;
 			case OTHER_ON:
 				setServoPower(-TURN_POWER);
+				break;
+			case ON_FAST:
+				setServoPower(FAST_TURN_POWER);
+				break;
+			case OTHER_ON_FAST:
+				setServoPower(-FAST_TURN_POWER);
 				break;
 			case OFF:
 				setServoPower(0);
@@ -56,6 +63,8 @@ public class DuckWheel implements subsystem{
 	public enum DuckWheelState {
 		ON,
 		OTHER_ON,
+		ON_FAST,
+		OTHER_ON_FAST,
 		OFF
 	}
 }
