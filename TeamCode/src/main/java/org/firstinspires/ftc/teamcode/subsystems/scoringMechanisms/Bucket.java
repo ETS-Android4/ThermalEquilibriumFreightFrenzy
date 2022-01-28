@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Filter.LowPassFilter;
+import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 public class Bucket implements subsystem {
@@ -16,7 +17,7 @@ public class Bucket implements subsystem {
 	protected Servo bucketServo;
 	DistanceSensor proximitySensor;
 	String proximitySensorName = "EyeOfTheBucket";
-	protected double minDistance = 0.25;
+	protected double minDistance = 1.5;
 	boolean holdDown = false;
 
 
@@ -59,7 +60,7 @@ public class Bucket implements subsystem {
 	 */
 	@Override
 	public void update() {
-
+		Dashboard.packet.put("BucketSensor", proximitySensor.getDistance(DistanceUnit.INCH));
 		if (state.equals(Deposit.depositStates.COLLECTION) && !previousState.equals(Deposit.depositStates.COLLECTION)) {
 			timer.reset();
 		}
