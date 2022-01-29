@@ -18,6 +18,8 @@ public class PVControl {
 	private State previousStateError = new State();
 	protected State error = new State();
 
+	protected double previousPosition = 0;
+
 	public PVControl(PVParams coefficients) {
 		this.coefficients = coefficients;
 	}
@@ -31,6 +33,8 @@ public class PVControl {
 	}
 
 	public double calculate(State reference,State state) {
+		double estimatedVelo = (state.getPosition() - previousPosition) / timer.seconds();
+		state.setVelocity(estimatedVelo);
 		error = reference.stateError(state);
 		double feedback = calculateFeedback(error);
 		double feedforward = calculateFeedforward(reference.getVelocity(), feedback);
