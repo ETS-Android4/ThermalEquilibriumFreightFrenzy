@@ -113,6 +113,12 @@ public class ThreeWheelOdometry implements subsystem {
 		kalmanFilter.setX(positionEstimate.getAngleRadians());
 	}
 
+	public void setInitialPosition(Vector3D positionEstimate) {
+
+		setPositionEstimate(positionEstimate);
+		this.mecanumDriveRR.setPoseEstimate(positionEstimate.toPose2d());
+
+	}
 	/**
 	 *
 	 * @return the field relative pose delta
