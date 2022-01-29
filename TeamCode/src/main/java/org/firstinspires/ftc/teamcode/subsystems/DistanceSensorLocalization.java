@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -20,7 +21,7 @@ import homeostasis.Filters.SISOKalmanFilter;
 import static org.firstinspires.ftc.teamcode.Utils.utils.AngleWrap;
 import static org.firstinspires.ftc.teamcode.Utils.utils.drawRobotBlue;
 import static org.firstinspires.ftc.teamcode.Utils.utils.plotVector;
-
+@Config
 public class DistanceSensorLocalization implements subsystem{
 
 	public Rev2mDistanceSensor leftSensor;
@@ -31,7 +32,7 @@ public class DistanceSensorLocalization implements subsystem{
 
 	final double leftDistanceFromCenter = 5 + (1/8.0);
 	final double leftDistanceFromEdge = 12.0;
-	final double frontDistanceFromCenter = 9.5;
+	public static double frontDistanceFromCenter = 4.5;
 	final double frontDistanceFromEdge = -0.5;
 
 
