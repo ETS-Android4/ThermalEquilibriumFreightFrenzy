@@ -4,6 +4,7 @@ import android.service.quicksettings.Tile;
 
 import com.acmerobotics.roadrunner.drive.Drive;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.commandBase.action;
@@ -23,7 +24,7 @@ import org.opencv.core.Mat;
 
 import java.util.Vector;
 
-@Autonomous
+@Disabled
 public class RedCycleAuto extends BaseAuto {
 
     Vector3D start = new Vector3D(TILE / 2.0, -TILE * 3 + 8.375, Math.toRadians(-90));
