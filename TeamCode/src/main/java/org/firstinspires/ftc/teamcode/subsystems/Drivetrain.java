@@ -150,6 +150,7 @@ public class Drivetrain implements subsystem {
      * @param turnSpeed turning speed
      */
     public void robotRelative(double xSpeed, double ySpeed, double turnSpeed) {
+        ySpeed *= 1.1;
         double frontLeftPower = (xSpeed + ySpeed + turnSpeed);
         double backLeftPower = (xSpeed - ySpeed + turnSpeed);
         double frontRightPower = (xSpeed - ySpeed - turnSpeed);
