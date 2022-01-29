@@ -110,17 +110,10 @@ public class ThreeWheelOdometry implements subsystem {
 	public void setPositionEstimate(Vector3D positionEstimate) {
 		this.initialPosition = positionEstimate;
 		this.positionEstimate = positionEstimate;
+		this.mecanumDriveRR.setPoseEstimate(new Pose2d(positionEstimate.getX(),positionEstimate.getY(),positionEstimate.getAngleRadians()));
 		kalmanFilter.setX(positionEstimate.getAngleRadians());
 	}
 
-	public void setInitialPosition(Vector3D positionEstimate) {
-
-		setPositionEstimate(positionEstimate);
-		this.mecanumDriveRR.setPoseEstimate(new Pose2d(positionEstimate.getX(),
-														positionEstimate.getY(),
-														positionEstimate.getAngleRadians()));
-
-	}
 	/**
 	 *
 	 * @return the field relative pose delta
@@ -174,11 +167,7 @@ public class ThreeWheelOdometry implements subsystem {
 	public void deployedUpdateRR() {
 		mecanumDriveRR.updatePoseEstimate();
 		Pose2d estimate = mecanumDriveRR.getPoseEstimate();
-		Pose2d eDel = estimate.minus(previousRoadrunnerPose);
-		previousRoadrunnerPose = estimate;
-		Vector3D newPosition = positionEstimate.add(new Vector3D(eDel.getX(),eDel.getY(),eDel.getHeading()));
-
-		positionEstimate = new Vector3D(newPosition.getX(),newPosition.getY(),estimate.getHeading());
+		positionEstimate = new Vector3D(estimate.getX(),estimate.getY(),estimate.getHeading());
 		System.out.println("Pose estimate from rr" + positionEstimate);
 		Pose2d velocity = mecanumDriveRR.getPoseVelocity();
 		try {
@@ -189,6 +178,47 @@ public class ThreeWheelOdometry implements subsystem {
 		drawRobot(positionEstimate,Dashboard.packet);
 	}
 
+	public void deployedUpdate() {
+		double left = -encoderTicksToInches(LeftEncoder.getCurrentPosition());
+		double right = encoderTicksToInches(RightEncoder.getCurrentPosition());
+		double middle = -encoderTicksToInches(MiddleEncoder.getCurrentPosition());
+
+
+		Dashboard.packet.put("Left Encoder", left);
+		Dashboard.packet.put("Right Encoder", right);
+		Dashboard.packet.put("Middle Encoder", middle);
+
+		double leftVelo = encoderTicksToInches(LeftEncoder.getVelocity()); // TODO This will break with the rev encoder
+		double rightVelo = encoderTicksToInches(RightEncoder.getVelocity());
+
+		double leftDelta = left - leftPrev;
+		double rightDelta = right - rightPrev;
+		double middleDelta = middle - middlePrev;
+
+		leftPrev = left;
+		rightPrev = right;
+		middlePrev = middle;
+
+		double xDelta = (leftDelta + rightDelta) / 2;
+		double yDelta = (middleWheelOffset / trackWidth) * (rightDelta - leftDelta);
+		yDelta = middleDelta - yDelta;
+		double thetaDelta = (rightDelta - leftDelta) / (trackWidth);
+
+
+		encoderAngle += thetaDelta;
+		encoderAngle = normalizeAngleRR(encoderAngle);
+
+		positionEstimateDeltaRobotRelative = new Vector3D(xDelta, yDelta, thetaDelta);
+		positionEstimate.setAngleRad(AngleWrap(positionEstimate.getAngleRadians() + thetaDelta));
+
+		//positionEstimateDeltaFieldRelative = positionEstimateDeltaRobotRelative.rotateBy(positionEstimate.getAngleDegrees());
+		positionEstimate = positionEstimate.poseExponential(positionEstimateDeltaFieldRelative);//positionEstimate.poseExponential(positionEstimateDeltaRobotRelative);
+
+		drawRobot(positionEstimate, Dashboard.packet);
+
+		System.out.println("Robot pose is " + positionEstimate);
+
+	}
 
 
 	public void setState(OdomState state) {
