@@ -49,4 +49,9 @@ public class DepositFreight implements action {
 	public boolean isActionPersistent() {
 		return false;
 	}
+
+	@Override
+	public boolean isAMultipleAction() {
+		return false;
+	}
 }

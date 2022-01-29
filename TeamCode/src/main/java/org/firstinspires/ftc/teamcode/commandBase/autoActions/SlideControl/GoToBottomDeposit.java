@@ -90,4 +90,9 @@ public class GoToBottomDeposit implements action {
 		return false;
 	}
 
+	@Override
+	public boolean isAMultipleAction() {
+		return false;
+	}
+
 }
