@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Geometry.Pose2d;
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
@@ -24,6 +25,7 @@ import static org.firstinspires.ftc.teamcode.Utils.utils.plotVector;
 @Config
 public class DistanceSensorLocalization implements subsystem{
 
+	double velocity_threshold = 10;
 	public Rev2mDistanceSensor leftSensor;
 	public Rev2mDistanceSensor rightSensor;
 	public Rev2mDistanceSensor rearSensor;
@@ -108,7 +110,9 @@ public class DistanceSensorLocalization implements subsystem{
 	@RequiresApi(api = Build.VERSION_CODES.N)
 	public void calculatePositions() {
 		System.out.println("current time for scheduling is " + timer.milliseconds());
-		if (timer.milliseconds() < delay) return;
+		double velocityMagnitude = odom.getVelocity().distanceToPose(new Vector3D());
+		Dashboard.packet.put("velocity magnitude", velocityMagnitude);
+		if (timer.milliseconds() < delay && velocityMagnitude < velocity_threshold) return;
 		timer.reset();
 
 
