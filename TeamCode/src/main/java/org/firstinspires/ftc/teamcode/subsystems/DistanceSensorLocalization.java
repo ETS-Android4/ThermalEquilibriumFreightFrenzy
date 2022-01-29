@@ -113,6 +113,10 @@ public class DistanceSensorLocalization implements subsystem{
 
 		readSensors();
 
+		if (leftDistance >= cutoffDistanceMAX || minDistance >= leftDistance) return;
+		if (rearDistance >= cutoffDistanceMAX || minDistance >= rearDistance) return;
+
+
 		timer.reset();
 
 		Vector3D robotPose = odom.subsystemState();
@@ -136,8 +140,6 @@ public class DistanceSensorLocalization implements subsystem{
 
 		double xPoseEstimate = estimatorX.updateKalmanMeasurements(robotPose.getX(), estimatedPose.getX());
 		double yPoseEstimate = estimatorY.updateKalmanMeasurements(robotPose.getY(), estimatedPose.getY());
-		if (leftDistance >= cutoffDistanceMAX || minDistance >= leftDistance) return;
-		if (rearDistance >= cutoffDistanceMAX || minDistance >= rearDistance) return;
 
 		odom.setYPose(yPoseEstimate);
 		odom.setXPose(xPoseEstimate);
