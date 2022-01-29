@@ -51,7 +51,7 @@ public class DistanceSensorLocalization implements subsystem{
 	double R = 30;
 	int N = 3;
 
-	double cutoffDistanceMAX = 50;
+	double cutoffDistanceMAX = 70;
 	double minDistance = 10;
 
 	SISOKalmanFilter estimatorX = new SISOKalmanFilter(Q,R);
