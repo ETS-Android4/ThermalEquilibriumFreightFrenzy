@@ -61,8 +61,7 @@ public class DistanceSensorLocalization implements subsystem{
 		this.odom = odom;
 	}
 
-
-	double hz = 5;
+	double hz = 10;
 	double delay = 1000 / hz;
 
 	ElapsedTime timer = new ElapsedTime();
