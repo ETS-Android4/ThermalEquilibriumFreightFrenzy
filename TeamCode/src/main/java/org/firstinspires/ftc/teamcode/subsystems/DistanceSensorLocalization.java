@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -31,10 +29,10 @@ public class DistanceSensorLocalization implements subsystem{
 	public final double TILE_SIZE = 24;
 	public final double maximumAngle = Math.toRadians(15);
 
-	final double leftDistanceFromCenter = 0;
-	final double leftDistanceFromEdge = 0;
-	final double frontDistanceFromCenter = 0;
-	final double frontDistanceFromEdge = 0;
+	final double leftDistanceFromCenter = 5 + (1/8.0);
+	final double leftDistanceFromEdge = 12.0;
+	final double frontDistanceFromCenter = 9.5;
+	final double frontDistanceFromEdge = -0.5;
 
 
 	public Vector3D leftDistanceSensorRobotRelative = new Vector3D(0,0,Math.toRadians(0.0));
@@ -52,7 +50,7 @@ public class DistanceSensorLocalization implements subsystem{
 	double R = 30;
 	int N = 3;
 
-	double cutoffDistance = 322;
+	double cutoffDistanceMAX = 50;
 	double minDistance = 10;
 
 	SISOKalmanFilter estimatorX = new SISOKalmanFilter(Q,R);
@@ -121,8 +119,8 @@ public class DistanceSensorLocalization implements subsystem{
 		if (Math.abs(AngleWrap(robotPose.getAngleRadians())) > maximumAngle) return;
 
 
-		if (leftDistance >= cutoffDistance || minDistance >= leftDistance) return;
-		if (rearDistance >= cutoffDistance || minDistance >= rearDistance) return;
+		if (leftDistance >= cutoffDistanceMAX || minDistance >= leftDistance) return;
+		if (rearDistance >= cutoffDistanceMAX || minDistance >= rearDistance) return;
 
 
 		double x = rearDistance * Math.cos(robotPose.getAngleRadians() + rearDistanceSensorRobotRelative.getAngleRadians());
@@ -130,7 +128,7 @@ public class DistanceSensorLocalization implements subsystem{
 
 
 		double x_field = (TILE_SIZE * 3) - (x - frontDistanceFromEdge + frontDistanceFromCenter);
-		double y_field = -(TILE_SIZE * 3) + (y - leftDistanceFromEdge + frontDistanceFromCenter);
+		double y_field = -(TILE_SIZE * 3) + (y - leftDistanceFromEdge + leftDistanceFromCenter);
 
 
 		Vector3D estimatedPose = new Vector3D(x_field, y_field, robotPose.getAngleRadians());
