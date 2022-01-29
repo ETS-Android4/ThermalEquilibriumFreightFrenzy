@@ -207,8 +207,10 @@ public class BenLocalizerRR extends ThreeTrackingWheelLocalizer {
 
 		if (leftDistance >= cutoffDistanceMAX || minDistance >= leftDistance) return;
 		if (rearDistance >= cutoffDistanceMAX || minDistance >= rearDistance) return;
+		double filteredX = estimatorX.updateKalmanMeasurements(x_field, getPoseEstimate().getX());
+		double filteredY = estimatorY.updateKalmanMeasurements(y_field, getPoseEstimate().getY());
 
-		Pose2d newPose = new Pose2d(new Vector2d(x_field, y_field), getExternalHeading());
+		Pose2d newPose = new Pose2d(new Vector2d(filteredX, filteredY), getExternalHeading());
 
 		super.setPoseEstimate(newPose);
 

@@ -62,7 +62,7 @@ public class DistanceSensorLocalization implements subsystem{
 	}
 
 
-	double hz = 10;
+	double hz = 30;
 	double delay = 1000 / hz;
 
 	ElapsedTime timer = new ElapsedTime();
