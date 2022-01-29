@@ -21,7 +21,7 @@ public class DriveToIntake extends DriveToPosition {
 
 	@Override
 	public boolean isActionPersistent() {
-		return false;
+		return true;
 	}
 
 	@Override

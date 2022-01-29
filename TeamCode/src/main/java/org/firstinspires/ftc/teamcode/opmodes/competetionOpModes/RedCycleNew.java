@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.commandBase.autoActions.Misc.OffsetOdom;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.DepositFreight;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToHighDeposit;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToInState;
+import org.firstinspires.ftc.teamcode.opmodes.testOpModes.MultipleActionExample;
 import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
 import org.opencv.core.Mat;
 
@@ -30,29 +31,16 @@ public class RedCycleNew extends BaseAuto {
 
 	Vector3D depositPosition1 = new Vector3D(+ 4,-TILE * 2 + 5 ,Math.toRadians(-55));
 
-	Vector3D readyForCollection1 = new Vector3D(TILE - 10 , -TILE * 3 + 7, Math.toRadians(0));
-	Vector3D readyForCollection2 = new Vector3D(TILE -10, -TILE * 3 + 8, Math.toRadians(0));
-	Vector3D readyForCollection3 = new Vector3D(TILE / 3, -TILE * 3 + 10.5, Math.toRadians(0));
-	Vector3D readyForCollection4 = new Vector3D(TILE / 3, -TILE * 3 + 10.5, Math.toRadians(0));
-	Vector3D readyForCollection5 = new Vector3D(TILE / 3, -TILE * 3 + 10.5, Math.toRadians(0));
-	Vector3D readyForCollection6 = new Vector3D(TILE / 3, -TILE * 3 + 10.5, Math.toRadians(0));
+	Vector3D readyForCollection1 = new Vector3D(TILE - 10, -TILE * 3 + 7,  Math.toRadians(0));
 
 	Vector3D readyForPark = new Vector3D(TILE / 3, -TILE * 3 + 11, Math.toRadians(0));
 
-	Vector3D collect1 = new Vector3D(TILE * 2 - 8, readyForCollection1.getY(), Math.toRadians(0));
-	Vector3D collect2 = new Vector3D(TILE * 2, readyForCollection2.getY(), Math.toRadians(0));
-	Vector3D collect3 = new Vector3D(TILE * 2, readyForCollection3.getY(), Math.toRadians(0));
-	Vector3D collect4 = new Vector3D(TILE * 2, readyForCollection4.getY(), Math.toRadians(0));
-	Vector3D collect5 = new Vector3D(TILE * 2, readyForCollection5.getY(), Math.toRadians(0));
-	Vector3D collect6 = new Vector3D(TILE * 2, readyForCollection6.getY(), Math.toRadians(0));
-	Vector3D park = new Vector3D(TILE * 2 - 6, readyForCollection6.getY(), Math.toRadians(0));
+	Vector3D collect1 = new Vector3D(TILE * 2 - 13,-TILE * 3 + 6, Math.toRadians(0));
 
 	Vector3D gapPose = new Vector3D(TILE, readyForPark.getY(), Math.toRadians(0));
 	Vector3D Test = new Vector3D(24,24, Math.toRadians(0));
 
-	Vector3D InWarehouse1 = new Vector3D(TILE * 2 - 10, readyForCollection1.getY(), Math.toRadians(0));
-	Vector3D InWarehouse2 = new Vector3D(TILE * 2 - 6, readyForCollection2.getY(), Math.toRadians(0));
-	Vector3D InWarehouse3 = new Vector3D(TILE * 2 - 6, readyForCollection3.getY(), Math.toRadians(0));
+
 
 	@Override
 	public void setStartingPosition() {
@@ -67,234 +55,64 @@ public class RedCycleNew extends BaseAuto {
 	@Override
 	public void addActions() {
 
+			actions.add(new DeployIntake(robot));
+
 		//Deposit pre-load
-		actions.add(new DriveToPosition(robot,depositPosition1));
-		actions.add(new DeployIntake(robot));
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
+		//actions.add(new GoToHighDeposit(robot));
+		//actions.add(new DriveToPosition(robot,depositPosition1));
 		actions.add(new DepositFreight(robot));
-		actions.add(new Delay(250));
+		actions.add(new Delay(300));
 
 		//Against wall lineup for first warehouse cycle + deploy intake
-		actions.add(new DriveToPosition(robot,readyForCollection1));
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1,1.5,false) , new GoToInState(robot)}));
+		//actions.add(new GoToInState(robot));
+		//actions.add(new DriveToPosition(robot,readyForCollection1));
 
 		//Intake first freight
-		actions.add(new DriveToIntake(robot,collect1,5,false));
+		actions.add(new DriveToIntake(robot, collect1, 4, false));
 
 		//Exit warehouse
-		actions.add(new DriveToPosition(robot, readyForCollection1));
-
-		//--------------------------------------------------------------------//
+		actions.add(new DriveToPosition(robot, readyForCollection1,1.5,false));
 
 		//Deposit pre-load
-		actions.add(new DriveToPosition(robot,depositPosition1));
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
+		//actions.add(new GoToHighDeposit(robot));
+		//actions.add(new DriveToPosition(robot,depositPosition1));
 		actions.add(new DepositFreight(robot));
-		actions.add(new Delay(250));
+		actions.add(new Delay(300));
 
 		//Against wall lineup for first warehouse cycle + deploy intake
-		actions.add(new DriveToPosition(robot,readyForCollection2));
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1,1.5,false) , new GoToInState(robot)}));
+		//actions.add(new GoToInState(robot));
+		//actions.add(new DriveToPosition(robot,readyForCollection1));
 
 		//Intake first freight
-		actions.add(new DriveToIntake(robot,collect2,5,false));
+		actions.add(new DriveToIntake(robot, collect1, 4, false));
 
 		//Exit warehouse
-		actions.add(new DriveToPosition(robot, readyForCollection2));
-
-		//--------------------------------------------------------------------//
+		actions.add(new DriveToPosition(robot, readyForCollection1,1.5,false));
 
 		//Deposit pre-load
-		actions.add(new DriveToPosition(robot,depositPosition1));
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
+		//actions.add(new GoToHighDeposit(robot));
+		//actions.add(new DriveToPosition(robot,depositPosition1));
 		actions.add(new DepositFreight(robot));
-		actions.add(new Delay(250));
+		actions.add(new Delay(300));
 
 		//Against wall lineup for first warehouse cycle + deploy intake
-		actions.add(new DriveToPosition(robot,readyForCollection3));
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1,1.5,false) , new GoToInState(robot)}));
+		//actions.add(new GoToInState(robot));
+		//actions.add(new DriveToPosition(robot,readyForCollection1));
 
 		//Intake first freight
-		actions.add(new DriveToIntake(robot,collect3,5,false));
+		actions.add(new DriveToIntake(robot, collect1, 4, false));
 
 		//Exit warehouse
-		actions.add(new DriveToPosition(robot, readyForCollection3));
+		actions.add(new DriveToPosition(robot, readyForCollection1,1.5,false));
 
-		//--------------------------------------------------------------------//
 
-		//Deposit pre-load
-		actions.add(new DriveToPosition(robot,depositPosition1));
-		actions.add(new DepositFreight(robot));
-		actions.add(new Delay(250));
+		//for ( int i = 0; i < 6; i++) {}
 
-		//Against wall lineup for first warehouse cycle + deploy intake
-		actions.add(new DriveToPosition(robot,readyForCollection4));
-
-		//Intake first freight
-		actions.add(new DriveToIntake(robot,collect4,5,false));
-
-		//Exit warehouse
-		actions.add(new DriveToPosition(robot, readyForCollection4));
-
-		//--------------------------------------------------------------------//
-
-		//Deposit pre-load
-		actions.add(new DriveToPosition(robot,depositPosition1));
-		actions.add(new DepositFreight(robot));
-		actions.add(new Delay(250));
-
-		//Against wall lineup for first warehouse cycle + deploy intake
-		actions.add(new DriveToPosition(robot,readyForCollection5));
-
-		//Intake first freight
-		actions.add(new DriveToIntake(robot,collect5,5,false));
-
-		//Exit warehouse
-		actions.add(new DriveToPosition(robot, readyForCollection5));
-
-		//--------------------------------------------------------------------//
-
-		//Deposit pre-load
-		actions.add(new DriveToPosition(robot,depositPosition1));
-		actions.add(new DepositFreight(robot));
-		actions.add(new Delay(250));
-
-		//Against wall lineup for first warehouse cycle + deploy intake
-		actions.add(new DriveToPosition(robot,readyForCollection6));
-
-		//Intake first freight
-		actions.add(new DriveToIntake(robot,collect6,5,false));
-
-		//Exit warehouse
-		actions.add(new DriveToPosition(robot, readyForCollection6));
-
-		//--------------------------------------------------------------------//
-
-		//Deposit pre-load
-		actions.add(new DriveToPosition(robot,depositPosition1));
-		actions.add(new DepositFreight(robot));
-		actions.add(new Delay(250));
-
-		//Against wall lineup for first warehouse cycle + deploy intake
-		actions.add(new DriveToPosition(robot,readyForPark));
-
-		actions.add(new DriveToPosition(robot,park));
-
-
-		//--------------------------------------------------------------------//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /*
-        //Deposit first freight
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
-        actions.add(new DepositFreight(robot));
-        actions.add(new Delay(250));
-
-        //Against wall lineup for second warehouse cycle
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection2) , new GoToInState(robot)}));
-
-        //Intake second freight
-        actions.add(new DriveToIntake(robot,collect2,5,false));
-
-        //Exit warehouse
-        actions.add(new DriveToPosition(robot, readyForCollection2));
-
-        //Deposit second freight
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
-        actions.add(new DepositFreight(robot));
-        actions.add(new Delay(250));
-
-        //Against wall lineup for third warehouse cycle
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection3) , new GoToInState(robot)}));
-
-        //Intake third freight
-        actions.add(new DriveToIntake(robot,collect3,5,false));
-
-        //Exit warehouse
-        actions.add(new DriveToPosition(robot, readyForCollection3));
-
-        //Deposit third freight
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
-        actions.add(new DepositFreight(robot));
-        actions.add(new Delay(250));
-
-        //Against wall lineup for fourth warehouse cycle
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection4) , new GoToInState(robot)}));
-
-        //Intake fourth freight
-        actions.add(new DriveToIntake(robot,collect4,5,false));
-
-        //Exit warehouse
-        actions.add(new DriveToPosition(robot, readyForCollection4));
-
-        //Deposit fourth freight
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
-        actions.add(new DepositFreight(robot));
-        actions.add(new Delay(250));
-
-        //Against wall lineup for fifth warehouse cycle
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection5) , new GoToInState(robot)}));
-
-        //Intake fifth freight
-        actions.add(new DriveToIntake(robot,collect5,5,false));
-
-        //Exit warehouse
-        actions.add(new DriveToPosition(robot, readyForCollection5));
-
-        //Deposit fifth freight
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
-        actions.add(new DepositFreight(robot));
-        actions.add(new Delay(250));
-
-        //Against wall lineup for sixth warehouse cycle
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection6) , new GoToInState(robot)}));
-
-        //Intake sixth freight
-        actions.add(new DriveToIntake(robot,collect6,5,false));
-
-        //Exit warehouse
-        actions.add(new DriveToPosition(robot, readyForCollection6));
-
-        //Deposit sixth freight
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
-        actions.add(new DepositFreight(robot));
-        actions.add(new Delay(250));
-
-        //Against wall lineup for warehouse park
-        actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForPark) , new GoToInState(robot)}));
-
-        //Park in warehouse
-        actions.add(new DriveToPosition(robot,park));*/
 	}
 }
