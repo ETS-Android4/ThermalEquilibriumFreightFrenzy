@@ -6,44 +6,94 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 
-public class DistanceSensorLocalization implements subsystem {
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+
+import java.util.ArrayList;
+
+
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import homeostasis.Filters.SISOKalmanFilter;
+
+import static org.firstinspires.ftc.teamcode.Utils.utils.AngleWrap;
+import static org.firstinspires.ftc.teamcode.Utils.utils.drawRobotBlue;
+import static org.firstinspires.ftc.teamcode.Utils.utils.plotVector;
+
+public class DistanceSensorLocalization implements subsystem{
+
+	public Rev2mDistanceSensor leftSensor;
+	public Rev2mDistanceSensor rightSensor;
+	public Rev2mDistanceSensor rearSensor;
+	public final double TILE_SIZE = 24;
+	public final double maximumAngle = Math.toRadians(15);
+
+	final double leftDistanceFromCenter = 0;
+	final double leftDistanceFromEdge = 0;
+	final double frontDistanceFromCenter = 0;
+	final double frontDistanceFromEdge = 0;
+
+
+	public Vector3D leftDistanceSensorRobotRelative = new Vector3D(0,0,Math.toRadians(0.0));
+	public Vector3D rearDistanceSensorRobotRelative = new Vector3D(0,0,Math.toRadians(0.0));
+	public Vector3D rightDistanceSensorRobotRelative = new Vector3D(0,0,Math.toRadians(0.0));
+
+	public double leftDistance = 0;
+	public double rightDistance = 0;
+	public double rearDistance = 0;
 
 	ThreeWheelOdometry odom;
 
-	String redSideDistanceSensorName = "distance1";
+	ArrayList<Vector3D> previousVectors = new ArrayList<>();
+	double Q = 4;
+	double R = 30;
+	int N = 3;
 
-	DistanceSensor redSideSensor;
+	double cutoffDistance = 322;
+	double minDistance = 10;
 
-	protected double redSideMeasurement = 0;
-
-	ElapsedTime timer = new ElapsedTime();
-
-	protected final double frequencyHz = 1;
-
-	protected final double DELAY = 1000.0 / frequencyHz;
+	SISOKalmanFilter estimatorX = new SISOKalmanFilter(Q,R);
+	SISOKalmanFilter estimatorY = new SISOKalmanFilter(Q,R);
 
 	public DistanceSensorLocalization(ThreeWheelOdometry odom) {
 		this.odom = odom;
 	}
 
+
+	double hz = 10;
+	double delay = 1000 / hz;
+
+	ElapsedTime timer = new ElapsedTime();
+
 	@Override
 	public void init(HardwareMap hwmap) {
-		this.redSideSensor = hwmap.get(DistanceSensor.class, redSideDistanceSensorName);
+
+		this.leftSensor = hwmap.get(Rev2mDistanceSensor.class, "LeftDistance");
+		this.rightSensor = hwmap.get(Rev2mDistanceSensor.class, "RightDistance");
+		this.rearSensor = hwmap.get(Rev2mDistanceSensor.class, "RearDistance");
+		timer.reset();
+
 	}
 
 	@Override
 	public void initNoReset(HardwareMap hwmap) {
 		init(hwmap);
-
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	@Override
 	public void update() {
-		if (timer.milliseconds() < DELAY) return;
-		timer.reset();
-		readSensors();
-		Dashboard.packet.put("distance",redSideMeasurement);
+
+
+		calculatePositions();
+
+		Dashboard.packet.put("left distance sensor", leftDistance);
+		Dashboard.packet.put("right distance sensor", rightDistance);
+		Dashboard.packet.put("rear distance sensor", rearDistance);
+
 	}
 
 	@Override
@@ -52,6 +102,47 @@ public class DistanceSensorLocalization implements subsystem {
 	}
 
 	protected void readSensors() {
-		this.redSideMeasurement = redSideSensor.getDistance(DistanceUnit.INCH);
+		this.leftDistance = leftSensor.getDistance(DistanceUnit.INCH);
+		this.rearDistance = rearSensor.getDistance(DistanceUnit.INCH);
+		this.rightDistance = rightSensor.getDistance(DistanceUnit.INCH);
+	}
+
+	@RequiresApi(api = Build.VERSION_CODES.N)
+	public void calculatePositions() {
+		System.out.println("current time for scheduling is " + timer.milliseconds());
+		if (timer.milliseconds() < delay) return;
+
+		readSensors();
+
+		timer.reset();
+
+		Vector3D robotPose = odom.subsystemState();
+		System.out.println("abs angle: " + Math.abs(AngleWrap(robotPose.getAngleRadians())) + " cutoff is "  + maximumAngle);
+		if (Math.abs(AngleWrap(robotPose.getAngleRadians())) > maximumAngle) return;
+
+
+		if (leftDistance >= cutoffDistance || minDistance >= leftDistance) return;
+		if (rearDistance >= cutoffDistance || minDistance >= rearDistance) return;
+
+
+		double x = rearDistance * Math.cos(robotPose.getAngleRadians() + rearDistanceSensorRobotRelative.getAngleRadians());
+		double y = leftDistance * Math.cos(robotPose.getAngleRadians() + leftDistanceSensorRobotRelative.getAngleRadians());
+
+
+		double x_field = (TILE_SIZE * 3) - (x - frontDistanceFromEdge + frontDistanceFromCenter);
+		double y_field = -(TILE_SIZE * 3) + (y - leftDistanceFromEdge + frontDistanceFromCenter);
+
+
+		Vector3D estimatedPose = new Vector3D(x_field, y_field, robotPose.getAngleRadians());
+		plotVector(estimatedPose,"distance sensor pose estimate", Dashboard.packet);
+
+		drawRobotBlue(estimatedPose, Dashboard.packet);
+
+		double xPoseEstimate = estimatorX.updateKalmanMeasurements(robotPose.getX(), estimatedPose.getX());
+		double yPoseEstimate = estimatorY.updateKalmanMeasurements(robotPose.getY(), estimatedPose.getY());
+
+		odom.setXPose(xPoseEstimate);
+		odom.setYPose(yPoseEstimate);
+
 	}
 }

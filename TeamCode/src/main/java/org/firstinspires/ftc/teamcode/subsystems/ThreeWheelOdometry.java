@@ -142,6 +142,16 @@ public class ThreeWheelOdometry implements subsystem {
 		return WHEEL_RADIUS * 2 * Math.PI * gearRatio * ticks / ticksPerRevolution;
 	}
 
+	public void setXPose(double xPoseEstimate) {
+		Vector3D currentPose = subsystemState();
+		currentPose.setX(xPoseEstimate);
+		this.setPositionEstimate(currentPose);
+	}
+	public void setYPose(double yPoseEstimate) {
+		Vector3D currentPose = subsystemState();
+		currentPose.setY(yPoseEstimate);
+		this.setPositionEstimate(currentPose);
+	}
 
 	public enum OdomState {
 		DEPLOYED,
