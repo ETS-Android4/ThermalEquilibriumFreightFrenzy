@@ -174,7 +174,7 @@ public class ThreeWheelOdometry implements subsystem {
 	public void deployedUpdateRR() {
 		mecanumDriveRR.updatePoseEstimate();
 		Pose2d estimate = mecanumDriveRR.getPoseEstimate();
-		Pose2d eDel = estimate.minus(previousRoadrunnerPose);
+		Pose2d eDel = previousRoadrunnerPose.minus(estimate);
 		previousRoadrunnerPose = estimate;
 		Vector3D newPosition = positionEstimate.add(new Vector3D(eDel.getX(),eDel.getY(),eDel.getHeading()));
 
