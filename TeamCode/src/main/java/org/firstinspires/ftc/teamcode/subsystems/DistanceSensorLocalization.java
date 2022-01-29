@@ -139,8 +139,9 @@ public class DistanceSensorLocalization implements subsystem{
 		double xPoseEstimate = estimatorX.updateKalmanMeasurements(robotPose.getX(), estimatedPose.getX());
 		double yPoseEstimate = estimatorY.updateKalmanMeasurements(robotPose.getY(), estimatedPose.getY());
 		if (leftDistance >= cutoffDistanceMAX || minDistance >= leftDistance) return;
-		odom.setYPose(yPoseEstimate);
 		if (rearDistance >= cutoffDistanceMAX || minDistance >= rearDistance) return;
+
+		odom.setYPose(yPoseEstimate);
 		odom.setXPose(xPoseEstimate);
 
 	}
