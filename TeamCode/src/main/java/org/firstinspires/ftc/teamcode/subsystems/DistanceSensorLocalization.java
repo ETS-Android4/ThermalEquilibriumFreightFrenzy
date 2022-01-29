@@ -112,7 +112,10 @@ public class DistanceSensorLocalization implements subsystem{
 		System.out.println("current time for scheduling is " + timer.milliseconds());
 		double velocityMagnitude = odom.getVelocity().distanceToPose(new Vector3D());
 		Dashboard.packet.put("velocity magnitude", velocityMagnitude);
-		if (timer.milliseconds() < delay && velocityMagnitude < velocity_threshold) return;
+		Vector3D robotPose = odom.subsystemState();
+		boolean angleOutOfRange = Math.abs(AngleWrap(robotPose.getAngleRadians())) > maximumAngle;
+
+		if (timer.milliseconds() < delay || velocityMagnitude < velocity_threshold || angleOutOfRange) return;
 		timer.reset();
 
 
@@ -120,13 +123,6 @@ public class DistanceSensorLocalization implements subsystem{
 
 		if (leftDistance >= cutoffDistanceMAX || minDistance >= leftDistance) return;
 		if (rearDistance >= cutoffDistanceMAX || minDistance >= rearDistance) return;
-
-
-
-		Vector3D robotPose = odom.subsystemState();
-		System.out.println("abs angle: " + Math.abs(AngleWrap(robotPose.getAngleRadians())) + " cutoff is "  + maximumAngle);
-		if (Math.abs(AngleWrap(robotPose.getAngleRadians())) > maximumAngle) return;
-
 
 
 		double x = rearDistance * Math.cos(robotPose.getAngleRadians() + rearDistanceSensorRobotRelative.getAngleRadians());
