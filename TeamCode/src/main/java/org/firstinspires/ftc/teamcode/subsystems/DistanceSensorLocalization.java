@@ -50,7 +50,7 @@ public class DistanceSensorLocalization implements subsystem{
 
 	ArrayList<Vector3D> previousVectors = new ArrayList<>();
 	double Q = 6;
-	double R = 25;
+	double R = 31;
 	int N = 3;
 
 	double cutoffDistanceMAX = 70;

@@ -10,7 +10,7 @@ public class DuckWheel implements subsystem{
 	protected DuckWheelState state = DuckWheelState.OFF;
 
 	protected double previousPower = 0;
-	protected final double TURN_POWER = -.45;
+	protected final double TURN_POWER = -1;
 	protected final double FAST_TURN_POWER = -1;
 
 	@Override
