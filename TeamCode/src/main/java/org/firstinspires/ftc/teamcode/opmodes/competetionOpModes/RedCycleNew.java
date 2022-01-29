@@ -55,7 +55,7 @@ public class RedCycleNew extends BaseAuto {
 	@Override
 	public void addActions() {
 
-			actions.add(new DeployIntake(robot));
+		actions.add(new DeployIntake(robot));
 
 		//Deposit pre-load
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
@@ -69,7 +69,7 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new DriveToIntake(robot, collect1, 4, false));
 
 		//Exit warehouse
-		actions.add(new DriveToPosition(robot, readyForCollection1,1.5,false));
+		actions.add(new DriveToPosition(robot, readyForCollection1));
 
 		//Deposit 1st cube
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
@@ -84,6 +84,17 @@ public class RedCycleNew extends BaseAuto {
 
 		//Exit warehouse
 		actions.add(new DriveToPosition(robot, readyForCollection1,1.5,false));
+
+		//Intake first freight
+		actions.add(new DriveToIntake(robot, collect1, 4, false));
+
+		actions.add(new DriveToPosition(robot, readyForCollection1,1.5,false));
+
+		//Deposit 1st cube
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
+		actions.add(new DepositFreight(robot));
+		actions.add(new Delay(300));
+
 
 	}
 }
