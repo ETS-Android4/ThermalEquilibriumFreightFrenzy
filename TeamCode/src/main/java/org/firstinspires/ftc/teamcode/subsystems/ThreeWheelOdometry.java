@@ -37,6 +37,7 @@ public class ThreeWheelOdometry implements subsystem {
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
 	double encoderAngle = 0;
+	Pose2d previousRoadrunnerPose = new Pose2d();
 
 	protected long counter = 0;
 	protected AngleKalmanFilter kalmanFilter;
@@ -109,7 +110,6 @@ public class ThreeWheelOdometry implements subsystem {
 	public void setPositionEstimate(Vector3D positionEstimate) {
 		this.initialPosition = positionEstimate;
 		this.positionEstimate = positionEstimate;
-		this.mecanumDriveRR.setPoseEstimate(new Pose2d(positionEstimate.getX(),positionEstimate.getY(),positionEstimate.getAngleRadians()));
 		kalmanFilter.setX(positionEstimate.getAngleRadians());
 	}
 
@@ -166,7 +166,10 @@ public class ThreeWheelOdometry implements subsystem {
 	public void deployedUpdateRR() {
 		mecanumDriveRR.updatePoseEstimate();
 		Pose2d estimate = mecanumDriveRR.getPoseEstimate();
-		positionEstimate = new Vector3D(estimate.getX(),estimate.getY(),estimate.getHeading());
+		Pose2d eDel = estimate.minus(previousRoadrunnerPose);
+		Vector3D newPosition = positionEstimate.add(new Vector3D(eDel.getX(),eDel.getY(),eDel.getHeading()));
+
+		positionEstimate = new Vector3D(newPosition.getX(),newPosition.getY(),estimate.getHeading());
 		System.out.println("Pose estimate from rr" + positionEstimate);
 		Pose2d velocity = mecanumDriveRR.getPoseVelocity();
 		try {
