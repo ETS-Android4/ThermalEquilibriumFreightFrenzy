@@ -47,8 +47,8 @@ public class DistanceSensorLocalization implements subsystem{
 	ThreeWheelOdometry odom;
 
 	ArrayList<Vector3D> previousVectors = new ArrayList<>();
-	double Q = 7;
-	double R = 30;
+	double Q = 6;
+	double R = 31;
 	int N = 3;
 
 	double cutoffDistanceMAX = 70;

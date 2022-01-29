@@ -58,7 +58,7 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new DeployIntake(robot));
 
 		//Deposit pre-load
-		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1) , new GoToHighDeposit(robot)}));
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1), new GoToHighDeposit(robot)}));
 		actions.add(new DepositFreight(robot));
 		actions.add(new Delay(300));
 
