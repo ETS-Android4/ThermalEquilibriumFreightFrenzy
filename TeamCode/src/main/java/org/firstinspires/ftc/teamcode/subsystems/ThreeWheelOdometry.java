@@ -116,7 +116,9 @@ public class ThreeWheelOdometry implements subsystem {
 	public void setInitialPosition(Vector3D positionEstimate) {
 
 		setPositionEstimate(positionEstimate);
-		this.mecanumDriveRR.setPoseEstimate(positionEstimate.toPose2d());
+		this.mecanumDriveRR.setPoseEstimate(new Pose2d(positionEstimate.getX(),
+														positionEstimate.getY(),
+														positionEstimate.getAngleRadians()));
 
 	}
 	/**
