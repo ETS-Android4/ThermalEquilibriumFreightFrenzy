@@ -129,7 +129,10 @@ public class Scheduler {
         }
 
         // run the persistent action if applicable
-        if (currentPersistentAction != null && (!actionList.get(currentState).isActionPersistent() || currentState == actionList.size() - 1) && hasStartedAction) {
+        if (currentPersistentAction != null
+				&& (!actionList.get(currentState).isActionPersistent()
+				|| currentState == actionList.size() - 1) && hasStartedAction
+				&& !currentPersistentAction.isAMultipleAction()) {
             currentPersistentAction.runAction();
         }
 

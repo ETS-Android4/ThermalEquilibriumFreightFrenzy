@@ -41,5 +41,10 @@ public class TuneOdometryTrackWidth implements action {
 	public boolean isActionPersistent() {
 		return false;
 	}
+
+	@Override
+	public boolean isAMultipleAction() {
+		return false;
+	}
 }
 

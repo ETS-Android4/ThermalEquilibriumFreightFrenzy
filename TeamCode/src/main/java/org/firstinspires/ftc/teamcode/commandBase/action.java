@@ -12,6 +12,10 @@ public interface action {
 
 	boolean isActionPersistent();
 
+	boolean isAMultipleAction();
+
+
+
 }
 
 

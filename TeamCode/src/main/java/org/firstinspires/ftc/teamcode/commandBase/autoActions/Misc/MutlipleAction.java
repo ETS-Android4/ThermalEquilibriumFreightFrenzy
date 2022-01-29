@@ -49,6 +49,15 @@ public class MutlipleAction implements action {
 
     @Override
     public boolean isActionPersistent() {
+        for (action a : actions) {
+            if (a.isActionComplete()) return true;
+        }
+
         return false;
+    }
+
+    @Override
+    public boolean isAMultipleAction() {
+        return true;
     }
 }

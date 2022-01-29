@@ -61,4 +61,9 @@ public class Turn implements action {
 	public boolean isActionPersistent() {
 		return true;
 	}
+
+	@Override
+	public boolean isAMultipleAction() {
+		return false;
+	}
 }

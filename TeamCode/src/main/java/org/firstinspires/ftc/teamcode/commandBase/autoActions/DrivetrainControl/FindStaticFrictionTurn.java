@@ -53,4 +53,9 @@ public class FindStaticFrictionTurn implements action {
 		return false;
 	}
 
+	@Override
+	public boolean isAMultipleAction() {
+		return false;
+	}
+
 }

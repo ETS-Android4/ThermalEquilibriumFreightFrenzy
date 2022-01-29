@@ -117,6 +117,11 @@ public class AimAtPoint implements action {
         return true;
     }
 
+    @Override
+    public boolean isAMultipleAction() {
+        return false;
+    }
+
     public void initializeController() {
         PIDFCoefficients coefficients;
         if (isCompBot) {
