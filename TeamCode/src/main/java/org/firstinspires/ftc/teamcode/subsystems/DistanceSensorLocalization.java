@@ -121,8 +121,6 @@ public class DistanceSensorLocalization implements subsystem{
 
 
 
-
-
 		double x = rearDistance * Math.cos(robotPose.getAngleRadians() + rearDistanceSensorRobotRelative.getAngleRadians());
 		double y = leftDistance * Math.cos(robotPose.getAngleRadians() + leftDistanceSensorRobotRelative.getAngleRadians());
 
