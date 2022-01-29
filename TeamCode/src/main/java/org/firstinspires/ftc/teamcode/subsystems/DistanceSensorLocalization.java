@@ -120,8 +120,7 @@ public class DistanceSensorLocalization implements subsystem{
 		if (Math.abs(AngleWrap(robotPose.getAngleRadians())) > maximumAngle) return;
 
 
-		if (leftDistance >= cutoffDistanceMAX || minDistance >= leftDistance) return;
-		if (rearDistance >= cutoffDistanceMAX || minDistance >= rearDistance) return;
+
 
 
 		double x = rearDistance * Math.cos(robotPose.getAngleRadians() + rearDistanceSensorRobotRelative.getAngleRadians());
@@ -139,9 +138,10 @@ public class DistanceSensorLocalization implements subsystem{
 
 		double xPoseEstimate = estimatorX.updateKalmanMeasurements(robotPose.getX(), estimatedPose.getX());
 		double yPoseEstimate = estimatorY.updateKalmanMeasurements(robotPose.getY(), estimatedPose.getY());
-
-		odom.setXPose(xPoseEstimate);
+		if (leftDistance >= cutoffDistanceMAX || minDistance >= leftDistance) return;
 		odom.setYPose(yPoseEstimate);
+		if (rearDistance >= cutoffDistanceMAX || minDistance >= rearDistance) return;
+		odom.setXPose(xPoseEstimate);
 
 	}
 }
