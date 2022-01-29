@@ -62,7 +62,7 @@ public class DistanceSensorLocalization implements subsystem{
 	}
 
 
-	double hz = 30;
+	double hz = 5;
 	double delay = 1000 / hz;
 
 	ElapsedTime timer = new ElapsedTime();
@@ -110,6 +110,8 @@ public class DistanceSensorLocalization implements subsystem{
 	public void calculatePositions() {
 		System.out.println("current time for scheduling is " + timer.milliseconds());
 		if (timer.milliseconds() < delay) return;
+		timer.reset();
+
 
 		readSensors();
 
@@ -117,7 +119,6 @@ public class DistanceSensorLocalization implements subsystem{
 		if (rearDistance >= cutoffDistanceMAX || minDistance >= rearDistance) return;
 
 
-		timer.reset();
 
 		Vector3D robotPose = odom.subsystemState();
 		System.out.println("abs angle: " + Math.abs(AngleWrap(robotPose.getAngleRadians())) + " cutoff is "  + maximumAngle);
