@@ -25,7 +25,7 @@ import static org.firstinspires.ftc.teamcode.Utils.utils.plotVector;
 @Config
 public class DistanceSensorLocalization implements subsystem{
 
-	double velocity_threshold = 15;
+	double velocity_threshold = 8;
 	public Rev2mDistanceSensor leftSensor;
 	public Rev2mDistanceSensor rightSensor;
 	public Rev2mDistanceSensor rearSensor;
