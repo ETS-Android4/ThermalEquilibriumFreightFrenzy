@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Controls.SISOControls;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Controls.Coefficients.PVParams;
+import org.firstinspires.ftc.teamcode.Filter.LowPassFilter;
 
 import homeostasis.utils.State;
 
@@ -17,6 +18,7 @@ public class PVControl {
 	private double integralSum = 0;
 	private State previousStateError = new State();
 	protected State error = new State();
+	protected LowPassFilter filter = new LowPassFilter(0.3);
 
 	protected double previousPosition = 0;
 
@@ -35,6 +37,7 @@ public class PVControl {
 	public double calculate(State reference,State state) {
 
 		double estimatedVelo = (state.getPosition() - previousPosition) / timer.seconds();
+		estimatedVelo = filter.updateEstimate(estimatedVelo);
 		previousPosition = state.getPosition();
 		state.setVelocity(estimatedVelo);
 		error = reference.stateError(state);
