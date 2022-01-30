@@ -42,7 +42,7 @@ public class TimeBasedMove implements action {
 
 	@Override
 	public boolean isActionComplete() {
-		return false;
+		return timer.seconds() > cutoffTime;
 	}
 
 	@Override
