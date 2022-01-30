@@ -25,12 +25,12 @@ import static org.firstinspires.ftc.teamcode.Utils.utils.plotVector;
 @Config
 public class DistanceSensorLocalization implements subsystem{
 
-	double velocity_threshold = 10;
+	double velocity_threshold = 20;
 	public Rev2mDistanceSensor leftSensor;
 	public Rev2mDistanceSensor rightSensor;
 	public Rev2mDistanceSensor rearSensor;
 	public final double TILE_SIZE = 24;
-	public final double maximumAngle = Math.toRadians(15);
+	public final double maximumAngle = Math.toRadians(20);
 
 	final double leftDistanceFromCenter = 5 + (1/8.0);
 	final double leftDistanceFromEdge = 12.0;
@@ -54,7 +54,7 @@ public class DistanceSensorLocalization implements subsystem{
 	int N = 3;
 
 	double cutoffDistanceMAX = 70;
-	double minDistance = 10;
+	double minDistance = 7;
 
 	SISOKalmanFilter estimatorX = new SISOKalmanFilter(Q,R);
 	SISOKalmanFilter estimatorY = new SISOKalmanFilter(Q,R);
