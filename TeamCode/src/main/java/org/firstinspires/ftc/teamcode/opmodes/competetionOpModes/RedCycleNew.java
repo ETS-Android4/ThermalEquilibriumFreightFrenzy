@@ -67,7 +67,7 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1) , new GoToInState(robot)}));
 
 		//Intake first freight
-		actions.add(new Turn(robot,0));
+		actions.add(new Turn(robot,0,2));
 		actions.add(new DriveToIntake(robot, collect1, 3.5, false));
 
 		//Exit warehouse
@@ -88,7 +88,7 @@ public class RedCycleNew extends BaseAuto {
 		//Intake first freight
 		//actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,collect2,2.5,false) , new TurnOnIntake(robot,true)}));
 		//actions.add(new TurnOffIntake(robot));
-		actions.add(new Turn(robot,0));
+		actions.add(new Turn(robot,0, 2));
 		actions.add(new DriveToIntake(robot, collect2, 3.5, false));
 
 		//Exit warehouse
@@ -108,7 +108,7 @@ public class RedCycleNew extends BaseAuto {
 		//Intake first freight
 		//actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,collect3,2.5,false) , new TurnOnIntake(robot,true)}));
 		//actions.add(new TurnOffIntake(robot));
-		actions.add(new Turn(robot,0));
+		actions.add(new Turn(robot,0, 2));
 		actions.add(new DriveToIntake(robot, collect3, 3.5, false));
 
 		//Exit warehouse

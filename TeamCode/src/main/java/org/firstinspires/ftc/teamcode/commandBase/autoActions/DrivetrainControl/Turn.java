@@ -20,6 +20,7 @@ public class Turn implements action {
 	double targetAngle;
 	boolean isComplete = false;
 	ElapsedTime timer = new ElapsedTime();
+	protected double cutoffTimeSeconds = 10;
 
 	public Turn(Robot robot, double targetAngle) {
 		this.robot = robot;
@@ -29,6 +30,17 @@ public class Turn implements action {
 		} else {
 			coefficients = controllerCoefficients.protoBotTurn;
 		}
+	}
+
+	public Turn(Robot robot, double targetAngle, double cutoffTimeSeconds) {
+		this.robot = robot;
+		this.targetAngle = targetAngle;
+		if (isCompBot) {
+			coefficients = controllerCoefficients.compBotTurn;
+		} else {
+			coefficients = controllerCoefficients.protoBotTurn;
+		}
+		this.cutoffTimeSeconds = cutoffTimeSeconds;
 	}
 
 	@Override
@@ -55,7 +67,7 @@ public class Turn implements action {
 
 	@Override
 	public boolean isActionComplete() {
-		return isComplete;
+		return isComplete || timer.seconds() > cutoffTimeSeconds;
 	}
 
 	@Override
