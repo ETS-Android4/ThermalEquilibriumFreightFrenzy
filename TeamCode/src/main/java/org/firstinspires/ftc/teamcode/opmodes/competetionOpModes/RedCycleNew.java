@@ -33,9 +33,9 @@ public class RedCycleNew extends BaseAuto {
 
 	Vector3D readyForCollection1 = new Vector3D(TILE - 12, -TILE * 3 + 6,  Math.toRadians(0));
 
-	Vector3D collect1 = new Vector3D(TILE * 2 - 8,-TILE * 3 + 5.75, Math.toRadians(0));
-	Vector3D collect2 = new Vector3D(TILE * 2 - 4,-TILE * 3 + 5.75, Math.toRadians(0));
-	Vector3D collect3 = new Vector3D(TILE * 2 - 1,-TILE * 3 + 5.75, Math.toRadians(0));
+	Vector3D collect1 = new Vector3D(TILE * 2 - 6,-TILE * 3 + 5.75, Math.toRadians(0));
+	Vector3D collect2 = new Vector3D(TILE * 2 + 1,-TILE * 3 + 5.75, Math.toRadians(0));
+	Vector3D collect3 = new Vector3D(TILE * 2 + 3,-TILE * 3 + 5.75, Math.toRadians(0));
 
 	Vector3D readyForPark = new Vector3D(TILE / 3, -TILE * 3 + 11, Math.toRadians(0));
 
