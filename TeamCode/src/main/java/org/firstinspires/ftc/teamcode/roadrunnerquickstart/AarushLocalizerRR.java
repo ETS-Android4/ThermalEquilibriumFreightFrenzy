@@ -51,9 +51,9 @@ public class AarushLocalizerRR extends ThreeTrackingWheelLocalizer {
 	public static double LATERAL_DISTANCE = trackWidth; // in; distance between the left and right wheels
 	public static double FORWARD_OFFSET = middleWheelOffset; // in; offset of the lateral wheel
 
-	public static double MIN_IMU_UPDATE_INTERVAL = 0.4;
-	public static double MIN_STABLE_HEADING_TIME = 0.3;
-	public static double HEADING_EPSILON = toRadians(0.15);
+	public static double MIN_IMU_UPDATE_INTERVAL = 0.5;
+	public static double MIN_STABLE_HEADING_TIME = 0.2;
+	public static double HEADING_EPSILON = toRadians(0.5);
 
 	private BNO055IMU imu;
 	private double baseExtHeading;
