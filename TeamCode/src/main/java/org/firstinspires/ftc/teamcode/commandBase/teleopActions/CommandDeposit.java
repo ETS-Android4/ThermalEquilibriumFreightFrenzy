@@ -130,7 +130,6 @@ public class CommandDeposit implements teleopAction {
 		intakeButton.button(intakeButtonState);
 
 		if (isRunning) {
-			System.out.println("is currently running!!");
 			return true;
 		} else if (intakeButtonState) {
 			state = COLLECTION;

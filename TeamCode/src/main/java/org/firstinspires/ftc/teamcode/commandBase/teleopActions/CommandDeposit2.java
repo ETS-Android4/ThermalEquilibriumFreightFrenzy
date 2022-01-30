@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.gamepadEnhancements.ButtonPress;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.COLLECTION;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.GOING_IN;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.IN;
 
@@ -27,6 +28,9 @@ public class CommandDeposit2 implements teleopAction {
 	ElapsedTime timer = new ElapsedTime();
 
 	ButtonPress slideToggle = new ButtonPress();
+
+	protected ButtonPress intakeButton = new ButtonPress();
+
 
 
 	public CommandDeposit2(Robot robot, Gamepad gamepad1, Gamepad gamepad2) {
@@ -50,14 +54,13 @@ public class CommandDeposit2 implements teleopAction {
 		switch (state) {
 
 			case DISARMED:
+			case COLLECTION:
 				break;
 			case IN:
 				if (slideToggle.press()) {
 					timer.reset();
 					state = desiredUpStateTransition;
 				}
-				break;
-			case COLLECTION:
 				break;
 			case GOING_TO_HIGH:
 			case GOING_TO_MID:
@@ -104,6 +107,17 @@ public class CommandDeposit2 implements teleopAction {
 
 	@Override
 	public boolean shouldRun() {
+		boolean intakeButtonState = gamepad1.right_trigger > 0.5 || gamepad1.left_trigger > 0.5;
+		intakeButton.button(intakeButtonState);
+
+		if (intakeButtonState) {
+			state = COLLECTION;
+		} else if (intakeButton.release()) {
+			state = IN;
+		}
+
+
+
 		return true;
 	}
 
