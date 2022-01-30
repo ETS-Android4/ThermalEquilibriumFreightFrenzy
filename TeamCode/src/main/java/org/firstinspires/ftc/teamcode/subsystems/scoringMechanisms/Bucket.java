@@ -60,7 +60,7 @@ public class Bucket implements subsystem {
 	 */
 	@Override
 	public void update() {
-		Dashboard.packet.put("BucketSensor", proximitySensor.getDistance(DistanceUnit.INCH));
+		//Dashboard.packet.put("BucketSensor", proximitySensor.getDistance(DistanceUnit.INCH));
 		if (state.equals(Deposit.depositStates.COLLECTION) && !previousState.equals(Deposit.depositStates.COLLECTION)) {
 			timer.reset();
 		}
