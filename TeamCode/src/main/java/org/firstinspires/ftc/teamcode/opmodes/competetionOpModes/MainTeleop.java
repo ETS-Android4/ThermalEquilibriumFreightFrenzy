@@ -21,8 +21,8 @@ import org.firstinspires.ftc.teamcode.commandBase.teleopActions.ToggleIntake;
 public class MainTeleop extends BaseTeleop {
 	@Override
 	public void addActions() {
-		//actions.add(new FieldRelativeDrive(robot,gamepad1,gamepad2));
-		actions.add(new NormalRobotRelative(robot,gamepad1,gamepad2));
+		actions.add(new FieldRelativeDrive(robot,gamepad1,gamepad2));
+		//actions.add(new NormalRobotRelative(robot,gamepad1,gamepad2));
 		actions.add(new ToggleIntake(robot, gamepad1, gamepad2));
 		actions.add(new CommandDeposit2(robot, gamepad1, gamepad2));
 		actions.add(new GoToCollectionState(robot, gamepad1, gamepad2));
