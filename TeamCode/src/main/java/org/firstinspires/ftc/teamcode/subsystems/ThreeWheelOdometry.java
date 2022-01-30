@@ -33,7 +33,6 @@ public class ThreeWheelOdometry implements subsystem {
 	private final double gearRatio;
 	public static double trackWidth =  3.4917806640625058; // TODO: fix this for real robot
 	public static double middleWheelOffset = -2;  // TODO: fix this for real robot
-	private BNO055IMU imu;
 	protected Vector3D initialPosition = new Vector3D();
 	protected double IMU_angle = 0;
 	double encoderAngle = 0;
@@ -62,15 +61,7 @@ public class ThreeWheelOdometry implements subsystem {
 	@Override
 	public void init(HardwareMap hwmap) {
 
-		if (isCompBot) {
-			imu = hwmap.get(BNO055IMU.class, "imu");
-		} else {
-			imu = hwmap.get(BNO055IMU.class, "imu");
-		}
-		BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-		parameters.mode = BNO055IMU.SensorMode.NDOF;
-		parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-		imu.initialize(parameters);
+
 		LeftEncoder = hwmap.get(DcMotorEx.class, "BackRight");
 		RightEncoder = hwmap.get(DcMotorEx.class, "FrontLeft");
 		MiddleEncoder = hwmap.get(DcMotorEx.class, "BackLeft");
@@ -89,6 +80,17 @@ public class ThreeWheelOdometry implements subsystem {
 				deployedUpdateRR();
 				break;
 			case RETRACTED:
+//				if (!hasIMUinitialized) {
+//					if (isCompBot) {
+//						imu = hwmap.get(BNO055IMU.class, "imu");
+//					} else {
+//						imu = hwmap.get(BNO055IMU.class, "imu");
+//					}
+//					BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+//					parameters.mode = BNO055IMU.SensorMode.NDOF;
+//					parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+//					imu.initialize(parameters);
+//				}
 				updateIMU();
 				break;
 		}
@@ -123,12 +125,13 @@ public class ThreeWheelOdometry implements subsystem {
 	}
 
 	public void updateIMU() {
-		Orientation angle = imu.getAngularOrientation();
-		IMU_angle = normalizeAngleRR(angle.firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
-		Dashboard.packet.put("IMU Angle",IMU_angle);
-		Dashboard.packet.put("IMU Angle Deg", Math.toDegrees(IMU_angle));
-		Dashboard.packet.put("pitch angle", pitchAngle);
-		angularVelocity = imu.getAngularVelocity().zRotationRate;
+//		Orientation angle = imu.getAngularOrientation();
+//		IMU_angle = normalizeAngleRR(angle.firstAngle + initialPosition.getAngleRadians());//normalizeAngleRR(navx.subsystemState().getAngleRadians());
+//		Dashboard.packet.put("IMU Angle",IMU_angle);
+//		Dashboard.packet.put("IMU Angle Deg", Math.toDegrees(IMU_angle));
+//		Dashboard.packet.put("pitch angle", pitchAngle);
+//		angularVelocity = imu.getAngularVelocity().zRotationRate;
+		IMU_angle = normalizeAngleRR(mecanumDriveRR.getExternalHeading() + initialPosition.getAngleRadians());
 		this.positionEstimate = new Vector3D(0,0,IMU_angle);
 	}
 
