@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.templateOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Utils.PoseStorage;
 import org.firstinspires.ftc.teamcode.commandBase.Scheduler;
 import org.firstinspires.ftc.teamcode.commandBase.teleopAction;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
@@ -25,6 +26,7 @@ public class BaseTeleop extends LinearOpMode {
 		robot = new Robot();
 		robot.init(hardwareMap);
 		robot.odometry.setState(ThreeWheelOdometry.OdomState.DEPLOYED);
+		robot.odometry.setPositionEstimate(PoseStorage.pose);
 
 		addActions();
 		scheduler = new Scheduler(robot.getSubsystems(), actions, hardwareMap);

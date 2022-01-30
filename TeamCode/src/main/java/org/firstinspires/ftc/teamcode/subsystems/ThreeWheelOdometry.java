@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
+import org.firstinspires.ftc.teamcode.Utils.PoseStorage;
 import org.firstinspires.ftc.teamcode.roadrunnerquickstart.SampleMecanumDrive;
 
 import homeostasis.Filters.AngleKalmanFilter;
@@ -94,6 +95,7 @@ public class ThreeWheelOdometry implements subsystem {
 				updateIMU();
 				break;
 		}
+		PoseStorage.pose = positionEstimate;
 	}
 
 	/**
