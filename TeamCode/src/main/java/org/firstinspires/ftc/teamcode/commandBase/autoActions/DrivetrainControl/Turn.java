@@ -44,7 +44,8 @@ public class Turn implements action {
 		robot.driveTrain.robotRelative(0,0, output);
 		Dashboard.packet.put("power",output);
 		Dashboard.packet.put("error",pid.getError());
-		isComplete = ((pid.isComplete()) && pid.isStable());
+		double errorPercent = Math.abs(pid.getError()) / Math.abs(targetAngle);
+		isComplete = ((pid.isComplete()) && pid.isStable()) || (pid.isVeryStable() && errorPercent < 0.05);
 	}
 
 	@Override
