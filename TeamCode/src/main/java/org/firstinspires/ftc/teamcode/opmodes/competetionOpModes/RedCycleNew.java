@@ -45,6 +45,8 @@ public class RedCycleNew extends BaseAuto {
 	Vector3D gapPose = new Vector3D(TILE, readyForPark.getY(), Math.toRadians(0));
 	Vector3D Test = new Vector3D(TILE / 2.0,-24, Math.toRadians(-90));
 
+	protected double turn_cutoff_time_seconds = 0.5;
+
 	@Override
 	public void setStartingPosition() {
 		robot.odometry.setPositionEstimate(start);
@@ -67,7 +69,7 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1) , new GoToInState(robot)}));
 
 		//Intake first freight
-		actions.add(new Turn(robot,0,2));
+		actions.add(new Turn(robot,0,turn_cutoff_time_seconds));
 		actions.add(new DriveToIntake(robot, collect1, 3.5, false));
 
 		//Exit warehouse
@@ -88,7 +90,7 @@ public class RedCycleNew extends BaseAuto {
 		//Intake first freight
 		//actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,collect2,2.5,false) , new TurnOnIntake(robot,true)}));
 		//actions.add(new TurnOffIntake(robot));
-		actions.add(new Turn(robot,0, 2));
+		actions.add(new Turn(robot,0, turn_cutoff_time_seconds));
 		actions.add(new DriveToIntake(robot, collect2, 3.5, false));
 
 		//Exit warehouse
@@ -108,7 +110,7 @@ public class RedCycleNew extends BaseAuto {
 		//Intake first freight
 		//actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,collect3,2.5,false) , new TurnOnIntake(robot,true)}));
 		//actions.add(new TurnOffIntake(robot));
-		actions.add(new Turn(robot,0, 2));
+		actions.add(new Turn(robot,0, turn_cutoff_time_seconds));
 		actions.add(new DriveToIntake(robot, collect3, 3.5, false));
 
 		//Exit warehouse
