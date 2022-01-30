@@ -33,9 +33,9 @@ public class RedCycleNew extends BaseAuto {
 
 	Vector3D readyForCollection1 = new Vector3D(TILE - 12, -TILE * 3 + 6,  Math.toRadians(0));
 
-	Vector3D collect1 = new Vector3D(TILE * 2 - 6,-TILE * 3 + 5.75, Math.toRadians(0));
-	Vector3D collect2 = new Vector3D(TILE * 2 + 1,-TILE * 3 + 5.75, Math.toRadians(0));
-	Vector3D collect3 = new Vector3D(TILE * 2 + 3,-TILE * 3 + 5.75, Math.toRadians(0));
+	Vector3D collect1 = new Vector3D(TILE * 2 - 4,-TILE * 3 + 5.5, Math.toRadians(0));
+	Vector3D collect2 = new Vector3D(TILE * 2 - 1,-TILE * 3 + 5.5, Math.toRadians(0));
+	Vector3D collect3 = new Vector3D(TILE * 2 + 4,-TILE * 3 + 5.5, Math.toRadians(0));
 
 	Vector3D readyForPark = new Vector3D(TILE / 3, -TILE * 3 + 11, Math.toRadians(0));
 
@@ -80,9 +80,9 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1,2.5,false) , new GoToInState(robot)}));
 
 		//Intake first freight
-		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,collect2,2.5,false) , new TurnOnIntake(robot,true)}));
-		actions.add(new TurnOffIntake(robot));
-		//actions.add(new DriveToIntake(robot, collect2, 3.5, false));
+		//actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,collect2,2.5,false) , new TurnOnIntake(robot,true)}));
+		//actions.add(new TurnOffIntake(robot));
+		actions.add(new DriveToIntake(robot, collect2, 3.5, false));
 
 		//Exit warehouse
 		actions.add(new DriveToPosition(robot, readyForCollection1));
@@ -98,9 +98,9 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1,2.5,false) , new GoToInState(robot)}));
 
 		//Intake first freight
-		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,collect3,2.5,false) , new TurnOnIntake(robot,true)}));
-		actions.add(new TurnOffIntake(robot));
-		//actions.add(new DriveToIntake(robot, collect3, 3.5, false));
+		//actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,collect3,2.5,false) , new TurnOnIntake(robot,true)}));
+		//actions.add(new TurnOffIntake(robot));
+		actions.add(new DriveToIntake(robot, collect3, 3.5, false));
 
 		//Exit warehouse
 
