@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
 
-public class TurnOffIntake implements action {
+public class  TurnOffIntake implements action {
 
 	protected boolean isComplete = false;
 	protected Robot robot;

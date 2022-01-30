@@ -81,15 +81,15 @@ public class ThreeWheelOdometry implements subsystem {
 				break;
 			case RETRACTED:
 //				if (!hasIMUinitialized) {
-//					if (isCompBot) {
-//						imu = hwmap.get(BNO055IMU.class, "imu");
-//					} else {
-//						imu = hwmap.get(BNO055IMU.class, "imu");
-//					}
-//					BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-//					parameters.mode = BNO055IMU.SensorMode.NDOF;
-//					parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-//					imu.initialize(parameters);
+////					if (isCompBot) {
+////						imu = hwmap.get(BNO055IMU.class, "imu");
+////					} else {
+////						imu = hwmap.get(BNO055IMU.class, "imu");
+////					}
+////					BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+////					parameters.mode = BNO055IMU.SensorMode.NDOF;
+////					parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+////					imu.initialize(parameters);
 //				}
 				updateIMU();
 				break;
@@ -131,7 +131,7 @@ public class ThreeWheelOdometry implements subsystem {
 //		Dashboard.packet.put("IMU Angle Deg", Math.toDegrees(IMU_angle));
 //		Dashboard.packet.put("pitch angle", pitchAngle);
 //		angularVelocity = imu.getAngularVelocity().zRotationRate;
-		IMU_angle = normalizeAngleRR(mecanumDriveRR.getExternalHeading() + initialPosition.getAngleRadians());
+		IMU_angle = normalizeAngleRR(mecanumDriveRR.getRawExternalHeading() + initialPosition.getAngleRadians());
 		this.positionEstimate = new Vector3D(0,0,IMU_angle);
 	}
 
