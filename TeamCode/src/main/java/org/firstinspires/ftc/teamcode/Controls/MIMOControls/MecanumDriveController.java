@@ -17,6 +17,7 @@ import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoe
 import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.compBotTurn;
 import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.compBotVelocity;
 import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.translationCoefficients;
+import static org.firstinspires.ftc.teamcode.Utils.utils.sin_c;
 
 public class MecanumDriveController {
 
@@ -74,9 +75,9 @@ public class MecanumDriveController {
 		double thetaReference = referencePose.getAngleRadians();
 		double robotTheta = robotPose.getAngleRadians();
 		thetaControl.setReference(thetaReference);
-
-		double X_u = controllerX.calculate(referenceX, robotX);
-		double Y_u = controllerY.calculate(referenceY, robotY);
+		double sine_c_multiplier = sin_c(thetaControl.getError());
+		double X_u = Range.clip(controllerX.calculate(referenceX, robotX), -1, 1) * sine_c_multiplier;
+		double Y_u = Range.clip(controllerY.calculate(referenceY, robotY), -1, 1) * sine_c_multiplier;
 		double Theta_u = thetaControl.calculateLinearAngle(robotTheta); // TODO: fix this
 
 		return new Vector3D(X_u, -Y_u, Theta_u);
@@ -177,9 +178,11 @@ public class MecanumDriveController {
 		Dashboard.packet.put("controller y complete", controllerY.isProcessComplete());
 		Dashboard.packet.put("theta control is complete",thetaControl.isComplete());
 		Dashboard.packet.put("profile is complete", isProfileComplete());
+
+
 		return controllerX.isProcessCompleteStrict()
 				&& controllerY.isProcessCompleteStrict()
-				&& (thetaControl.isComplete() || thetaControl.isBasicallyStopped());
+				&& (thetaControl.isComplete() || thetaControl.isBasicallyStopped() );
 	}
 
 	/**
