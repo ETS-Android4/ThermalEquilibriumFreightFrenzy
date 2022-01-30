@@ -25,12 +25,12 @@ import static org.firstinspires.ftc.teamcode.Utils.utils.plotVector;
 @Config
 public class DistanceSensorLocalization implements subsystem{
 
-	double velocity_threshold = 20;
+	double velocity_threshold = 15;
 	public Rev2mDistanceSensor leftSensor;
 	public Rev2mDistanceSensor rightSensor;
 	public Rev2mDistanceSensor rearSensor;
 	public final double TILE_SIZE = 24;
-	public final double maximumAngle = Math.toRadians(20);
+	public final double maximumAngle = Math.toRadians(9);
 
 	final double leftDistanceFromCenter = 5 + (1/8.0);
 	final double leftDistanceFromEdge = 12.0;
