@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 
@@ -151,6 +152,9 @@ public class Drivetrain implements subsystem {
      */
     public void robotRelative(double xSpeed, double ySpeed, double turnSpeed) {
         ySpeed *= 1.1;
+        xSpeed = Range.clip(xSpeed,-1,1);
+        ySpeed = Range.clip(ySpeed, -1, 1);
+        turnSpeed = Range.clip(turnSpeed, -1, 1);
         double frontLeftPower = (xSpeed + ySpeed + turnSpeed);
         double backLeftPower = (xSpeed - ySpeed + turnSpeed);
         double frontRightPower = (xSpeed - ySpeed - turnSpeed);
