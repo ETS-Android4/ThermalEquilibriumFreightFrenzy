@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Controls.Coefficients.PVParams;
 import org.firstinspires.ftc.teamcode.Filter.LowPassFilter;
+import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 
 import homeostasis.utils.State;
 
@@ -37,7 +38,9 @@ public class PVControl {
 	public double calculate(State reference,State state) {
 
 		double estimatedVelo = (state.getPosition() - previousPosition) / timer.seconds();
+		Dashboard.packet.put("estimatedVelo",estimatedVelo);
 		estimatedVelo = filter.updateEstimate(estimatedVelo);
+		Dashboard.packet.put("Velo LPF", estimatedVelo);
 		previousPosition = state.getPosition();
 		state.setVelocity(estimatedVelo);
 		error = reference.stateError(state);
