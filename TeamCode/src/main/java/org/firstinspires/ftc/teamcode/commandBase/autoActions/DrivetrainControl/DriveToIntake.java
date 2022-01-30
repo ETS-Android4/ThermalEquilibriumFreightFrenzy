@@ -26,7 +26,7 @@ public class DriveToIntake extends DriveToPosition {
 
 	@Override
 	public boolean isActionComplete() {
-		return controller.getTime() > cutOffTime || robot.bucketSys.isFreightInBox();
+		return (controller.getTime() > cutOffTime || robot.bucketSys.isFreightInBox()) && controller.getTime() > 0.5;
 	}
 	@Override
 	public void stopAction() {
