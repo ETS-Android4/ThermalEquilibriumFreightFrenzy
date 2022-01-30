@@ -18,7 +18,7 @@ public class PVControl {
 	private double integralSum = 0;
 	private State previousStateError = new State();
 	protected State error = new State();
-	protected LowPassFilter filter = new LowPassFilter(0.3);
+	protected LowPassFilter filter = new LowPassFilter(0.6);
 
 	protected double previousPosition = 0;
 
