@@ -33,7 +33,9 @@ public class PVControl {
 	}
 
 	public double calculate(State reference,State state) {
+
 		double estimatedVelo = (state.getPosition() - previousPosition) / timer.seconds();
+		previousPosition = state.getPosition();
 		state.setVelocity(estimatedVelo);
 		error = reference.stateError(state);
 		double feedback = calculateFeedback(error);
@@ -45,10 +47,7 @@ public class PVControl {
 	}
 
 	protected double calculateIntegral(State error) {
-		if (!hasStarted) {
-			timer.reset();
-			hasStarted = true;
-		}
+
 		if (error.getPosition() > 0 && previousStateError.getPosition() < 0 || error.getPosition() < 0 || previousStateError.getPosition() > 0) {
 			integralSum = 0;
 		}
