@@ -138,7 +138,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         // TODO: reverse any motors using DcMotor.setDirection()
 
         // TODO: if desired, use setLocalizer() to change the localization method
-        setLocalizer(new AarushLocalizerRR(hardwareMap));
+        setLocalizer(new TwoWheelTrackingLocalizer(hardwareMap, this));
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
