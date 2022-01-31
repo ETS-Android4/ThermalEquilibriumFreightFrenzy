@@ -141,7 +141,8 @@ public class DistanceSensorLocalization implements subsystem{
 		double xPoseEstimate = estimatorX.updateKalmanMeasurements(robotPose.getX(), estimatedPose.getX());
 		double yPoseEstimate = estimatorY.updateKalmanMeasurements(robotPose.getY(), estimatedPose.getY());
 
-		odom.setYPose(yPoseEstimate);
+		// TODO FIX THIS ONCE Y POSE WORKS
+		// odom.setYPose(yPoseEstimate);
 		odom.setXPose(xPoseEstimate);
 
 	}
