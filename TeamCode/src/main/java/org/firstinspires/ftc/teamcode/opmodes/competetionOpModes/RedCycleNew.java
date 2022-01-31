@@ -5,10 +5,12 @@ import android.service.quicksettings.Tile;
 import com.acmerobotics.roadrunner.drive.Drive;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.commandBase.action;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.DriveToIntake;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.DriveToPosition;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.LastResort.TimeBasedMove;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.DrivetrainControl.Turn;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Intake.DeployIntake;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Intake.TurnOffIntake;
@@ -45,6 +47,18 @@ public class RedCycleNew extends BaseAuto {
 	Vector3D gapPose = new Vector3D(TILE, readyForPark.getY(), Math.toRadians(0));
 	Vector3D Test = new Vector3D(TILE / 2.0,-24, Math.toRadians(-90));
 
+	Vector3D LineUp = new Vector3D(TILE - 12, -TILE * 3 + 10,  Math.toRadians(0));
+	Vector3D StrafeIntoWall = new Vector3D(0,.5,0);
+	Vector3D newcollect1 = new Vector3D(TILE * 2 - 2,-TILE * 3 + 5.5, Math.toRadians(0));
+	Vector3D newcollect2 = new Vector3D(TILE * 2 ,-TILE * 3 + 5.5, Math.toRadians(0));
+	Vector3D newcollect3 = new Vector3D(TILE * 2 ,-TILE * 3 + 5.5, Math.toRadians(0));
+
+	Vector3D NewReadyForDepo1 = new Vector3D(TILE - 15, -TILE * 3 + 5.,  Math.toRadians(0));
+	Vector3D NewReadyForDepo2 = new Vector3D(TILE - 15, -TILE * 3 + 5.25,  Math.toRadians(0));
+	Vector3D NewReadyForDepo3 = new Vector3D(TILE - 15, -TILE * 3 + 5.5,  Math.toRadians(0));
+
+
+
 	protected double turn_cutoff_time_seconds = 0.7;
 
 	@Override
@@ -64,7 +78,42 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1), new GoToHighDeposit(robot), new DeployIntake(robot)}));
 		actions.add(new DepositFreight(robot));
 		actions.add(new Delay(300));
+		//agaisnt wall
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, LineUp), new GoToInState(robot)}));
+		actions.add(new TimeBasedMove(robot,StrafeIntoWall,.75));
+		//Intake
+		actions.add(new DriveToIntake(robot,newcollect1,3,false));
+		//out of depo
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, NewReadyForDepo1), new TurnOnIntake(robot,false), new Delay(250)}));
+		actions.add(new TurnOffIntake(robot));
+//------------------------------------------------------------------------------------------------\\
+		//Deposit pre-load
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1), new GoToHighDeposit(robot), new DeployIntake(robot), new Delay(250)}));
+		actions.add(new DepositFreight(robot));
+		actions.add(new Delay(300));
+		//agaisnt wall WITH TIME BASED CODE
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, LineUp), new GoToInState(robot)}));
+		actions.add(new TimeBasedMove(robot,StrafeIntoWall,.75));
+		//Intake
+		actions.add(new DriveToIntake(robot,newcollect2,3,false));
+		//out of depo
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, NewReadyForDepo2), new TurnOnIntake(robot,false)}));
+		actions.add(new TurnOffIntake(robot));
+//------------------------------------------------------------------------------------------------\\
+		//Deposit pre-load
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1), new GoToHighDeposit(robot), new DeployIntake(robot), new Delay(250)}));
+		actions.add(new DepositFreight(robot));
+		actions.add(new Delay(300));
 
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, LineUp), new GoToInState(robot)}));
+		actions.add(new TimeBasedMove(robot,StrafeIntoWall,.75));
+
+		actions.add(new DriveToIntake(robot,newcollect3,3,false));
+
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, NewReadyForDepo3), new TurnOnIntake(robot,false)}));
+		actions.add(new TurnOffIntake(robot));
+
+		/*
 		//Against wall lineup for first warehouse cycle + deploy intake
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,readyForCollection1) , new GoToInState(robot)}));
 
@@ -114,6 +163,6 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new DriveToIntake(robot, collect3, 3.5, false));
 
 		//Exit warehouse
-
+*/
 	}
 }
