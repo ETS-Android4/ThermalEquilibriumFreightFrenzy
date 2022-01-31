@@ -115,7 +115,7 @@ public class DistanceSensorLocalization implements subsystem{
 		Vector3D robotPose = odom.subsystemState();
 		boolean angleOutOfRange = Math.abs(AngleWrap(robotPose.getAngleRadians())) > maximumAngle;
 
-		if (timer.milliseconds() < delay || velocityMagnitude < velocity_threshold || angleOutOfRange) return;
+		if (timer.milliseconds() < delay || velocityMagnitude > velocity_threshold || angleOutOfRange) return;
 		timer.reset();
 
 
