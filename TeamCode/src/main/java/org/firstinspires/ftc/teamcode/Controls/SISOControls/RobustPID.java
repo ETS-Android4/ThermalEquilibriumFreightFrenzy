@@ -258,13 +258,6 @@ public class RobustPID {
 	}
 
 	public void antiWindup() {
-
-//		double max_integral = 1;
-//
-//		if (Math.abs(integral_sum) * coefficients.Ki > max_integral) {
-//			integral_sum = Math.signum(integral_sum) * max_integral / coefficients.Ki;
-//		}
-
 		if ((lastError > 0 && error < 0) || ((lastError < 0 && error > 0))) {
 			integral_sum = 0;
 		}

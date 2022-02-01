@@ -19,8 +19,10 @@ import org.firstinspires.ftc.teamcode.commandBase.autoActions.Misc.Delay;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Misc.MutlipleAction;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.Misc.OffsetOdom;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.DepositFreight;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToBottomDeposit;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToHighDeposit;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToInState;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToMidDeposit;
 import org.firstinspires.ftc.teamcode.commandBase.teleopActions.SetYPosition;
 import org.firstinspires.ftc.teamcode.opmodes.testOpModes.MultipleActionExample;
 import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
@@ -32,6 +34,12 @@ import java.util.Vector;
 public class RedCycleNew extends BaseAuto {
 
 	Vector3D start = new Vector3D(TILE / 2.0, -TILE * 3 + 8.375, Math.toRadians(-90));
+
+
+	Vector3D depositPosition1HIGH = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
+	Vector3D depositPosition1MID = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
+	Vector3D depositPosition1LOW = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
+
 
 	Vector3D depositPosition1 = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
 	Vector3D depositPosition2 = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-70));
@@ -72,13 +80,33 @@ public class RedCycleNew extends BaseAuto {
 
 	}
 
+	public void depositPreload() {
+		Vector3D targetPosition = depositPosition1;
+
+		switch (TSEPosition) {
+			case LEFT:
+				actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1LOW),
+						new GoToBottomDeposit(robot), new DeployIntake(robot)}));
+				break;
+			case MIDDLE:
+				actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1MID),
+						new GoToMidDeposit(robot), new DeployIntake(robot)}));
+				break;
+			case RIGHT:
+				actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1HIGH),
+						new GoToHighDeposit(robot), new DeployIntake(robot)}));
+				break;
+		}
+		actions.add(new DepositFreight(robot));
+		actions.add(new Delay(300));
+	}
+
+
 	@Override
 	public void addActions() {
 
 		//Deposit pre-load Works
-		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1), new GoToHighDeposit(robot), new DeployIntake(robot),}));
-		actions.add(new DepositFreight(robot));
-		actions.add(new Delay(300));
+		depositPreload();
 
 		//agaisnt wall Meh
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, LineUp,2,false), new GoToInState(robot)}));
@@ -178,4 +206,6 @@ public class RedCycleNew extends BaseAuto {
 		//Exit warehouse
 */
 	}
+
+
 }
