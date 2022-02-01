@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.teamcode.commandBase.teleopActions.CommandDeposit2;
 import org.firstinspires.ftc.teamcode.commandBase.teleopActions.Drive.FieldRelativeDrive;
 import org.firstinspires.ftc.teamcode.commandBase.teleopActions.Drive.NormalRobotRelative;
+import org.firstinspires.ftc.teamcode.commandBase.teleopActions.RezeroHeading;
 import org.firstinspires.ftc.teamcode.commandBase.teleopActions.ToggleDuckWheel;
 import org.firstinspires.ftc.teamcode.commandBase.teleopActions.ToggleDuckWheel2;
 import org.firstinspires.ftc.teamcode.templateOpModes.BaseTeleop;
@@ -27,7 +28,9 @@ public class MainTeleop extends BaseTeleop {
 		actions.add(new CommandDeposit2(robot, gamepad1, gamepad2));
 		actions.add(new GoToCollectionState(robot, gamepad1, gamepad2));
 		actions.add(new ToggleDuckWheel2(robot,gamepad1,gamepad2));
+		actions.add(new RezeroHeading(robot,gamepad1,gamepad2));
 		actions.add(new ToggleBox(robot, gamepad1, gamepad2)); // this must go last or there will be a race condition.
+
 
 	}
 }
