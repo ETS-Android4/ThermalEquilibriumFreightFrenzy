@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToB
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToHighDeposit;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToInState;
 import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToMidDeposit;
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.NoSlideDeposit;
 import org.firstinspires.ftc.teamcode.commandBase.teleopActions.SetYPosition;
 import org.firstinspires.ftc.teamcode.opmodes.testOpModes.MultipleActionExample;
 import org.firstinspires.ftc.teamcode.templateOpModes.BaseAuto;
@@ -77,18 +78,22 @@ public class RedCycleNew extends BaseAuto {
 		switch (TSEPosition) {
 			case LEFT:
 				actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1LOW), new DeployIntake(robot)}));
+				actions.add(new NoSlideDeposit(robot));
+				actions.add(new Delay(300));
 				break;
 			case MIDDLE:
 				actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1MID),
 						new GoToMidDeposit(robot), new DeployIntake(robot)}));
+				actions.add(new DepositFreight(robot));
+				actions.add(new Delay(300));
 				break;
 			case RIGHT:
 				actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1HIGH),
 						new GoToHighDeposit(robot), new DeployIntake(robot)}));
+				actions.add(new DepositFreight(robot));
+				actions.add(new Delay(300));
 				break;
 		}
-		actions.add(new DepositFreight(robot));
-		actions.add(new Delay(300));
 	}
 
 

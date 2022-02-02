@@ -22,12 +22,13 @@ public class EliminationPipeline extends OpenCvPipeline {
 	public static Scalar higher = new Scalar(255,255,82.3);
 	public static boolean tuning_mode = false;
 
-	public static double low1 = 140;
-	public static double low2 = 50;
-	public static double low3 = 50;
-	public static double high1 = 210;
-	public static double high2 = 230;
-	public static double high3 = 255;
+	public static double high1 = 120;
+	public static double high2 = 240;
+	public static double high3 = 100;
+	public static double low1 = 60;
+	public static double low2 = 200;
+	public static double low3 = 70;
+
 
 	public boolean hasStarted = false;
 
