@@ -221,8 +221,10 @@ public class MecanumDriveController {
 		double y = Range.clip(output.getY(),-1,1);
 		double theta = Range.clip(output.getAngleRadians(),-1,1);
 
-		return new Vector3D(x * powerScalar, y* powerScalar,
-				theta * anglePowerScalar).rotateBy(robotPose.getAngleDegrees());
+		Vector3D power = new Vector3D(x, y,
+				theta).rotateBy(robotPose.getAngleDegrees());
+
+		return power.scale(powerScalar, true);
 
 	}
 

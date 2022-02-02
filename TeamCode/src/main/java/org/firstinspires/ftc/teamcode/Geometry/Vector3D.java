@@ -311,7 +311,7 @@ public class Vector3D {
         mult.setX(mult.x * scaler);
         mult.setY(mult.y * scaler);
         if (scaleAngle) {
-            mult.setAngleRad(normalizeAngle(this.angle.radians * scaler));
+            mult.setAngleRad(this.angle.radians * scaler);
         }
 
         return mult;
