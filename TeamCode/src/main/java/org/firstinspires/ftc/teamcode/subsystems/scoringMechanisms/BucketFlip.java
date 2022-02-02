@@ -59,7 +59,6 @@ public class BucketFlip implements subsystem {
 			case IN:
 			case GOING_TO_MID:
 			case GOING_TO_HIGH:
-			case GOING_TO_LOW:
 			case GOING_IN:
 				if (timer.seconds() > FINISH_COLLECTING_GO_UP_TIME_Seconds) {
 					setServoPosition(REST);
@@ -68,6 +67,7 @@ public class BucketFlip implements subsystem {
 			case COLLECTION:
 				setServoPosition(COLLECTION);
 				break;
+			case GOING_TO_LOW:
 			case GOING_TO_LOW_2:
 			case DEPOSITING:
 			case AT_LOW:
