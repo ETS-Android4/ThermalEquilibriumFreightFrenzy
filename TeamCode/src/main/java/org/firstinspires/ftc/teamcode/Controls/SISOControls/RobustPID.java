@@ -47,6 +47,7 @@ public class RobustPID {
 	protected double stability_threshold;
 	// previous feedback output for adaptive feedforward control
 	protected double previous_feedback = 0;
+	protected boolean limitIntegralSum = true;
 
 	/**
 	 * construct PID with buffer length and stability threshold
@@ -259,15 +260,23 @@ public class RobustPID {
 
 	public void antiWindup() {
 
-		if (integral_sum > 1) integral_sum = 1;
-		if (integral_sum < -1) integral_sum = -1;
-
 
 		if ((lastError > 0 && error < 0) || ((lastError < 0 && error > 0))) {
 			integral_sum = 0;
 		}
+
+		if (!limitIntegralSum) return;
+		if (integral_sum > 1) integral_sum = 1;
+		if (integral_sum < -1) integral_sum = -1;
+
+
+
 	}
 
+
+	public void setLimitIntegralSum(boolean limitIntegralSum) {
+		this.limitIntegralSum = limitIntegralSum;
+	}
 
 	/**
 	 * change the reference (imo)

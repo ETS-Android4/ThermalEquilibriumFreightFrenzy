@@ -53,6 +53,7 @@ public class Slides implements subsystem {
 		motors.add(left);
 		motors.add(right);
 		slides = new DcMotorPlant(motors);
+		slideController.setLimitIntegralSum(false);
 	}
 
 	/**
