@@ -37,21 +37,11 @@ public class RedCycleNew extends BaseAuto {
 
 
 	Vector3D depositPosition1HIGH = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
-	Vector3D depositPosition1MID = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
-	Vector3D depositPosition1LOW = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
+	Vector3D depositPosition1MID  = new Vector3D(+ 6,-TILE * 2  ,Math.toRadians(-60));
+	Vector3D depositPosition1LOW  = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
 
-
-	Vector3D depositPosition1 = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
-	Vector3D depositPosition2 = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-70));
-
-
-	Vector3D readyForCollection1 = new Vector3D(TILE - 15, -TILE * 3 + 5.75,  Math.toRadians(0));
-	Vector3D readyForCollection2 = new Vector3D(TILE - 15, -TILE * 3 + 6.5,  Math.toRadians(0));
-	Vector3D readyForCollection3 = new Vector3D(TILE - 15, -TILE * 3 + 6.5,  Math.toRadians(0));
-
-	Vector3D collect1 = new Vector3D(TILE * 2 - 5,-TILE * 3 + 5.25, Math.toRadians(0));
-	Vector3D collect2 = new Vector3D(TILE * 2 - 3,-TILE * 3 + 5.5, Math.toRadians(0));
-	Vector3D collect3 = new Vector3D(TILE * 2 - 2,-TILE * 3 + 5.69, Math.toRadians(0));
+	Vector3D depositPosition1 = new Vector3D(+ .5,-TILE * 2 + 8 ,Math.toRadians(-50));
+	Vector3D depositPosition2 = new Vector3D(+ .5,-TILE * 2 + 8 ,Math.toRadians(-60));
 
 	Vector3D readyForPark = new Vector3D(TILE / 3, -TILE * 3 + 11, Math.toRadians(0));
 
@@ -60,9 +50,10 @@ public class RedCycleNew extends BaseAuto {
 
 	Vector3D LineUp = new Vector3D(TILE - 12, -TILE * 3 + 7,  Math.toRadians(0));
 	Vector3D StrafeIntoWall = new Vector3D(0,.5,0);
-	Vector3D newcollect1 = new Vector3D(TILE * 2 - 6.5,-TILE * 3 + 5.5, Math.toRadians(0));
-	Vector3D newcollect2 = new Vector3D(TILE * 2 - 4,-TILE * 3 + 5.5, Math.toRadians(0));
-	Vector3D newcollect3 = new Vector3D(TILE * 2 - 1,-TILE * 3 + 5.5, Math.toRadians(0));
+
+	Vector3D newcollect1 = new Vector3D(TILE * 2 - 5,-TILE * 3 + 5.5, Math.toRadians(0));
+	Vector3D newcollect2 = new Vector3D(TILE * 2 - 3,-TILE * 3 + 5.5, Math.toRadians(0));
+	Vector3D newcollect3 = new Vector3D(TILE * 2 ,-TILE * 3 + 5.5, Math.toRadians(0));
 
 	Vector3D NewReadyForDepo1 = new Vector3D(TILE - 15, -TILE * 3 + 5.,  Math.toRadians(0));
 	Vector3D NewReadyForDepo2 = new Vector3D(TILE - 15, -TILE * 3 + 5.25,  Math.toRadians(0));
@@ -144,7 +135,6 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new Delay(300));
 
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, LineUp), new GoToInState(robot)}));
-		actions.add(new TimeBasedMove(robot,StrafeIntoWall,.75));
 		actions.add(new SetYPosition(robot,-TILE * 3 + 6 ));
 
 		actions.add(new DriveToIntake(robot,newcollect3,3,false));
