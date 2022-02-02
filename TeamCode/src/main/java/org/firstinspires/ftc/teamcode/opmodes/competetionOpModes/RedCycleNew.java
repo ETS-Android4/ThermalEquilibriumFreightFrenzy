@@ -37,7 +37,7 @@ public class RedCycleNew extends BaseAuto {
 
 
 	Vector3D depositPosition1HIGH = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
-	Vector3D depositPosition1MID  = new Vector3D(+ 6,-TILE * 2  ,Math.toRadians(-60));
+	Vector3D depositPosition1MID  = new Vector3D(+ 2,-TILE * 2 + 2 ,Math.toRadians(-60));
 	Vector3D depositPosition1LOW  = new Vector3D(+ 2,-TILE * 2 + 4 ,Math.toRadians(-60));
 
 	Vector3D depositPosition1 = new Vector3D(+ .5,-TILE * 2 + 8 ,Math.toRadians(-50));
@@ -137,8 +137,8 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, LineUp), new GoToInState(robot)}));
 		actions.add(new SetYPosition(robot,-TILE * 3 + 6 ));
 
-		actions.add(new DriveToIntake(robot,newcollect3,3,false));
-
+		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, newcollect3,2,false), new TurnOnIntake(robot,true)}));
+		actions.add(new TurnOffIntake(robot));
 
 /*
 		//deposit first preload
