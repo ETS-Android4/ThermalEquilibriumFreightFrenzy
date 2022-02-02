@@ -224,7 +224,7 @@ public class MecanumDriveController {
 		Vector3D power = new Vector3D(x, y,
 				theta).rotateBy(robotPose.getAngleDegrees());
 
-		return power.scale(powerScalar, true);
+		return power.scale(powerScalar, false);
 
 	}
 
