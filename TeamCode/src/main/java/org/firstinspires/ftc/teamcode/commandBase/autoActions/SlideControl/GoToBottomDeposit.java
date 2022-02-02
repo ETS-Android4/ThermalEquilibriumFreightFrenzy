@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_HIGH;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_LOW;
 import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.AT_MID;
+import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit.depositStates.GOING_TO_LOW_2;
 
 public class GoToBottomDeposit implements action {
 	protected boolean isComplete = false;
@@ -53,6 +54,11 @@ public class GoToBottomDeposit implements action {
 				}
 				break;
 			case GOING_TO_LOW:
+				if (robot.Deposit.tolerantEnoughForDeploy()) {
+					state = GOING_TO_LOW_2;
+				}
+				break;
+			case GOING_TO_LOW_2:
 				if (robot.Deposit.tolerantEnoughForDeploy()) {
 					state = AT_LOW;
 				}

@@ -49,6 +49,7 @@ Extension implements subsystem {
 			case GOING_TO_MID:
 			case GOING_TO_HIGH:
 			case GOING_IN:
+			case GOING_TO_LOW_2:
 				setPosition(IN);
 				break;
 			case AT_HIGH:

@@ -82,6 +82,7 @@ public class Deposit implements subsystem {
 		GOING_TO_HIGH,
 		GOING_TO_MID,
 		GOING_TO_LOW,
+		GOING_TO_LOW_2, // weird thing because our bucket is sus.
 		AT_HIGH, // at high but not deposited
 		AT_MID, // at mid but not deposited
 		AT_LOW, // at low but not deposited

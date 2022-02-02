@@ -73,13 +73,14 @@ public class Slides implements subsystem {
 			case COLLECTION:
 				referencePosition = COLLECTION;
 				break;
-			case GOING_TO_HIGH:
-			case AT_HIGH:
-				referencePosition = HIGH;
-				break;
+			case GOING_TO_LOW_2:
 			case GOING_TO_MID:
 			case AT_MID:
 				referencePosition = MID;
+				break;
+			case GOING_TO_HIGH:
+			case AT_HIGH:
+				referencePosition = HIGH;
 				break;
 			case GOING_TO_LOW:
 			case AT_LOW:
