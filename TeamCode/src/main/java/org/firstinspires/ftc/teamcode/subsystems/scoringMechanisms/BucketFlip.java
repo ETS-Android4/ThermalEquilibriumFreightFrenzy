@@ -74,7 +74,6 @@ public class BucketFlip implements subsystem {
 			case AT_MID:
 			case AT_HIGH:
 				setServoPosition(OUT);
-
 				break;
 			default:
 				// do nothing
