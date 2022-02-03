@@ -11,7 +11,7 @@ public class NoSlideDeposit implements action {
 
 	private static final double DEPOSIT_DURATION = 370;
 	protected boolean isComplete = false;
-	protected Deposit.depositStates state = Deposit.depositStates.DEPOSITING;
+	protected Deposit.depositStates state = Deposit.depositStates.AT_LOWEST;
 	protected double TIME_FOR_COMPLETION = 300;
 	Robot robot;
 	ElapsedTime timer = new ElapsedTime();

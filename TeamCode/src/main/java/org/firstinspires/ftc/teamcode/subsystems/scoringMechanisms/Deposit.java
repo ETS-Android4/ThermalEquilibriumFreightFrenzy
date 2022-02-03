@@ -87,6 +87,7 @@ public class Deposit implements subsystem {
 		AT_MID, // at mid but not deposited
 		AT_LOW, // at low but not deposited
 		DEPOSITING, //depositing
+		AT_LOWEST,
 		GOING_IN
 	}
 }

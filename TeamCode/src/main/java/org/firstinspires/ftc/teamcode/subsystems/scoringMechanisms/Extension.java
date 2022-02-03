@@ -44,6 +44,7 @@ Extension implements subsystem {
 			case COLLECTION:
 				setPosition(COLLECTION);
 				break;
+			case AT_LOWEST:
 			case IN:
 			case GOING_TO_LOW:
 			case GOING_TO_MID:

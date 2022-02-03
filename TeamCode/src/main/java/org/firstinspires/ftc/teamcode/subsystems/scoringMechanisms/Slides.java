@@ -69,6 +69,8 @@ public class Slides implements subsystem {
 
 		switch (state) {
 			case IN:
+			case DEPOSITING:
+			case GOING_IN:
 				referencePosition = IN;
 				break;
 			case COLLECTION:
@@ -87,8 +89,7 @@ public class Slides implements subsystem {
 			case AT_LOW:
 				referencePosition = LOW;
 				break;
-			case DEPOSITING:
-			case GOING_IN:
+			case AT_LOWEST:
 				break;
 		}
 		System.out.println("reference position is " + referencePosition);
