@@ -79,7 +79,8 @@ public class RedCycleNew extends BaseAuto {
 			case LEFT:
 				actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1LOW), new DeployIntake(robot)}));
 				actions.add(new NoSlideDeposit(robot));
-				actions.add(new Delay(300));
+				actions.add(new DepositFreight(robot));
+				actions.add(new Delay(1300));
 				break;
 			case MIDDLE:
 				actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition1MID),
