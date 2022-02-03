@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
-public class
-Extension implements subsystem {
+public class Extension implements subsystem {
 
 	protected final double COLLECTION = 1;
 	protected final double IN = 1;
