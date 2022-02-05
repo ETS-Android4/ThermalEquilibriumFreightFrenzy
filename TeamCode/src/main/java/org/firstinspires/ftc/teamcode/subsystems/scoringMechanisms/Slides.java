@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Controls.SISOControls.RobustPID;
 import org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients;
+import org.firstinspires.ftc.teamcode.subsystems.Dashboard;
 import org.firstinspires.ftc.teamcode.subsystems.subsystem;
 
 import java.util.ArrayList;
@@ -99,7 +100,7 @@ public class Slides implements subsystem {
 		error = slideController.getError();
 		System.out.println("controller error is " + error + " controller setpoint is " + slideController.getReference());
 		System.out.println("slide power " + controllerCommand);
-
+		Dashboard.packet.put("SlidePower",controllerCommand);
 	}
 
 	public double getControllerError() {

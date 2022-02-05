@@ -34,7 +34,7 @@ public class Bucket implements subsystem {
 
 	protected boolean isFreightInBox = false;
 
-	double TIME_FOR_INTAKE_TO_DO_ITS_THING = 0.2;
+	double TIME_FOR_INTAKE_TO_DO_ITS_THING = 0.25;
 
 
 	ElapsedTime timer = new ElapsedTime();
