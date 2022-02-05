@@ -17,6 +17,7 @@ import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoe
 import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.compBotTurn;
 import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.compBotVelocity;
 import static org.firstinspires.ftc.teamcode.Controls.Coefficients.controllerCoefficients.translationCoefficients;
+import static org.firstinspires.ftc.teamcode.Utils.utils.plotVector;
 import static org.firstinspires.ftc.teamcode.Utils.utils.sin_c;
 
 public class MecanumDriveController {
@@ -222,9 +223,9 @@ public class MecanumDriveController {
 		double theta = Range.clip(output.getAngleRadians(),-1,1);
 
 		Vector3D power = new Vector3D(x, y,
-				theta).rotateBy(robotPose.getAngleDegrees());
-
-		return power.scale(powerScalar, false);
+				theta).rotateBy(robotPose.getAngleDegrees()).scale(powerScalar,false);
+		plotVector(power,"drive power",Dashboard.packet);
+		return power;
 
 	}
 

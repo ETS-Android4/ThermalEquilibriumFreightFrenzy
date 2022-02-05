@@ -52,9 +52,9 @@ public class RedCycleNew extends BaseAuto {
 	Vector3D LineUp = new Vector3D(TILE - 12, -TILE * 3 + 7,  Math.toRadians(0));
 	Vector3D StrafeIntoWall = new Vector3D(0,.5,0);
 
-	Vector3D newcollect1 = new Vector3D(TILE * 2 - 5,-TILE * 3 + 5.5, Math.toRadians(0));
-	Vector3D newcollect2 = new Vector3D(TILE * 2 - 3,-TILE * 3 + 5.5, Math.toRadians(0));
-	Vector3D newcollect3 = new Vector3D(TILE * 2 ,-TILE * 3 + 5.5, Math.toRadians(0));
+	Vector3D newcollect1 = new Vector3D(TILE * 3 - 26 ,-TILE * 3 + 5.5, Math.toRadians(0));
+	Vector3D newcollect2 = new Vector3D(TILE * 3 - 22,-TILE * 3 + 5.5, Math.toRadians(0));
+	Vector3D newcollect3 = new Vector3D(TILE * 3 - 20 ,-TILE * 3 + 5.5, Math.toRadians(0));
 
 	Vector3D NewReadyForDepo1 = new Vector3D(TILE - 15, -TILE * 3 + 5.,  Math.toRadians(0));
 	Vector3D NewReadyForDepo2 = new Vector3D(TILE - 15, -TILE * 3 + 5.25,  Math.toRadians(0));

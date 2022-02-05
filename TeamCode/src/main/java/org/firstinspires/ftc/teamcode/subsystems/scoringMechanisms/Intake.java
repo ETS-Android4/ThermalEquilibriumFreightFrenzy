@@ -12,7 +12,7 @@ public class Intake implements subsystem {
 	protected double lastPower = 1000;
 	protected DcMotorEx intakeMotor;
 
-	protected double ON_POWER = -.75;
+	protected double ON_POWER = -1;
 
 	protected intakeStates state = intakeStates.OFF;
 
