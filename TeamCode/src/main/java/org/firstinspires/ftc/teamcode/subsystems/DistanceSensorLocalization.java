@@ -121,25 +121,25 @@ public class DistanceSensorLocalization implements subsystem{
 
 		readSensors();
 
-		if (leftDistance >= cutoffDistanceMAX || minDistance >= leftDistance) return;
+		//if (leftDistance >= cutoffDistanceMAX || minDistance >= leftDistance) return;
 		if (rearDistance >= cutoffDistanceMAX || minDistance >= rearDistance) return;
 
 
 		double x = rearDistance * Math.cos(robotPose.getAngleRadians() + rearDistanceSensorRobotRelative.getAngleRadians());
-		double y = leftDistance * Math.cos(robotPose.getAngleRadians() + leftDistanceSensorRobotRelative.getAngleRadians());
+		//double y = leftDistance * Math.cos(robotPose.getAngleRadians() + leftDistanceSensorRobotRelative.getAngleRadians());
 
 
 		double x_field = (TILE_SIZE * 3) - (x - frontDistanceFromEdge + frontDistanceFromCenter);
-		double y_field = -(TILE_SIZE * 3) + (y - leftDistanceFromEdge + leftDistanceFromCenter);
+		//double y_field = -(TILE_SIZE * 3) + (y - leftDistanceFromEdge + leftDistanceFromCenter);
 
 
-		Vector3D estimatedPose = new Vector3D(x_field, y_field, robotPose.getAngleRadians());
-		plotVector(estimatedPose,"distance sensor pose estimate", Dashboard.packet);
+		//Vector3D estimatedPose = new Vector3D(x_field, y_field, robotPose.getAngleRadians());
+		//plotVector(estimatedPose,"distance sensor pose estimate", Dashboard.packet);
 
-		drawRobotBlue(estimatedPose, Dashboard.packet);
+		//drawRobotBlue(estimatedPose, Dashboard.packet);
 
-		double xPoseEstimate = estimatorX.updateKalmanMeasurements(robotPose.getX(), estimatedPose.getX());
-		double yPoseEstimate = estimatorY.updateKalmanMeasurements(robotPose.getY(), estimatedPose.getY());
+		double xPoseEstimate = estimatorX.updateKalmanMeasurements(robotPose.getX(), x_field);
+		//double yPoseEstimate = estimatorY.updateKalmanMeasurements(robotPose.getY(), estimatedPose.getY());
 
 		// TODO FIX THIS ONCE Y POSE WORKS
 		// odom.setYPose(yPoseEstimate);

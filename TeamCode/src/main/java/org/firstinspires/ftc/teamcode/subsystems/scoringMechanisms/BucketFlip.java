@@ -16,7 +16,7 @@ public class BucketFlip implements subsystem {
 
 	public final double COLLECTION = 0.17;
 	public final double OUT = 1;
-	public final double REST = 0.35;
+	public final double REST = 0.4;
 
 	protected double previousPosition = 100;
 

@@ -119,10 +119,14 @@ public class RedCycleNew extends BaseAuto {
 		actions.add(new TurnOffIntake(robot));
 
 //------------------------------------------------------------------------------------------------\\
-/*		//Deposit pre-load
+		//Deposit pre-load
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot,depositPosition2), new GoToHighDeposit(robot)}));
 		actions.add(new DepositFreight(robot));
 		actions.add(new Delay(300));
+
+
+
+		/*
 		//agaisnt wall WITH TIME BASED CODE
 		actions.add(new MutlipleAction(new action[]{new DriveToPosition(robot, LineUp1,2,false), new GoToInState(robot)}));
 		actions.add(new TimeBasedMove(robot,StrafeIntoWall,.75));
