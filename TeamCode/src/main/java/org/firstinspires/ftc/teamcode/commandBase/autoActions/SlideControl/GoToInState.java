@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commandBase.action;
+import org.firstinspires.ftc.teamcode.commandBase.teleopActions.CommandDeposit2;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
@@ -16,7 +17,7 @@ import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposi
  */
 public class GoToInState implements action {
 
-	private static final double DEPOSIT_DURATION = 370;
+	public static final double DEPOSIT_DURATION = CommandDeposit2.DEPOSIT_DURATION;
 	protected boolean isComplete = false;
 	protected Deposit.depositStates state = Deposit.depositStates.DEPOSITING;
 	protected double TIME_FOR_COMPLETION = 300;

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commandBase.action;
+import org.firstinspires.ftc.teamcode.commandBase.teleopActions.CommandDeposit2;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
@@ -20,7 +21,7 @@ public class GoToHighDeposit implements action {
 
 	protected boolean isComplete = false;
 	protected Deposit.depositStates state = Deposit.depositStates.GOING_TO_HIGH;
-	protected double TIME_FOR_COMPLETION = 300;
+	protected double TIME_FOR_COMPLETION = CommandDeposit2.DEPOSIT_DURATION;
 	Robot robot;
 	ElapsedTime timer = new ElapsedTime();
 

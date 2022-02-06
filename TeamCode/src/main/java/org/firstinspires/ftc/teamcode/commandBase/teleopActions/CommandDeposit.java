@@ -21,7 +21,7 @@ import static org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposi
 
 public class CommandDeposit implements teleopAction {
 
-	protected final double DEPOSIT_DURATION = 370;
+	protected final double DEPOSIT_DURATION = CommandDeposit2.DEPOSIT_DURATION;
 	protected Robot robot;
 	protected Gamepad gamepad1;
 	protected Gamepad gamepad2;

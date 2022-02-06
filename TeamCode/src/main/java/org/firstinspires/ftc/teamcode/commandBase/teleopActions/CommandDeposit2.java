@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.commandBase.teleopActions;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.commandBase.autoActions.SlideControl.GoToInState;
 import org.firstinspires.ftc.teamcode.commandBase.teleopAction;
 import org.firstinspires.ftc.teamcode.gamepadEnhancements.ButtonPress;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
@@ -19,7 +20,7 @@ public class CommandDeposit2 implements teleopAction {
 	Gamepad gamepad1;
 	Gamepad gamepad2;
 
-	protected final double DEPOSIT_DURATION = 370;
+	public static final double DEPOSIT_DURATION = 370;
 
 	protected Deposit.depositStates desiredUpState = Deposit.depositStates.AT_HIGH;
 	protected Deposit.depositStates desiredUpStateTransition = Deposit.depositStates.GOING_TO_HIGH;
