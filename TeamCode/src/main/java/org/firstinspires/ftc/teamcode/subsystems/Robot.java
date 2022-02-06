@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.Geometry.Vector3D;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Bucket;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.Intake;
-import org.firstinspires.ftc.teamcode.subsystems.scoringMechanisms.TapeTurret;
 
 import java.util.ArrayList;
 
@@ -34,8 +33,6 @@ public class Robot {
 
     public DuckWheel duckwheel = new DuckWheel();
     public ThreeWheelOdometry odometry = new ThreeWheelOdometry();
-
-    public TapeTurret turret = new TapeTurret();
 
     public DistanceSensorLocalization distanceSensorLocalization
             = new DistanceSensorLocalization(odometry);

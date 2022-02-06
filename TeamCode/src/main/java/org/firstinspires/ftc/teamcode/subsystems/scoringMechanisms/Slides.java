@@ -94,11 +94,11 @@ public class Slides implements subsystem {
 				break;
 
 		}
-		System.out.println("reference position is " + referencePosition);
+		System.out.println("slide reference position is " + referencePosition);
 		double controllerCommand = slideController.stateReferenceCalculate(referencePosition, subsystemState().getPosition());
 		slides.input(controllerCommand);
 		error = slideController.getError();
-		System.out.println("controller error is " + error + " controller setpoint is " + slideController.getReference());
+		System.out.println("slide controller error is " + error + " slide controller setpoint is " + slideController.getReference());
 		System.out.println("slide power " + controllerCommand);
 		Dashboard.packet.put("SlidePower",controllerCommand);
 	}
